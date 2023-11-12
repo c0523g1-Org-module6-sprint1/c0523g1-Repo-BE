@@ -7,6 +7,8 @@ public class PrivacyPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(columnDefinition = "varchar(50)")
     private String name;
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
