@@ -1,9 +1,6 @@
-package com.dating.model.HauNH;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.dating.model.update_account;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class PackageDetail {

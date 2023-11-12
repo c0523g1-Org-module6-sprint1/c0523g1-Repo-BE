@@ -1,6 +1,6 @@
-package com.dating.service.HauNH;
+package com.dating.service.update_account;
 
-import com.dating.model.HauNH.AccountTypes;
+import com.dating.model.update_account.AccountTypes;
 
 import java.util.List;
 
