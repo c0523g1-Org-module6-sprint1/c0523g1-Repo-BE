@@ -1,16 +1,19 @@
 package com.dating.service.impl;
 
-import com.dating.model.Account;
+import com.dating.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Setter
 @Getter
+@Setter
 public class AccountDetail implements UserDetails {
 
     private static final long serialVersionUID = 10L;
@@ -20,10 +23,10 @@ public class AccountDetail implements UserDetails {
     @JsonIgnore
     private String password;
 
-    GrantedAuthority authorities = null;
+    private Collection<? extends GrantedAuthority> authorities;
 
     public AccountDetail(Integer id, String username,
-                         String password, GrantedAuthority authorities) {
+                         String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -31,12 +34,14 @@ public class AccountDetail implements UserDetails {
     }
 
     public static AccountDetail build(Account account) {
-        GrantedAuthority authorities = (GrantedAuthority) account.getRole();
+        List<GrantedAuthority> authorities = account.getRole().steam()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name))
+                .collection(Collectors.toList());
 
         return new AccountDetail(
                 account.getId(),
                 account.getUserName(),
-                account.getEncryptPassword(),
+                account.getPassword(),
                 authorities
         );
     }
