@@ -1,4 +1,4 @@
-package com.dating.model;
+package com.dating.model.relationship;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
