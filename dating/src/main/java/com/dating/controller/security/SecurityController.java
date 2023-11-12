@@ -6,6 +6,7 @@ import com.dating.payload.request.LoginRequest;
 import com.dating.payload.response.JwtResponse;
 import com.dating.service.impl.AccountDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
