@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 public interface IPostRepository extends JpaRepository<Post,Integer> {
     @Modifying
-    @Query(value = "INSERT INTO your_table (date, content, image, account_id, privacy_post_id) " +
+    @Query(value = "INSERT INTO post (date, content, image, account_id, privacy_post_id) " +
             "VALUES (:date, :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
     void create(@Param("date") LocalDateTime date, @Param("content") String content,
                     @Param("image") String image, @Param("accountId") Integer accountId,
