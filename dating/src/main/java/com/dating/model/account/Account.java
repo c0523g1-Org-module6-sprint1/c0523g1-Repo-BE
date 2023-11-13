@@ -17,7 +17,6 @@ import com.dating.model.gift.GiftRecord;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.model.message.MessageStatus;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -101,13 +100,16 @@ public class Account {
     @JsonBackReference
     private Set<Comments> commentsSet;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "senderAccount")
     @JsonBackReference
     private Set<Messages> messagesSet;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "receiverAccount")
     @JsonBackReference
     private Set<Relationships> relationshipsSet;
+    @JsonBackReference
+    @OneToMany(mappedBy = "senderAccount")
+    private Set<Relationships> relationshipsSets;
 
 
     @OneToMany(mappedBy="account")
@@ -119,12 +121,12 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
- 
-  
+
+
     @JsonBackReference
     @OneToMany(mappedBy = "accountSender")
     private Set<GiftRecord> giftRecords;
- 
+
     @JsonBackReference
     @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;

@@ -24,7 +24,7 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
      * param String userName
      * return Account
      */
-    @Query(value = " select *. from accounts " +
+    @Query(value = " select * from accounts " +
             " where user_name like :username" +
             " and is_deleted = 0 ",
             nativeQuery = true)
@@ -43,43 +43,43 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
     @Query(value = "select * from accounts where user_name like :username and is_deleted = 0 ", nativeQuery = true)
     Page<Account> findAllAccount(Pageable pageable, @Param("username") String username);
 
-    Account findAccountByUserNameAndDeletedIsFalse(String username);
-
-    /**
-     * method findAccountByEmail
-     * Create SangPQ
-     * Date 13-11-2023
-     * param String email
-     * return Account
-     */
-    @Query(value = "select *. from accounts " +
-            "where email like :email " +
-            "and is_deleted = 0",
-            nativeQuery = true)
-    Account findAccountByEmail(@Param("email") String email);
-
-    /**
-     * method findAccountById
-     * Create SangPQ
-     * Date 13-11-2023
-     * param String email
-     * return Account
-     */
-    @Query(value = "select *. from accounts " +
-            "where email like :email " +
-            "and is_deleted = 0",
-            nativeQuery = true)
-    Account findAccountById(@Param("email") int id);
-
-    /**
-     * method addNewAccount
-     * Create SangPQ
-     * Date 13-11-2023
-     * param Account account
-     * return Integer
-     */
-
-
+    Account findAccountByUserNameAndIsDeletedIsFalse(String username);
+//
+//    /**
+//     * method findAccountByEmail
+//     * Create SangPQ
+//     * Date 13-11-2023
+//     * param String email
+//     * return Account
+//     */
+//    @Query(value = "select *. from accounts " +
+//            "where email like :email " +
+//            "and is_deleted = 0",
+//            nativeQuery = true)
+//    Account findAccountByEmail(@Param("email") String email);
+//
+//    /**
+//     * method findAccountById
+//     * Create SangPQ
+//     * Date 13-11-2023
+//     * param String email
+//     * return Account
+//     */
+//    @Query(value = "select *. from accounts " +
+//            "where email like :email " +
+//            "and is_deleted = 0",
+//            nativeQuery = true)
+//    Account findAccountById(@Param("email") int id);
+//
+//    /**
+//     * method addNewAccount
+//     * Create SangPQ
+//     * Date 13-11-2023
+//     * param Account account
+//     * return Integer
+//     */
+//
+//
 
 
 }

@@ -1,10 +1,13 @@
 package com.dating.model.gift;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
 @Entity
+@AllArgsConstructor
 public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,21 +16,21 @@ public class Gift {
     private String image;
     private int price;
     private boolean isDelete;
-    @JsonBackReference
-    @OneToMany(mappedBy = "gift")
-   private Set<GiftRecord> giftRecords;
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "gift")
+//   private Set<GiftRecord> giftRecords;
 
     public Gift() {
     }
 
-    public Gift(int id, String name, String image, int price, boolean isDelete, Set<GiftRecord> giftRecords) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.price = price;
-        this.isDelete = isDelete;
-        this.giftRecords = giftRecords;
-    }
+//    public Gift(int id, String name, String image, int price, boolean isDelete, Set<GiftRecord> giftRecords) {
+//        this.id = id;
+//        this.name = name;
+//        this.image = image;
+//        this.price = price;
+//        this.isDelete = isDelete;
+//        this.giftRecords = giftRecords;
+//    }
 
     public int getId() {
         return id;
@@ -69,11 +72,11 @@ public class Gift {
         isDelete = delete;
     }
 
-    public Set<GiftRecord> getGiftRecords() {
-        return giftRecords;
-    }
-
-    public void setGiftRecords(Set<GiftRecord> giftRecords) {
-        this.giftRecords = giftRecords;
-    }
+//    public Set<GiftRecord> getGiftRecords() {
+//        return giftRecords;
+//    }
+//
+//    public void setGiftRecords(Set<GiftRecord> giftRecords) {
+//        this.giftRecords = giftRecords;
+//    }
 }

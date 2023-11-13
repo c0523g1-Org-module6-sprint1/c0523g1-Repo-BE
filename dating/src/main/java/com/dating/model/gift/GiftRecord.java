@@ -3,6 +3,7 @@ package com.dating.model.gift;
 import com.dating.model.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class GiftRecord {
     @Id
@@ -29,10 +31,6 @@ public class GiftRecord {
     @JoinColumn(name = "accountReceiver_id",referencedColumnName = "id")
     private Account accountReceiver;
 
-
-
-    public GiftRecord() {
-    }
 
 
 }
