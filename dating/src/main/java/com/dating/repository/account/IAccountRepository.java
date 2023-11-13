@@ -77,7 +77,7 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
      * return Account
      */
     @Query(value = "select *. from accounts " +
-            "where email like :id " +
+            "where id like :id " +
             "and is_deleted = 0",
             nativeQuery = true)
     Account findAccountById(@Param("id") int id);
