@@ -1,7 +1,7 @@
-package com.dating.controller.HauNH;
+package com.dating.controller.update_account;
 
-import com.dating.model.HauNH.PackageTypes;
-import com.dating.service.HauNH.IPackageTypesService;
+import com.dating.model.update_account.PackageTypes;
+import com.dating.service.update_account.IPackageTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

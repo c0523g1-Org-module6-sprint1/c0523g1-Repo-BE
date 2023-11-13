@@ -1,6 +1,6 @@
-package com.dating.service.HauNH;
+package com.dating.service.update_account;
 
-import com.dating.model.HauNH.PackageDetail;
+import com.dating.model.update_account.PackageDetail;
 
 import java.util.List;
 
