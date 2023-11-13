@@ -106,18 +106,9 @@ public class Account {
     private Set<Messages> messagesSenderSet;
 
 
-    @OneToMany(mappedBy = "receiveAccountId")
+    @OneToMany(mappedBy = "receiveAccount")
     @JsonBackReference
     private Set<Messages> messagesReceiverSet;
-
-
-//    @OneToMany(mappedBy = "sender_account_id")
-//    @JsonBackReference
-//    private Set<Relationships> relationshipsSenderSet;
-//
-//    @OneToMany(mappedBy = "receiver_account_id")
-//    @JsonBackReference
-//    private Set<Relationships> relationshipsReceiverSet;
 
 
     @OneToMany(mappedBy="account")
@@ -138,5 +129,5 @@ public class Account {
     @JsonBackReference
     @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;
-
+//a
 }
