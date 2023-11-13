@@ -1,33 +1,19 @@
-package com.dating.model.message;
+package com.dating.dto;
 import com.dating.model.account.Account;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "messages")
-public class Messages {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(unique = true)
+public class MessageDto {
     private String path;
     private Boolean isDeleted;
-    @ManyToOne
-    @JoinColumn(name = "senderAccountId", referencedColumnName = "id")
     private Account senderAccount;
-    @ManyToOne
-    @JoinColumn(name = "receiveAccountId", referencedColumnName = "id")
     private Account receiverAccount;
 
-    public Messages() {
+    public MessageDto() {
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public MessageDto(String path, Boolean isDeleted, Account senderAccount, Account receiverAccount) {
+        this.path = path;
+        this.isDeleted = isDeleted;
+        this.senderAccount = senderAccount;
+        this.receiverAccount = receiverAccount;
     }
 
     public String getPath() {
