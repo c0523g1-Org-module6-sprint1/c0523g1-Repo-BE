@@ -1,7 +1,6 @@
 package com.dating.model.account;
 
 
-import com.dating.model.Messages;
 
 
 import com.dating.model.Role;
