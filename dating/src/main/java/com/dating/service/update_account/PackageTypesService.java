@@ -1,8 +1,7 @@
-package com.dating.service.HauNH;
+package com.dating.service.update_account;
 
-import com.dating.model.HauNH.PackageTypes;
-import com.dating.repository.HauNH.IPackageDetailRepository;
-import com.dating.repository.HauNH.IPackageTypesRepository;
+import com.dating.model.update_account.PackageTypes;
+import com.dating.repository.update_account.IPackageTypesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
