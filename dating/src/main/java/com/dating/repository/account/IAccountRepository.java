@@ -31,6 +31,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
 
+    Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
+
+
 
     /**
      * author: TriVN
@@ -49,7 +52,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             "            where user_name like :username and  acc.is_deleted = 0;", nativeQuery = true)
     Page<Account> findAllAccount(Pageable pageable, @Param("username") String username);
 
-    Account findAccountByUserNameAndDeletedIsFalse(String username);
+   
+
 
     /**
      * method findAccountByEmail
@@ -72,10 +76,24 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account
      */
     @Query(value = "select *. from accounts " +
-            "where email like :email " +
+            "where email like :id " +
             "and is_deleted = 0",
             nativeQuery = true)
-    Account findAccountById(@Param("email") int id);
+    Account findAccountById(@Param("id") int id);
+
+    /**
+     * method addNewAccount
+     * Create SangPQ
+     * Date 13-11-2023
+     * param Account account
+     * return Integer
+     */
+    @Modifying
+    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id)\n" +
+            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id})", nativeQuery = true)
+    Integer addNewAccount(Account account);
+
+
 
 
     /**
