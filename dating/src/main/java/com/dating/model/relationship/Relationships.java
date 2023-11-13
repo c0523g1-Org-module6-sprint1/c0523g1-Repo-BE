@@ -31,11 +31,11 @@ public class Relationships {
     private RelationshipStatus relationshipStatus;
 
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
     private Account senderAccount;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "receiver_account_id", referencedColumnName = "id")
     private Account receiverAccount;
 
