@@ -20,7 +20,7 @@ public class Gift {
     public Gift() {
     }
 
-    public Gift(int id, String name, String image, int price, int isDelete, Set<GiftRecord> giftRecords) {
+    public Gift(int id, String name, String image, int price, boolean isDelete, Set<GiftRecord> giftRecords) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -61,12 +61,12 @@ public class Gift {
         this.price = price;
     }
 
-    public int getIsDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
-        this.isDelete = isDelete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
     public Set<GiftRecord> getGiftRecords() {
