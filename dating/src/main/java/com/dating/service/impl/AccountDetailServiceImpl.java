@@ -15,6 +15,14 @@ public class AccountDetailServiceImpl implements UserDetailsService {
     @Autowired
     IAccountRepository accountRepository;
 
+
+    /**
+     * method loadUserByUsername
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String username
+     * return new Object: AccountDetail.build
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

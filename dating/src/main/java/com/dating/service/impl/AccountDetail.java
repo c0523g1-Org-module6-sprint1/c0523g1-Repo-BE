@@ -33,6 +33,13 @@ public class AccountDetail implements UserDetails {
         this.authorities = authorities;
     }
 
+    /**
+     * method Create Account Detail
+     * Create ThienBB
+     * Date 13-11-2023
+     * param Account account
+     * return new Object: AccountDetail
+     */
     public static AccountDetail build(Account account) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         Role role = account.getRole();
