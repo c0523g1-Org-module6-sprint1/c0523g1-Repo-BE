@@ -119,8 +119,14 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
+ 
+  
     @JsonBackReference
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "accountSender")
+    private Set<GiftRecord> giftRecords;
+ 
+    @JsonBackReference
+    @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;
-
+//a
 }
