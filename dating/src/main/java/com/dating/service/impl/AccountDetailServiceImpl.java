@@ -21,6 +21,7 @@ public class AccountDetailServiceImpl implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("User with username: " + username + " was not found in database");
         }
-        return AccountDetail.build(account);
+//        return AccountDetail.build(account);
+        return null;
     }
 }
