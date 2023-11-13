@@ -16,9 +16,9 @@ import javax.persistence.Id;
 public class Warning {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private boolean isDelete;
+    private Boolean isDelete;
 
     public Warning() {
     }

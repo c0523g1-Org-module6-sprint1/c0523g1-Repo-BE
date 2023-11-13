@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface IAccountService {
     Page<Account> findAll(Pageable pageable,String username);
+
+    void deleteAccount(Integer id);
 }
