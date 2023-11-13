@@ -1,5 +1,7 @@
 package com.dating.model.gift;
 
+import com.dating.model.account.Account;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -14,6 +16,12 @@ public class GiftRecord {
     @ManyToOne
     @JoinColumn(name = "gift_id",referencedColumnName = "id")
     private Gift gift;
+    @ManyToOne
+    @JoinColumn(name = "accountSender_id",referencedColumnName = "id")
+    private Account accountSender;
+    @ManyToOne
+    @JoinColumn(name = "accountReceiver_id",referencedColumnName = "id")
+    private Account accountReceiver;
 
     public GiftRecord() {
     }

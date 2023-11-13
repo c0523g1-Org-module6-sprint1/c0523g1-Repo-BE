@@ -1,5 +1,6 @@
 package com.dating.service.impl;
 
+import com.dating.model.Role;
 import com.dating.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,9 +36,11 @@ public class AccountDetail implements UserDetails {
     }
 
     public static AccountDetail build(Account account) {
-        List<GrantedAuthority> authorities = account.getRole().steam()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name))
-                .collection(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        Role role = account.getRole();
+        if (role != null) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
 
         return new AccountDetail(
                 account.getId(),
