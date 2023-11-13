@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+
 public interface IPackageTypesRepository extends JpaRepository<PackageTypes, Integer> {
     @Query(value = "select package_types.* from package_types " +
-            "join account_types on account_types.id = package_types.account_type_id " +
-            "join package_detail on package_detail.account_type_id = account_types.id " +
-            "join accounts on accounts.id = package_detail.account_id;", nativeQuery = true)
+            "left join account_types on account_types.id = package_types.account_type_id " +
+            "left join package_detail on package_detail.account_types_id = account_types.id " +
+            "left join accounts on accounts.id = package_detail.account_id", nativeQuery = true)
     List<PackageTypes> findAll();
 }

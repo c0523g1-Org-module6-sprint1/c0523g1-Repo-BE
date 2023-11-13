@@ -14,12 +14,14 @@ public class AccountsService  implements IAccountsService {
 
     @Override
     public List<Account> getAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId) {
-        return accountsRepository.findAll(name, birthday, genderId, hobbyId, locationId, jobId, hobbyDetailId);
+//        return accountsRepository.findAll(name, birthday, genderId, hobbyId, locationId, jobId, hobbyDetailId);
+        return null;
     }
 
     @Override
     public List<Account> findAll() {
-        return accountsRepository.findAllByAccount();
+//        return accountsRepository.findAllByAccount();
+        return null;
     }
 
 }
