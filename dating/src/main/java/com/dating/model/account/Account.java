@@ -1,12 +1,7 @@
 package com.dating.model.account;
-
-
-
-
 import com.dating.model.Role;
 import com.dating.model.comment.Comments;
 import com.dating.model.gender.Gender;
-
 import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
@@ -122,12 +117,6 @@ public class Account {
     @OneToMany(mappedBy="account")
     @JsonBackReference
     private Set<LikeDetail>likeDetails;
-
-
-  
-    @JsonBackReference
-    @OneToMany(mappedBy = "account")
-    private Set<GiftRecord> giftRecords;
 
 
     @JsonBackReference
