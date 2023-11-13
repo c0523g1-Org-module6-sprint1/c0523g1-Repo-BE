@@ -1,5 +1,6 @@
 package com.dating.model.hobby_detail;
 
+import com.dating.model.account.Account;
 import com.dating.model.hobby.Hobby;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,5 +22,9 @@ public class HobbyDetail {
     @ManyToOne
     @JoinColumn(name = "hobby_id",referencedColumnName = "id")
     private Hobby hobby;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id",referencedColumnName = "id")
+    private Account account;
 }
 
