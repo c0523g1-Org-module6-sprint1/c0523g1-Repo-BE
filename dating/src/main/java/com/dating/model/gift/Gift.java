@@ -14,7 +14,7 @@ public class Gift {
     private String name;
     private String image;
     private int price;
-    private int isDelete;
+    private boolean isDelete;
     @JsonBackReference
     @OneToMany(mappedBy = "gift")
    private Set<GiftRecord> giftRecords;
