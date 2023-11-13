@@ -15,14 +15,18 @@ public class AccountTypes {
     private boolean isDeleted;
     @JsonBackReference
     @OneToMany(mappedBy = "accountTypes")
+    private Set<PackageDetail> packageDetails;
+    @JsonBackReference
+    @OneToMany(mappedBy = "accountTypes")
     private Set<PackageTypes> packageTypesSet;
     public AccountTypes() {
     }
 
-    public AccountTypes(int id, String name, boolean isDeleted, Set<PackageTypes> packageTypesSet) {
+    public AccountTypes(int id, String name, boolean isDeleted, Set<PackageDetail> packageDetails, Set<PackageTypes> packageTypesSet) {
         this.id = id;
         this.name = name;
         this.isDeleted = isDeleted;
+        this.packageDetails = packageDetails;
         this.packageTypesSet = packageTypesSet;
     }
 
@@ -48,6 +52,14 @@ public class AccountTypes {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Set<PackageDetail> getPackageDetails() {
+        return packageDetails;
+    }
+
+    public void setPackageDetails(Set<PackageDetail> packageDetails) {
+        this.packageDetails = packageDetails;
     }
 
     public Set<PackageTypes> getPackageTypesSet() {
