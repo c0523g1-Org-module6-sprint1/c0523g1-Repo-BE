@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 @Setter
 public class AccountDetail implements UserDetails {
@@ -25,10 +23,10 @@ public class AccountDetail implements UserDetails {
     @JsonIgnore
     private String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    List<GrantedAuthority> authorities = null;
 
     public AccountDetail(Integer id, String username,
-                         String password, Collection<? extends GrantedAuthority> authorities) {
+                         String password, List<GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
