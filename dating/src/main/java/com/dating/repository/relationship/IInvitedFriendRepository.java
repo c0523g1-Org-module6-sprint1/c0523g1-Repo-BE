@@ -1,4 +1,4 @@
 package com.dating.repository.relationship;
 
-public interface IInvitedFriendRepository {
+public interface IInvitedFriendRepository  {
 }

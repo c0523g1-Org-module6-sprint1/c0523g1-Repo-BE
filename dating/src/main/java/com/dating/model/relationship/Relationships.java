@@ -33,5 +33,4 @@ public class Relationships {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account receiverAccount;
 
-
 }
