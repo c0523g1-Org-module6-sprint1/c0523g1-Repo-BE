@@ -1,11 +1,16 @@
 package com.dating.model.relationship;
+
 import com.dating.model.account.Account;
+import com.dating.model.gift.GiftRecord;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Entity
@@ -32,5 +37,9 @@ public class Relationships {
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account receiverAccount;
+    @JsonBackReference
+    @OneToMany(mappedBy = "relationships")
+    private Set<RelationshipStatus> relationshipStatusSet;
+
 
 }
