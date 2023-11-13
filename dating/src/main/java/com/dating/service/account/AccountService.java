@@ -32,21 +32,26 @@ public class AccountService implements IAccountService{
 
     @Override
     public Boolean createNewAccount(Account account) {
+        Account currentAccount = accountRepository.findAccountByUserName(account.getUserName());
+        if (currentAccount == null){
+            Integer amount = accountRepository.addNewAccount(account);
+            return amount > 0;
+        }
         return null;
+    }
+
+    @Override
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return accountRepository.findAllAccount(pageable, username);
+    }
+
+    @Override
+    public void deleteAccount(Integer id) {
+        accountRepository.deleteAccountId(id);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
-      
-    @Override
-    public Page<Account> findAll(Pageable pageable,String username) {
-        return iAccountRepository.findAllAccount(pageable,username);
-
-    }
-
-    @Override
-    public void deleteAccount(Integer id) {
-        iAccountRepository.deleteAccountId(id);
     }
 }

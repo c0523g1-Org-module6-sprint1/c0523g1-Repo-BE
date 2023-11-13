@@ -32,4 +32,14 @@ public class AccountController {
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
+
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Integer id){
+        if (iAccountService.findAccountById(id)== null){
+            return ResponseEntity.notFound().build();
+        }
+        iAccountService.deleteAccount(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
