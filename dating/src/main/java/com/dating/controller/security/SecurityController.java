@@ -28,6 +28,13 @@ public class SecurityController {
     @Autowired
     private JwtUtility jwtUtility;
 
+    /**
+     * method authenticationUser
+     * Create ThienBB
+     * Date 13-11-2023
+     * param LoginRequest loginRequest
+     * return JwtResponse
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticationUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(

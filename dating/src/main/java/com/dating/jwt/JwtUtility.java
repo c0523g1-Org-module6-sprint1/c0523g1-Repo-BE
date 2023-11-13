@@ -15,6 +15,13 @@ public class JwtUtility implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
     private String jwtSecret = "nothing";
 
+    /**
+     * method JwtTokenGenerator()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String username
+     * return Jwts.builder()
+     */
     public String JwtTokenGenerator(String username) {
 
         return Jwts.builder()
@@ -24,9 +31,25 @@ public class JwtUtility implements Serializable {
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
+
+    /**
+     * method getUsernameFromJwtToken()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String token
+     * return Jwts.parser()
+     */
     public String getUsernameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
+
+    /**
+     * method validateJwtToken()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String authToken
+     * return true if no JwtString is valid
+     */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

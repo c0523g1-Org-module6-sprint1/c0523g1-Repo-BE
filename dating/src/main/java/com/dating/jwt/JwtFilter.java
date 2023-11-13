@@ -26,6 +26,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private AccountDetailServiceImpl accountDetailService;
 
+    /**
+     * method doFilterInternal()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param HttpServletRequest, HttpServletResponse, FilterChain
+     * return void
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -49,6 +56,14 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+    /**
+     * method parseJwt()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param HttpServletRequest
+     * return String
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
 

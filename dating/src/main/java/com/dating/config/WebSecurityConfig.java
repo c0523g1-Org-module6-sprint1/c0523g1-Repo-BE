@@ -23,17 +23,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
+    /**
+     * method authenticationManagerBean()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param N/A
+     * return authenticationManagerBean()
+     */
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * method passwordEncoder()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param N/A
+     * return new BCryptPasswordEncoder()
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
+
+    /**
+     * method configure()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param HttpSecurity
+     * return void
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
