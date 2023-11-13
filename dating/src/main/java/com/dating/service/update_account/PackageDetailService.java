@@ -1,5 +1,7 @@
 package com.dating.service.update_account;
 
+import com.dating.model.account.Account;
+import com.dating.model.update_account.AccountTypes;
 import com.dating.model.update_account.PackageDetail;
 import com.dating.repository.update_account.IPackageDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +15,15 @@ public class PackageDetailService implements IPackageDetailService{
     @Override
     public List<PackageDetail> findAll() {
         return packageDetailRepository.findAll();
+    }
+
+    @Override
+    public void setMoneyAccount(Account account, int newMoney) {
+
+    }
+
+    @Override
+    public void setAccountTypes(AccountTypes accountTypes) {
+
     }
 }
