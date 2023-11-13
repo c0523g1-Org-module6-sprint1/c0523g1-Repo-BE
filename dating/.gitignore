@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 
 ### STS ###
+.DS_Store
+.idea
 .apt_generated
 .classpath
 .factorypath
