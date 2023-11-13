@@ -123,8 +123,6 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
- 
-  
     @JsonBackReference
     @OneToMany(mappedBy = "accountSender")
     private Set<GiftRecord> giftRecords;

@@ -14,7 +14,7 @@ public class MessageStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private LocalTime offlineMoment;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private Boolean isDeleted;
     @JsonBackReference
     @OneToMany(mappedBy = "messageStatus")
@@ -37,14 +37,6 @@ public class MessageStatus {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public LocalTime getOfflineMoment() {
-        return offlineMoment;
-    }
-
-    public void setOfflineMoment(LocalTime offlineMoment) {
-        this.offlineMoment = offlineMoment;
     }
 
     public Boolean getDeleted() {
