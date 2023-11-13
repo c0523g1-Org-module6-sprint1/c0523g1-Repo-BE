@@ -12,6 +12,7 @@ import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.model.message.MessageStatus;
+import com.dating.model.message.Messages;
 import com.dating.model.post.LikeDetail;
 import com.dating.model.post.Post;
 import com.dating.model.relationship.Relationships;
@@ -114,10 +115,13 @@ public class Account {
     @JsonBackReference
     private Set<Relationships> relationshipsSet;
 
+
     @OneToMany(mappedBy="account")
+    @JsonBackReference
     private Set<Post>posts;
 
     @OneToMany(mappedBy="account")
+    @JsonBackReference
     private Set<LikeDetail>likeDetails;
 
 
@@ -125,6 +129,8 @@ public class Account {
     @JsonBackReference
     @OneToMany(mappedBy = "account")
     private Set<GiftRecord> giftRecords;
+
+
     @JsonBackReference
     @OneToMany(mappedBy = "account")
     private Set<GiftRecord> giftRecord;
