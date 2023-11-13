@@ -2,6 +2,7 @@ package com.dating.service.impl;
 
 
 import com.dating.model.account.Account;
+import com.dating.repository.account.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
