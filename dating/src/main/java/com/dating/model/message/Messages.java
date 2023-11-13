@@ -11,6 +11,7 @@ public class Messages {
     private Integer id;
     @Column(unique = true)
     private String path;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private Boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "senderAccountId", referencedColumnName = "id")
