@@ -23,7 +23,7 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
-    Account findAccountByUserNameAndDeletedIsFalse(@Param("username") String username);
+    Account findAccountByUserNameAndDeletedIsFalse(String username);
 
     /**
      * method findAccountByEmail
