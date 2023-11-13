@@ -1,12 +1,7 @@
 package com.dating.model.account;
-
-
-
-
 import com.dating.model.Role;
 import com.dating.model.comment.Comments;
 import com.dating.model.gender.Gender;
-
 import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
@@ -124,12 +119,12 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
+ 
   
     @JsonBackReference
     @OneToMany(mappedBy = "accountSender")
     private Set<GiftRecord> giftRecords;
-
-
+ 
     @JsonBackReference
     @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;

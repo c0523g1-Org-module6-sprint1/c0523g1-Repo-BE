@@ -1,5 +1,7 @@
 package com.dating.model.post;
 
+import com.dating.model.account.Account;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,14 +13,22 @@ public class LikeDetail {
     private LocalDateTime date;
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted ;
+    @ManyToOne
+    @JoinColumn(name = "account_id",referencedColumnName = "id")
+    private Account account;
 
+    @ManyToOne
+    @JoinColumn (name = "post_id",referencedColumnName = "id")
+    private Post post;
     public LikeDetail() {
     }
 
-    public LikeDetail(Integer id, LocalDateTime date, boolean isDeleted) {
+    public LikeDetail(Integer id, LocalDateTime date, boolean isDeleted, Account account, Post post) {
         this.id = id;
         this.date = date;
         this.isDeleted = isDeleted;
+        this.account = account;
+        this.post = post;
     }
 
     public Integer getId() {
@@ -43,5 +53,21 @@ public class LikeDetail {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
