@@ -1,6 +1,4 @@
 package com.dating.repository.relationship;
-
-import com.dating.model.account.Account;
 import com.dating.model.relationship.Relationships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +17,6 @@ public interface IInvitedFriendRepository extends JpaRepository<Relationships, I
             " and is_deleted = 0 ",
             nativeQuery = true)
     Relationships findAccountByUserName(@Param("username") String username);
+
 
 }
