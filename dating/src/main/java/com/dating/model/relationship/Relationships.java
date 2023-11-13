@@ -31,11 +31,11 @@ public class Relationships {
     private RelationshipStatus relationshipStatus;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
     private Account senderAccount;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "receiver_account_id", referencedColumnName = "id")
     private Account receiverAccount;
     @JsonBackReference
     @OneToMany(mappedBy = "relationships")
