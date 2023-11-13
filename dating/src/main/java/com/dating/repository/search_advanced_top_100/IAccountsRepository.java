@@ -20,7 +20,7 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
             " JOIN hobbies ON hobby_detail.hobby_id = hobbies.id " +
             " WHERE accounts.name LIKE :name AND genders.id = id AND accounts.birthday LIKE :birthday AND jobs.id = id AND location.id =id  AND hobbies.id = id",
             nativeQuery = true)
-    List<SearchAvancedDto> findAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId);
+    List<SearchAvancedDto> findAll( String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId);
 
     @Transactional
     @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as account_type, accounts.money, count(like_detail.id) AS count_like " +
