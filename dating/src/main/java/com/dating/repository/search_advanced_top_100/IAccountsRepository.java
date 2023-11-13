@@ -10,17 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface IAccountsRepository extends JpaRepository<Account, Integer> {
-    @Transactional
-    @Query(value = " SELECT accounts.id, accounts.name, location.name as location , jobs.name as job , accounts.avatar  " +
-            " FROM accounts " +
-            " JOIN location ON accounts.location_id = location.id  " +
-            " JOIN genders ON genders.id = accounts.gender_id " +
-            " JOIN jobs ON jobs.id = accounts.job_id " +
-            " JOIN hobby_detail on hobby_detail.account_id = accounts.id " +
-            " JOIN hobbies ON hobby_detail.hobby_id = hobbies.id " +
-            " WHERE accounts.name LIKE :name AND genders.id = id AND accounts.birthday LIKE :birthday AND jobs.id = id AND location.id =id  AND hobbies.id = id",
-            nativeQuery = true)
-    List<SearchAvancedDto> findAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId);
+//    @Transactional
+//    @Query(value = " SELECT accounts.id, accounts.name, location.name as location , jobs.name as job , accounts.avatar  " +
+//            " FROM accounts " +
+//            " JOIN location ON accounts.location_id = location.id  " +
+//            " JOIN genders ON genders.id = accounts.gender_id " +
+//            " JOIN jobs ON jobs.id = accounts.job_id " +
+//            " JOIN hobby_detail on hobby_detail.account_id = accounts.id " +
+//            " JOIN hobbies ON hobby_detail.hobby_id = hobbies.id " +
+//            " WHERE accounts.name LIKE a AND genders.id = 1 AND accounts.birthday LIKE :birthday AND jobs.id = 1 AND location.id =1  AND hobbies.id = 1",
+//            nativeQuery = true)
+//    List<SearchAvancedDto> findAll( String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId);
 
     @Transactional
     @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as account_type, accounts.money, count(like_detail.id) AS count_like " +

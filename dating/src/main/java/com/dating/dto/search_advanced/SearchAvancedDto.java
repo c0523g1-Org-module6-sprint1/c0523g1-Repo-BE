@@ -13,14 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class SearchAvancedDto {
-    private int id;
-    private String name;
-    private String avatar;
-    private Location location;
-    private Job job;
+
+public interface SearchAvancedDto {
+     int getId();
+     String getName();
+     String getAvatar();
+     String  getLocation();
+     String getJob();
 }

@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class TopHunderedDto {
-    private int id;
-    private String name;
-    private String avatar;
-    private AccountTypes accountTypes;
-    private double money;
+
+public interface TopHunderedDto {
+     int getId();
+     String getName();
+     String getAvatar();
+     String  getAccountTypes();
+     double getMoney();
+
 }
