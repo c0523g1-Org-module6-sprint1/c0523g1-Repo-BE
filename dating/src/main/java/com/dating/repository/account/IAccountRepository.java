@@ -1,6 +1,9 @@
 package com.dating.repository.account;
 
 import com.dating.model.account.Account;
+import com.dating.model.gender.Gender;
+import com.dating.model.job.Job;
+import com.dating.model.location.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +28,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param String userName
      * return Account
      */
-    @Query(value = " select *. from accounts " +
+    @Query(value = " select * from accounts " +
             " where user_name like :username" +
             " and is_deleted = 0 ",
             nativeQuery = true)
@@ -33,9 +36,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
 
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
-
-
-
     /**
      * author: TriVN
      * date: 13/11/2023
@@ -53,8 +53,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             "            where user_name like :username and  acc.is_deleted = 0;", nativeQuery = true)
     Page<Account> findAllAccount(Pageable pageable, @Param("username") String username);
 
-   
-
 
     /**
      * method findAccountByEmail
@@ -63,7 +61,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param String email
      * return Account
      */
-    @Query(value = "select *. from accounts " +
+    @Query(value = "select * from accounts " +
             "where email like :email " +
             "and is_deleted = 0",
             nativeQuery = true)
@@ -76,7 +74,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param String email
      * return Account
      */
-    @Query(value = "select *. from accounts " +
+    @Query(value = "select * from accounts " +
             "where id like :id " +
             "and is_deleted = 0",
             nativeQuery = true)
@@ -95,8 +93,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     Integer addNewAccount(Account account);
 
 
-
-
     /**
      * author: TriVN
      * date: 13/11/2023
@@ -104,12 +100,17 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      *
      * @return HttpStatus
      */
-    @Modifying
-    @Transactional
     @Query(value = "UPDATE accounts SET is_deleted = 1", nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
 
+    @Query(value = "SELECT * from genders where id = :id", nativeQuery = true)
+    Gender findGender(@Param("id") Integer genderId);
 
+    @Query(value = "SELECT * FROM location where id = :id", nativeQuery = true)
+    Location findLocation(@Param("id") Integer locationId);
+
+    @Query(value = "select * from jobs where id = :id", nativeQuery = true)
+    Job findJob(@Param("id") Integer jobId);
     /**
      * author: thienlch
      * date: 13/11/2023
