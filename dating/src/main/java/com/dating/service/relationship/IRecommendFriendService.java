@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IRecommendFriendService {
-    List<IRecommendFriendDto> findAllRecommendFriend(String name);
+    List<IRecommendFriendDto> findAllRecommendFriend();
 }

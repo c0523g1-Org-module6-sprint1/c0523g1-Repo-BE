@@ -19,16 +19,12 @@ public class RecommendFriendController {
      * Method find All
      * Author HungHLP
      * Create 13-11-2023
-     *
-     * @param name : Select type to search
      * @return list  recommend friend
      */
     @GetMapping("")
-    public ResponseEntity<List<IRecommendFriendDto>> findAll(
-            @RequestParam(value = "name",defaultValue = "") String name
-    ){
+    public ResponseEntity<List<IRecommendFriendDto>> findAll(){
         List<IRecommendFriendDto> recommendDtoList = null;
-        recommendDtoList = recommendFriendService.findAllRecommendFriend(name);
+        recommendDtoList = recommendFriendService.findAllRecommendFriend();
         return new ResponseEntity<>(recommendDtoList, HttpStatus.OK);
     }
 }
