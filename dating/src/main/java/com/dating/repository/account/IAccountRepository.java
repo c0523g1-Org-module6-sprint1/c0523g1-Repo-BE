@@ -105,4 +105,22 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
      */
 @Query(value = "UPDATE accounts SET is_deleted = 1",nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
+
+
+    /**
+     * author: thienlch
+     * date: 13/11/2023
+     * goal: edit account
+     * @return HttpStatus
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location = :#{#account.location.id}," +
+            "job = :#{#account.job.id}, hobbies = :#{#account" +
+            "////" +
+            "}", nativeQuery = true)
+    void EditAccount(@Param("account") Account account);
 }
+
+
