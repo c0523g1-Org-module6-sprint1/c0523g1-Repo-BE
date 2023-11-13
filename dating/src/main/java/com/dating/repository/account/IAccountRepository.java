@@ -31,6 +31,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
 
+
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
 
 

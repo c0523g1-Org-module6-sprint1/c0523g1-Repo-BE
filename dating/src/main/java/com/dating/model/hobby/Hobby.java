@@ -22,6 +22,7 @@ public class Hobby {
     private int id;
     private String name;
     private boolean isDeleted;
+
     @JsonBackReference
     @OneToMany(mappedBy = "hobby")
     private Set<HobbyDetail> hobbyDetailSet;
