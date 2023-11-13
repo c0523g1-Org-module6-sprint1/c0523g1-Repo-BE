@@ -51,6 +51,16 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
             nativeQuery = true)
     Account findAccountById(@Param("email") int id);
 
+    /**
+     * method addNewAccount
+     * Create SangPQ
+     * Date 13-11-2023
+     * param Account account
+     * return Integer
+     */
+
+
+
 
 
 
