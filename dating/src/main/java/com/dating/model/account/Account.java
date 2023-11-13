@@ -1,5 +1,12 @@
 package com.dating.model.account;
 
+import com.dating.model.MessageStatusEntity;
+import com.dating.model.Role;
+import com.dating.model.gender.Gender;
+import com.dating.model.job.Job;
+import com.dating.model.location.Location;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "accounts")
@@ -17,7 +25,7 @@ public class Account {
     private int id;
     @Column(name = "name",columnDefinition = "varchar(100)",nullable = false)
     private String name;
-    @Column(name = "user_name",columnDefinition = "varchar(100)",nullable = false)
+    @Column(name = "user_name",columnDefinition = "varchar(100)",nullable = false,unique = true)
     private String userName;
     @Column(name = "password",columnDefinition = "varchar(100)",nullable = false)
     private String password;
@@ -40,5 +48,25 @@ public class Account {
     @Column(name = "point",columnDefinition = "int",nullable = false)
     private int point;
     @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
-    private int isDeleted;
+    private boolean isDeleted;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id",referencedColumnName = "id")
+    private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "gender_id",referencedColumnName = "id")
+    private Gender gender;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id",referencedColumnName = "id")
+    private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id",referencedColumnName = "id")
+    private Job job;
+
+    @ManyToOne
+    @JoinColumn(name = "message_status_id",referencedColumnName = "id")
+    private MessageStatusEntity messageStatusEntity;
 }
