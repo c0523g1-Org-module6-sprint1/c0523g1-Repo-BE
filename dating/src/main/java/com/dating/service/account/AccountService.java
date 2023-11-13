@@ -41,17 +41,17 @@ public class AccountService implements IAccountService{
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-      
-    @Override
-    public Page<Account> findAll(Pageable pageable,String username) {
-        return iAccountRepository.findAllAccount(pageable,username);
-
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return accountRepository.findAllAccount(pageable, username);
     }
 
     @Override
     public void deleteAccount(Integer id) {
-        iAccountRepository.deleteAccountId(id);
+        accountRepository.deleteAccountId(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
