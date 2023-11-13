@@ -23,6 +23,11 @@ public class AccountService implements IAccountService{
 
     @Override
     public Boolean createNewAccount(Account account) {
+        Account currentAccount = accountRepository.findAccountByUserName(account.getUserName());
+        if (currentAccount == null){
+            Integer amount = accountRepository.addNewAccount(account);
+            return amount > 0;
+        }
         return null;
     }
 

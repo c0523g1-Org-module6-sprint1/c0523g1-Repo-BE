@@ -101,7 +101,7 @@ public class Account {
     @JsonBackReference
     private Set<Comments> commentsSet;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "senderAccount")
     @JsonBackReference
     private Set<Messages> messagesSet;
 
