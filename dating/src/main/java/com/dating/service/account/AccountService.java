@@ -43,4 +43,10 @@ public class AccountService implements IAccountService{
     public Page<Account> findAll(Pageable pageable,String username) {
         return iAccountRepository.findAllAccount(pageable,username);
 
+    }
+
+    @Override
+    public void deleteAccount(Integer id) {
+        iAccountRepository.deleteAccountId(id);
+    }
 }

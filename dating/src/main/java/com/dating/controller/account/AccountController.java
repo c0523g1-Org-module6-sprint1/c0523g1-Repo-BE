@@ -15,22 +15,29 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping()
+@RequestMapping("/api/admin")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
 
-    @GetMapping("api/admin/accounts")
+    @GetMapping("/accounts")
     public ResponseEntity<Page<Account>> showAccountList(
-                                                         @RequestParam(name = "_page", defaultValue = "1") int page,
-                                                         @RequestParam(name = "username_like", defaultValue = "") String username,
-                                                         @RequestParam(name = "_limit", defaultValue = "5") int pageSize) {
-        Pageable pageable = PageRequest.of(page - 1, pageSize);
+                                                         @RequestParam(value = "_page", defaultValue = "1") int page,
+                                                         @RequestParam(value = "username_like", defaultValue = "") String username
+                                                          ) {
+        Pageable pageable = PageRequest.of(page , 2);
         Page<Account> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
-
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Integer id){
+        if (iAccountService.findAccountById(id)== null){
+            return ResponseEntity.notFound().build();
+        }
+        iAccountService.deleteAccount(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -16,10 +18,12 @@ import java.time.LocalDate;
 public class WarningDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private LocalDate date;
+    private Integer id;
+    private LocalDateTime date;
     private Long description;
-    private boolean isDeleted;
+
+    private Integer faultAmount;
+    private Boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "warning_id", referencedColumnName = "id")
     private Warning warning;
@@ -31,10 +35,13 @@ public class WarningDetails {
     public WarningDetails() {
     }
 
-    public WarningDetails(int id, LocalDate date, Long description, boolean isDeleted) {
+    public WarningDetails(Integer id, LocalDateTime date, Long description, Integer faultAmount, Boolean isDeleted, Warning warning, Account account) {
         this.id = id;
         this.date = date;
         this.description = description;
+        this.faultAmount = faultAmount;
         this.isDeleted = isDeleted;
+        this.warning = warning;
+        this.account = account;
     }
 }
