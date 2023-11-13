@@ -34,9 +34,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
 
+
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
-
-
     /**
      * author: TriVN
      * date: 13/11/2023
@@ -112,4 +111,20 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(value = "select * from jobs where id = :id", nativeQuery = true)
     Job findJob(@Param("id") Integer jobId);
+    /**
+     * author: thienlch
+     * date: 13/11/2023
+     * goal: edit account
+     * @return HttpStatus
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location = :#{#account.location.id}," +
+            "job = :#{#account.job.id}, hobbies = :#{#account" +
+            "////" +
+            "}", nativeQuery = true)
+    void EditAccount(@Param("account") Account account);
 }
+
+

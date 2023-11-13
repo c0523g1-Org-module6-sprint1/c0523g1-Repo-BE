@@ -6,13 +6,7 @@ import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.security.core.userdetails.UserDetailsService;
-import java.util.List;
-
-
-
-
 public interface IAccountService extends UserDetailsService {
     Account findByUsername(String userName);
     Account findByEmail(String email);
@@ -23,4 +17,7 @@ public interface IAccountService extends UserDetailsService {
     Gender findGender(Integer genderId);
     Location findLocation(Integer locationId);
     Job findJob(Integer jobId);
+    void updateAccount(Account account);
+
+
 }

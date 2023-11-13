@@ -13,8 +13,14 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(columnDefinition = "datetime", nullable = false)
     private LocalDateTime date;
+
+    @Column(columnDefinition = "longtext")
     private String content;
+
+    @Column(columnDefinition = "varchar(255)")
     private String image;
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
