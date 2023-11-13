@@ -1,48 +1,28 @@
 package com.dating.model.relationship;
+import com.dating.model.account.Account;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
+
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RelationshipStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+    @Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
     private String name;
+    @Column(name = "is_deleted", columnDefinition = "bit(1) default 0", nullable = false)
     private boolean isDeleted;
 
-    public RelationshipStatus() {
-    }
 
-    public RelationshipStatus(int id, String name, boolean isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.isDeleted = isDeleted;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 }

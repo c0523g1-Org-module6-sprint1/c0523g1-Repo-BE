@@ -1,10 +1,8 @@
 package com.dating.model.gift;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.org.apache.xpath.internal.operations.String;
-
 import javax.persistence.*;
 import java.util.Set;
+
 
 @Entity
 public class Gift {
