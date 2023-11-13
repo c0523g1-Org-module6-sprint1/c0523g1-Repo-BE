@@ -1,5 +1,6 @@
 package com.dating.model.account;
 
+import com.dating.model.MessageStatusEntity;
 import com.dating.model.Role;
 import com.dating.model.gender.Gender;
 import com.dating.model.job.Job;
@@ -47,7 +48,7 @@ public class Account {
     @Column(name = "point",columnDefinition = "int",nullable = false)
     private int point;
     @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
-    private int isDeleted;
+    private boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "role_id",referencedColumnName = "id")
@@ -65,5 +66,7 @@ public class Account {
     @JoinColumn(name = "job_id",referencedColumnName = "id")
     private Job job;
 
-
+    @ManyToOne
+    @JoinColumn(name = "message_status_id",referencedColumnName = "id")
+    private MessageStatusEntity messageStatusEntity;
 }
