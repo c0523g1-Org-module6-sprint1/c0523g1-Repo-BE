@@ -33,18 +33,18 @@ public class AccountDetail implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static AccountDetail build(Account account) {
-        List<GrantedAuthority> authorities = account.getRole().steam()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name))
-                .collection(Collectors.toList());
-
-        return new AccountDetail(
-                account.getId(),
-                account.getUserName(),
-                account.getPassword(),
-                authorities
-        );
-    }
+//    public static AccountDetail build(Account account) {
+//        List<GrantedAuthority> authorities = account.getRole().stream()
+//                .map(role -> new SimpleGrantedAuthority(role.getName()))
+//                .collection(Collectors.toList());
+//
+//        return new AccountDetail(
+//                account.getId(),
+//                account.getUserName(),
+//                account.getPassword(),
+//                authorities
+//        );
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
