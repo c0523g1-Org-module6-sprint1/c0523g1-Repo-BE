@@ -128,5 +128,5 @@ public class Account {
     @JsonBackReference
     @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;
-
+//a
 }
