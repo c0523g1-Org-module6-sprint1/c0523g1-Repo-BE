@@ -1,7 +1,6 @@
 package com.dating.model.relationship;
 
 import com.dating.model.account.Account;
-import com.dating.model.gift.GiftRecord;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +25,11 @@ public class Relationships {
     private LocalDateTime dateRequest;
     @Column(name = "is_deleted", columnDefinition = "bit(1) default 0", nullable = false)
     private boolean isDeleted;
+
     @ManyToOne
     @JoinColumn(name = "relationship_status_id", referencedColumnName = "id")
     private RelationshipStatus relationshipStatus;
+
 
     @ManyToOne
     @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
@@ -37,10 +38,5 @@ public class Relationships {
     @ManyToOne
     @JoinColumn(name = "receiver_account_id", referencedColumnName = "id")
     private Account receiverAccount;
-    @JsonBackReference
-    @OneToMany(mappedBy = "relationships")
-    private Set<RelationshipStatus> relationshipStatusSet;
-
-
 
 }
