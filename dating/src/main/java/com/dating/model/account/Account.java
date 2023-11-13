@@ -1,12 +1,7 @@
 package com.dating.model.account;
-
-
-
-
 import com.dating.model.Role;
 import com.dating.model.comment.Comments;
 import com.dating.model.gender.Gender;
-
 import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
@@ -41,7 +36,7 @@ import java.util.Set;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "name",columnDefinition = "varchar(255)",nullable = false)
     private String name;
     @Column(name = "user_name",columnDefinition = "varchar(255)",nullable = false,unique = true)
@@ -55,7 +50,7 @@ public class Account {
     @Column(name = "phone_number",columnDefinition = "varchar(15)",nullable = false)
     private String phoneNumber;
     @Column(name = "money",columnDefinition = "double",nullable = false)
-    private double money;
+    private Double money;
     @Column(name = "regis_date",columnDefinition = "date",nullable = false)
     private String regisDate;
     @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = false)
@@ -65,9 +60,9 @@ public class Account {
     @Column(name = "marital_status",columnDefinition = "varchar(255)",nullable = false)
     private String maritalStatus;
     @Column(name = "point",columnDefinition = "int",nullable = false)
-    private int point;
+    private Integer point;
     @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "role_id",referencedColumnName = "id")
@@ -124,14 +119,14 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
+ 
   
     @JsonBackReference
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "accountSender")
     private Set<GiftRecord> giftRecords;
-
-
+ 
     @JsonBackReference
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;
-
+//a
 }
