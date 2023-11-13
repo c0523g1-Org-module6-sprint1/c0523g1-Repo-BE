@@ -106,7 +106,7 @@ public class Account {
     private Set<Messages> messagesSenderSet;
 
 
-    @OneToMany(mappedBy = "receiveAccount")
+    @OneToMany(mappedBy = "receiverAccount")
     @JsonBackReference
     private Set<Messages> messagesReceiverSet;
 
