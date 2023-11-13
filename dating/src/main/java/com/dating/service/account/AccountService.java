@@ -50,6 +50,13 @@ public class AccountService implements IAccountService{
         accountRepository.deleteAccountId(id);
     }
 
+
+
+    @Override
+    public Account findById(Integer id) {
+        return accountRepository.findById(id).get();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
