@@ -1,10 +1,10 @@
 package com.dating.model.account;
 
-import com.dating.model.MessageStatusEntity;
 import com.dating.model.Role;
 import com.dating.model.gender.Gender;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
+import com.dating.model.message.MessageStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,5 +68,5 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "message_status_id",referencedColumnName = "id")
-    private MessageStatusEntity messageStatusEntity;
+    private MessageStatus messageStatus;
 }
