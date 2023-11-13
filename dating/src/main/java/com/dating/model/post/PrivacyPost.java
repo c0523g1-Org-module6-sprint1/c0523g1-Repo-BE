@@ -1,6 +1,9 @@
 package com.dating.model.post;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class PrivacyPost {
@@ -12,14 +15,17 @@ public class PrivacyPost {
     private String name;
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
+    @JsonBackReference
+    @OneToMany(mappedBy = "privacyPost")
+    private Set<Post> posts;
 
     public PrivacyPost() {
     }
 
-    public PrivacyPost(Integer id, String name, boolean isDeleted) {
-        this.id = id;
+    public PrivacyPost(String name, boolean isDeleted, Set<Post> posts) {
         this.name = name;
         this.isDeleted = isDeleted;
+        this.posts = posts;
     }
 
     public Integer getId() {
@@ -44,5 +50,13 @@ public class PrivacyPost {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 }
