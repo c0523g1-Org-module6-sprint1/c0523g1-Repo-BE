@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface IAccountRepository extends JpaRepository<Account,Integer> {
+public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     /**
      * method findAccountByUserName
@@ -35,14 +35,13 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
 
 
 
-
-
-/**
- * author: TriVN
- * date: 13/11/2023
- * goal: display account
- * @return HttpStatus
- */
+    /**
+     * author: TriVN
+     * date: 13/11/2023
+     * goal: display account
+     *
+     * @return HttpStatus
+     */
 
     @Query(value = "select acc.user_name as user_name, acc.regis_date as regis_date, acc.money as money,wd.fault_amount as fault_amount,wd.description as description, wd.date as date_warning, acct.name as type_account" +
             "            from warning_details wd" +
@@ -101,8 +100,29 @@ public interface IAccountRepository extends JpaRepository<Account,Integer> {
      * author: TriVN
      * date: 13/11/2023
      * goal: delete account
+     *
      * @return HttpStatus
      */
-@Query(value = "UPDATE accounts SET is_deleted = 1",nativeQuery = true)
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE accounts SET is_deleted = 1", nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
+
+
+    /**
+     * author: thienlch
+     * date: 13/11/2023
+     * goal: edit account
+     * @return HttpStatus
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location = :#{#account.location.id}," +
+            "job = :#{#account.job.id}, hobbies = :#{#account" +
+            "////" +
+            "}", nativeQuery = true)
+    void EditAccount(@Param("account") Account account);
 }
+
+
