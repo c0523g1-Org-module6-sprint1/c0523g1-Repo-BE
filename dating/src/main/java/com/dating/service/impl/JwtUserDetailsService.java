@@ -1,36 +1,35 @@
 package com.dating.service.impl;
 
-
 import com.dating.model.account.Account;
 import com.dating.repository.account.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
-public class AccountDetailServiceImpl implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
+
     @Autowired
-    IAccountRepository accountRepository;
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private IAccountRepository accountRepository;
 
-    /**
-     * method loadUserByUsername
-     * Create ThienBB
-     * Date 13-11-2023
-     * param String username
-     * return new Object: AccountDetail.build
-     */
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findAccountByUserNameAndAndIsDeletedIsFalse(username);
+        Account existedAccount = this.accountRepository.findAccountByUserNameAndAndIsDeletedIsFalse(username);
 
-        if (account == null) {
+        if (existedAccount == null) {
             throw new UsernameNotFoundException("User with username: " + username + " was not found in database");
         }
-        return AccountDetail.build(account);
+        return new org.springframework.security.core.userdetails.User(
+                existedAccount.getUserName(),
+                existedAccount.getPassword(),
+                new ArrayList<>());
     }
 }
