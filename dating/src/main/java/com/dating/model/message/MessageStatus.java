@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "message_status")
-public class MessageStatusEntity {
+public class MessageStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
