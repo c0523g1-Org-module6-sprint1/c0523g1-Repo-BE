@@ -38,7 +38,7 @@ public class AccountController {
 
 //    @PatchMapping("/personal-page/edit/{id}")
 //    @ResponseBody
-//    public ResponseEntity<Object> updateAccount(@Valid @ResponseBody Account account, BindingResult bindingResult){
+//    public ResponseEntity<Object> updateAccount(@Valid @ResponseBody AccountDto accountDto, BindingResult bindingResult){
 //        new AccountDto
 //    }
 }
