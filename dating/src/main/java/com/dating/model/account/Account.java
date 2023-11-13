@@ -2,6 +2,7 @@ package com.dating.model.account;
 
 import com.dating.model.Role;
 import com.dating.model.gender.Gender;
+import com.dating.model.gift.GiftRecord;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.model.message.MessageStatus;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -69,4 +71,12 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "message_status_id",referencedColumnName = "id")
     private MessageStatus messageStatus;
+  
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private Set<GiftRecord> giftRecords;
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private Set<GiftRecord> giftRecord;
+
 }
