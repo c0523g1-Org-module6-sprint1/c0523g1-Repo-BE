@@ -16,6 +16,14 @@ import java.util.List;
 public class SearchNameController {
     @Autowired
     private ISearchNameService accountService;
+
+    /**
+     * method searchByName
+     * Create LienDTM
+     * Date 13-11-2023
+     * param String name
+     * return new Object: SearchNameDto
+     */
     @GetMapping("/public/search-name/{name}")
     public ResponseEntity<List<SearchNameDto>> searchByName(@PathVariable String name){
         List<SearchNameDto> accounts = accountService.searchByName(name);
