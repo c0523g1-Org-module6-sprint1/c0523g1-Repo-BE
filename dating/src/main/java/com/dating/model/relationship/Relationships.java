@@ -1,12 +1,9 @@
 package com.dating.model.relationship;
-
 import com.dating.model.account.Account;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -29,7 +26,6 @@ public class Relationships {
     @ManyToOne
     @JoinColumn(name = "relationship_status_id", referencedColumnName = "id")
     private RelationshipStatus relationshipStatus;
-
 
     @OneToOne
     @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
