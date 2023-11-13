@@ -24,6 +24,7 @@ public class RelationshipsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         relationships.setDateRequest(LocalDateTime.now());
+
         sendInvitedService.saveInvited(relationships);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
