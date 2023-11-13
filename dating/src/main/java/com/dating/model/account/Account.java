@@ -1,9 +1,13 @@
 package com.dating.model.account;
 
+
 import com.dating.model.Messages;
+
+
 import com.dating.model.Role;
 import com.dating.model.comment.Comments;
 import com.dating.model.gender.Gender;
+
 import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
@@ -13,6 +17,12 @@ import com.dating.model.post.Post;
 import com.dating.model.relationship.Relationships;
 import com.dating.model.update_account.PackageDetail;
 import com.dating.model.warning_detail.WarningDetails;
+
+import com.dating.model.gift.GiftRecord;
+import com.dating.model.job.Job;
+import com.dating.model.location.Location;
+import com.dating.model.message.MessageStatus;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -79,6 +89,7 @@ public class Account {
     @JoinColumn(name = "message_status_id",referencedColumnName = "id")
     private MessageStatus messageStatus;
 
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<WarningDetails> warningDetailsSet;
@@ -110,13 +121,12 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
-
-
-
-
-
-
-
-
+  
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private Set<GiftRecord> giftRecords;
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private Set<GiftRecord> giftRecord;
 
 }
