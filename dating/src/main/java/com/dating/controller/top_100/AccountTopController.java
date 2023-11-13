@@ -1,5 +1,6 @@
 package com.dating.controller.top_100;
 
+import com.dating.dto.top_100.TopHunderedDto;
 import com.dating.model.account.Account;
 import com.dating.service.search_advanced_top_100.IAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class AccountTopController {
     private IAccountsService accountsService;
 
     @GetMapping("")
-    public ResponseEntity<List<Account>> getAll() {
-        List<Account> accounts = accountsService.findAll();
+    public ResponseEntity<List<TopHunderedDto>> getAll() {
+        List<TopHunderedDto> accounts = accountsService.findAll();
         if (accounts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {

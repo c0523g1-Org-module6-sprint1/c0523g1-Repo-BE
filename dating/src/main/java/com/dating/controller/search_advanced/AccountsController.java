@@ -1,5 +1,6 @@
 package com.dating.controller.search_advanced;
 
+import com.dating.dto.search_advanced.SearchAvancedDto;
 import com.dating.model.account.Account;
 import com.dating.service.search_advanced_top_100.IAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class AccountsController {
     private IAccountsService accountsService;
 
     @GetMapping("")
-    public ResponseEntity<List<Account>> getAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId) {
-        List<Account> accounts = accountsService.getAll(name, birthday, genderId, hobbyId, locationId, jobId, hobbyDetailId);
+    public ResponseEntity<List<SearchAvancedDto>> getAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId) {
+        List<SearchAvancedDto> accounts = accountsService.getAll(name, birthday, genderId, hobbyId, locationId, jobId, hobbyDetailId);
         if (accounts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
