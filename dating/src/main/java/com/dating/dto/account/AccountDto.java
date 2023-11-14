@@ -1,6 +1,12 @@
 package com.dating.dto.account;
 
 import com.dating.commons.account.ValidateAccount;
+import com.dating.model.Role;
+import com.dating.model.gender.Gender;
+import com.dating.model.hobby.Hobby;
+import com.dating.model.job.Job;
+import com.dating.model.location.Location;
+import com.dating.model.message.MessageStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,14 +34,17 @@ public class AccountDto implements Validator {
     private String expire;
     private String maritalStatus;
     private Integer point;
-    @NotNull
-    private Integer genderId;
-    @NotNull
-    private Integer jobId;
-    private Integer roleId;
-    @NotNull
-    private Integer locationId;
-    private Integer messageStatusId;
+//    private Integer genderId;
+//    private Integer jobId;
+//    private Integer roleId;
+//    private Integer locationId;
+//    private Integer hobbyId;
+    private Gender gender;
+    private Job job;
+    private Role role;
+    private Location location;
+    private Hobby hobby;
+    private MessageStatus messageStatus;
 
 
     @Override
