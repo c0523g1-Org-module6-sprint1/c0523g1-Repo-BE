@@ -1,4 +1,4 @@
-package com.dating.controller.account.account_register;
+package com.dating.trivn_controller.account.account_register;
 
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
