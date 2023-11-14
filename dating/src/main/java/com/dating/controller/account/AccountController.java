@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.account;
+package com.dating.controller.account;
 
 import com.dating.model.account.Account;
 import com.dating.model.warning_detail.WarningDetails;
@@ -6,12 +6,18 @@ import com.dating.service.account.IAccountService;
 import com.dating.service.warning_detail.IWarningDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
 @CrossOrigin("*")
@@ -50,7 +56,7 @@ public class AccountController {
      * @param id
      * @return
      */
-    @PostMapping("/accounts/{id}")
+    @PatchMapping ("/accounts/{id}")
     public ResponseEntity<?> handleWarning(@RequestParam Integer id) {
         WarningDetails warningDetails = new WarningDetails();
        Account account = iAccountService.findAccountById(id);
@@ -80,6 +86,16 @@ public class AccountController {
               break;
       }
     return null;
+    }
+
+    @PatchMapping("/accounts/{id}")
+    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
+        Account account = iAccountService.findAccountById(id);
+        if (account == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+       iAccountService.deleteAccount(id);
+       return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @PatchMapping("/personal-page/edit/{id}")

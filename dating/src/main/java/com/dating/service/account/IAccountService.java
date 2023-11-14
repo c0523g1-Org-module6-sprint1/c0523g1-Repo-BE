@@ -13,7 +13,7 @@ public interface IAccountService extends UserDetailsService {
     Boolean createNewAccount(Account account);
     Page<Account> findAll(Pageable pageable,String username);
     void deleteAccount(Integer id);
-    void findAccountById(Integer id);
+    Account findAccountById(Integer id);
     Gender findGender(Integer genderId);
     Location findLocation(Integer locationId);
     Job findJob(Integer jobId);

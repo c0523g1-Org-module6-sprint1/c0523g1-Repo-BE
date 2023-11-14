@@ -48,14 +48,12 @@ public class AccountService implements IAccountService {
 
 
 
-    @Override
-    public Account findById(Integer id) {
-        return accountRepository.findById(id).get();
-    }
+
 
     @Override
-    public void findAccountById(Integer id) {
+    public Account findAccountById(Integer id) {
         accountRepository.findAccountById(id);
+        return null;
     }
 
     @Override
