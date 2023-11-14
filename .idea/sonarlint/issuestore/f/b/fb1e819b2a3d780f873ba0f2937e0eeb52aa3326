@@ -1,0 +1,10 @@
+
+ž
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹»´¤8’¬ä·¼1
+]	java:S125"<This block of commented-out lines of code should be removed.(ŸøÓ¡ûÿÿÿÿ8î”ä·¼1
+X	java:S125"<This block of commented-out lines of code should be removed.(Î„Â8”¬ä·¼1
+]	java:S125K"<This block of commented-out lines of code should be removed.(úïš²þÿÿÿÿ8›Áå·¼1
+q
+java:S1128"ORemove this unused import 'com.fasterxml.jackson.annotation.JsonBackReference'.(»Ôœ¿ýÿÿÿÿ8›Áå·¼1
+L
+java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ8›Áå·¼1

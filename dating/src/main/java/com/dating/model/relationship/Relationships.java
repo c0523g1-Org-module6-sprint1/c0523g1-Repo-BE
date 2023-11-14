@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
+
 @Entity
 @Setter
 @Getter
@@ -21,17 +22,17 @@ public class Relationships {
     private LocalDateTime dateRequest;
     @Column(name = "is_deleted", columnDefinition = "bit(1) default 0", nullable = false)
     private boolean isDeleted;
+
     @ManyToOne
     @JoinColumn(name = "relationship_status_id", referencedColumnName = "id")
     private RelationshipStatus relationshipStatus;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
     private Account senderAccount;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "receiver_account_id", referencedColumnName = "id")
     private Account receiverAccount;
-
 
 }

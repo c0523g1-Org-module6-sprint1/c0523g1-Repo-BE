@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -19,7 +20,7 @@ public class GiftRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int quantity;
-    private LocalDate time;
+    private LocalDateTime time;
     private boolean isDelete;
     @ManyToOne
     @JoinColumn(name = "gift_id",referencedColumnName = "id")

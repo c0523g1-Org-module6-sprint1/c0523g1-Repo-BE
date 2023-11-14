@@ -13,17 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AccountDetailServiceImpl implements UserDetailsService {
     @Autowired
-    private IAccountRepository accountRepository;
+    IAccountRepository accountRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findAccountByUserNameAndIsDeletedIsFalse(username);
+        Account account = accountRepository.findAccountByUserNameAndAndIsDeletedIsFalse(username);
 
         if (account == null) {
             throw new UsernameNotFoundException("User with username: " + username + " was not found in database");
         }
         return AccountDetail.build(account);
-//        return null;
     }
 }
