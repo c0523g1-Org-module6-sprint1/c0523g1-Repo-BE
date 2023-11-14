@@ -27,7 +27,8 @@ public class SearchNameRestController {
     public ResponseEntity<List<SearchNameDto>> searchByName(@PathVariable String name){
         List<SearchNameDto> accounts = accountService.searchByName(name);
         if(accounts.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            em hay làm NO_CONTENT nhưng để khớp với checklist nên để BAD_REQUEST
         }else {
             return new ResponseEntity<>(accounts,HttpStatus.OK);
         }

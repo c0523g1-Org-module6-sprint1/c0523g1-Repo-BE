@@ -1,8 +1,6 @@
-package com.dating.controller.hobby;
+package com.dating.controller.job;
 
-import com.dating.model.hobby.Hobby;
 import com.dating.model.job.Job;
-import com.dating.service.hobby.IHobbyService;
 import com.dating.service.job.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,17 +14,17 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/hobbies")
-public class HobbyController {
+@RequestMapping("/api/jobs")
+public class JobController {
     @Autowired
-    private IHobbyService hobbyService;
+    private IJobService jobService;
     @GetMapping("")
-    public ResponseEntity<List<Hobby>> getAll(){
-        List<Hobby> hobbies = hobbyService.getAll();
-        if(hobbies.isEmpty()){
+    public ResponseEntity<List<Job>> getAll(){
+        List<Job> jobs = jobService.getAll();
+        if(jobs.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
-            return new ResponseEntity<>(hobbies,HttpStatus.OK);
+            return new ResponseEntity<>(jobs,HttpStatus.OK);
         }
     }
 }
