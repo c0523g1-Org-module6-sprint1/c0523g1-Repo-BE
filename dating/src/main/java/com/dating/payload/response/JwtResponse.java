@@ -19,4 +19,5 @@ public class JwtResponse implements Serializable {
     public String getJwtToken() {
         return this.jwtToken;
     }
+
 }
