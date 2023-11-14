@@ -27,7 +27,7 @@ public class SecurityController_authenticationUser {
     /**
      * Creator: ThienBB
      * Date created: 14/11/2023
-     * Goal: LoginRequest = null
+     * Expect: LoginRequest = null
      *
      * @Throw: Exception
      */
@@ -39,13 +39,13 @@ public class SecurityController_authenticationUser {
                                 .content(this.objectMapper.writeValueAsString(null))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
-                .andExpect(status().is(401));
+                .andExpect(status().is(400));
     }
 
     /**
      * Creator: ThienBB
      * Date created: 14/11/2023
-     * Goal: LoginRequest is invalid
+     * Expect: LoginRequest is invalid
      *
      * @Throw: Exception
      */
@@ -62,13 +62,13 @@ public class SecurityController_authenticationUser {
                                 .content(this.objectMapper.writeValueAsString(loginRequest))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
-                .andExpect(status().is(403));
+                .andExpect(status().is(400));
     }
 
     /**
      * Creator: ThienBB
      * Date created: 14/11/2023
-     * Goal: LoginRequest is valid and user has role admin
+     * Expect: LoginRequest is valid and user has role admin
      *
      * @Throw: Exception
      */
@@ -91,7 +91,7 @@ public class SecurityController_authenticationUser {
     /**
      * Creator: ThienBB
      * Date created: 14/11/2023
-     * Goal: LoginRequest is valid and user has role member
+     * Expect: LoginRequest is valid and user has role member
      *
      * @Throw: Exception
      */
