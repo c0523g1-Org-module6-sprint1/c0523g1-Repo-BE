@@ -1,4 +1,4 @@
-package com.dating.controller.account;
+package com.dating.HauNH_controller.account;
 
 import com.dating.service.account.IChangePasswordService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.dating.controller.post;
+package com.dating.HauNH_controller.post;
 
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;

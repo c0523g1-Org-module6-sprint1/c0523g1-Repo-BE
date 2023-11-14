@@ -1,9 +1,7 @@
-package com.dating.controller.gender;
+package com.dating.HauNH_controller.gender;
 
 import com.dating.model.gender.Gender;
-import com.dating.model.job.Job;
 import com.dating.service.gender.IGenderService;
-import com.dating.service.job.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
