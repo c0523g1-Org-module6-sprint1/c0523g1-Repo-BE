@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -32,14 +34,11 @@ public class AccountController {
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
-    @DeleteMapping("/accounts/{id}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable Integer id){
-        if (iAccountService.findAccountById(id)== null){
-            return ResponseEntity.notFound().build();
-        }
-        iAccountService.deleteAccount(id);
-        return ResponseEntity.noContent().build();
-    }
 
 
+//    @PatchMapping("/personal-page/edit/{id}")
+//    @ResponseBody
+//    public ResponseEntity<Object> updateAccount(@Valid @ResponseBody AccountDto accountDto, BindingResult bindingResult){
+//        new AccountDto
+//    }
 }
