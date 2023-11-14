@@ -1,6 +1,8 @@
 package com.dating.repository.relationship;
 
 import com.dating.dto.relationship.IFriendDto;
+import com.dating.model.relationship.Relationships;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Repository
-public interface IRelationshipRepository {
+public interface IRelationshipRepository  extends JpaRepository<Relationships, Integer> {
     /**
      * method findAllFriendByName
      * Create: 13-11-2023
