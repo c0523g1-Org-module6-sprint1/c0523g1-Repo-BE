@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.post;
+package com.dating.controller.post;
 
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;
@@ -66,7 +66,7 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{accountId}/{postId}")
+    @PatchMapping ("/{accountId}/{postId}")
     public ResponseEntity<String> updateForThePostOwner(@PathVariable Integer accountId, @PathVariable Integer postId, @RequestBody Post post) {
         boolean check = iPostService.updateForThePostOwner(post.getContent(), post.getImage(), accountId, postId, post.getPrivacyPost().getId());
         if (check) {
@@ -76,7 +76,7 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{postId}")
+    @PatchMapping("/{postId}")
     public ResponseEntity<String> updateForAdmin(@PathVariable Integer postId, @RequestBody Post post) {
         boolean check = iPostService.updateForAdmin(post.getContent(), post.getImage(), postId, post.getPrivacyPost().getId());
         if (check) {
