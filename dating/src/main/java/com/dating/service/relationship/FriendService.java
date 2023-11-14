@@ -1,6 +1,6 @@
 package com.dating.service.relationship;
 
-import com.dating.dto.IFriendDto;
+import com.dating.dto.friend.IFriendDto;
 import com.dating.repository.relationship.IRelationshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,5 +13,15 @@ public class FriendService implements IFriendService{
     @Override
     public List<IFriendDto> findAllFriendByName(String name) {
         return iRelationshipRepository.findAllFriendByName(name);
+    }
+
+    @Override
+    public void blockFriend(Integer idLogin, Integer idFriend) {
+        iRelationshipRepository.blockFriend(idLogin,idFriend);
+    }
+
+    @Override
+    public void unFriend(Integer idLogin, Integer idFriend) {
+        iRelationshipRepository.unFriend(idLogin,idFriend);
     }
 }

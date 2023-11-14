@@ -1,4 +1,4 @@
-package com.dating.dto;
+package com.dating.dto.friend;
 
 public interface IFriendDto {
     Integer getId();

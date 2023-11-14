@@ -1,11 +1,13 @@
 package com.dating.repository.relationship;
 
-import com.dating.dto.IFriendDto;
+import com.dating.dto.friend.IFriendDto;
 import com.dating.model.relationship.Relationships;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Repository
@@ -39,4 +41,26 @@ public interface IRelationshipRepository extends JpaRepository<Relationships,Int
             "END " +
             "WHERE acc.name LIKE CONCAT('%', :name, '%')",nativeQuery = true)
     List<IFriendDto> findAllFriendByName(@Param("name") String name);
+
+    /**
+     * method delete
+     * Create: 14-11-2023
+     * return: void
+     * author: ThienPT
+     */
+    @Transactional
+    @Modifying
+    @Query(value =
+            "update relationships as rel set rel.relationship_status_id = 3 " +
+            "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
+            "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
+    void blockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "update relationships as rel set rel.is_deleted = 1 " +
+            "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
+            "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin)",nativeQuery = true)
+    void unFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
 }
