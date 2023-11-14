@@ -1,7 +1,6 @@
-package com.dating.controller.search_advanced;
+package com.dating.trivn_controller.search_advanced;
 
 import com.dating.dto.search_advanced.SearchAvancedDto;
-import com.dating.model.account.Account;
 import com.dating.service.search_advanced_top_100.IAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

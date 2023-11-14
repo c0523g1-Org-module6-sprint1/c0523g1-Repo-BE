@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -28,12 +29,20 @@ public class AccountController {
     @Autowired
     private IWarningDetailService iWarningDetailService;
 
+    /**
+     * TriVN
+     * display list accounts
+     * search
+     * page
+     * @param pageable
+     * @param username
+     * @return
+     */
     @GetMapping("/accounts")
     public ResponseEntity<Page<Account>> showAccountList(
-            @RequestParam(value = "_page", defaultValue = "1") int page,
+            @PageableDefault(size = 5) Pageable pageable,
             @RequestParam(value = "username_like", defaultValue = "") String username
     ) {
-        Pageable pageable = PageRequest.of(page, 2);
         Page<Account> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -41,10 +50,16 @@ public class AccountController {
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
 
-    @PostMapping("/warning")
+    /**
+     * TriVN
+     * Lock account
+     * @param id
+     * @return
+     */
+    @PatchMapping ("/accounts/{id}")
     public ResponseEntity<?> handleWarning(@RequestParam Integer id) {
         WarningDetails warningDetails = new WarningDetails();
-       Account account = iAccountService.findById(id);
+       Account account = iAccountService.findAccountById(id);
        if (account != null){
            warningDetails.setAccount(account);
            warningDetails.incrementFaultAmount();
@@ -66,11 +81,21 @@ public class AccountController {
               return ResponseEntity.ok("Bạn bị khoa 30 ngày");
           case 10:
               iWarningDetailService.lockAccount(warningDetails);
-              return ResponseEntity.ok("Babnj bị khoá vĩnh viễn");
+              return ResponseEntity.ok("Bạn bị khoá vĩnh viễn");
           default:
               break;
       }
     return null;
+    }
+
+    @PatchMapping("/accounts/{id}")
+    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
+        Account account = iAccountService.findAccountById(id);
+        if (account == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+       iAccountService.deleteAccount(id);
+       return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @PatchMapping("/personal-page/edit/{id}")

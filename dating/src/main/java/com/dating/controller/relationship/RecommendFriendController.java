@@ -1,4 +1,4 @@
-package com.dating.controller.relationship;
+package com.dating.trivn_controller.relationship;
 import com.dating.dto.relationship.IRecommendFriendDto;
 import com.dating.service.relationship.IRecommendFriendService;
 import org.springframework.beans.factory.annotation.Autowired;

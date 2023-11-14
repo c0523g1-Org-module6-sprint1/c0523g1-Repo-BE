@@ -1,7 +1,6 @@
-package com.dating.controller.job;
+package com.dating.trivn_controller.job;
 
 import com.dating.model.job.Job;
-import com.dating.model.location.Location;
 import com.dating.service.job.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
