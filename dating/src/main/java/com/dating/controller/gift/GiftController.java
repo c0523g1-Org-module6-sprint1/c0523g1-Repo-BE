@@ -1,4 +1,4 @@
-package com.dating.controller.gift;
+package com.dating.trivn_controller.gift;
 
 import com.dating.model.gift.Gift;
 import com.dating.model.gift.GiftRecord;
