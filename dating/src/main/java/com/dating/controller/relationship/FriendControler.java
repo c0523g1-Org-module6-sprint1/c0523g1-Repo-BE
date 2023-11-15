@@ -3,20 +3,25 @@ package com.dating.controller.relationship;
 
 import com.dating.dto.relationship.FriendBlockDto;
 import com.dating.dto.relationship.IFriendDto;
+import com.dating.repository.account.IAccountRepository;
+import com.dating.service.account.IAccountService;
 import com.dating.service.relationship.IFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/member/relationship/friend")
+@RequestMapping("api/public/relationship/friend")
 public class FriendControler {
     @Autowired
     private IFriendService friendService;
+    @Autowired
+    private IAccountService accountService;
 
     /**
      * Method find All
@@ -27,34 +32,52 @@ public class FriendControler {
      * @return list friend management
      */
     @GetMapping("")
-    public ResponseEntity<List<IFriendDto>> findAll(
+    public ResponseEntity<?> findAll(
             @RequestParam(value = "name", defaultValue = "") String name
     ) {
-        List<IFriendDto> friendDtoList = null;
+        List<IFriendDto> friendDtoList = new ArrayList<>();
         friendDtoList = friendService.findAllFriendByName(name);
+        if (name == null || name.equals("") ){
+            return new ResponseEntity<>("Giá trị name truyền vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        if (friendDtoList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(friendDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/block/{idLogin}")
+    @DeleteMapping ("/block/{idLogin}")
     public ResponseEntity<?> blockFriend(
             @PathVariable Integer idLogin,
             @RequestBody FriendBlockDto request
     ) {
-        if (idLogin == null || request.getIdFriend() == null) {
-            return new ResponseEntity<>("Giá trị id không thể null!", HttpStatus.BAD_REQUEST);
+        if (request == null){
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        if (idLogin == null || idLogin.equals("") || request.getIdFriend() == null) {
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(request.getIdFriend()) == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Integer idFriend = request.getIdFriend();
         friendService.blockFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/unfriend/{idLogin}")
+    @DeleteMapping("/unfriend/{idLogin}")
     public ResponseEntity<?> unFriend(
             @PathVariable Integer idLogin,
             @RequestBody FriendBlockDto request
     ){
-        if (idLogin == null || request.getIdFriend() == null) {
-            return new ResponseEntity<>("Giá trị id không thể null!", HttpStatus.BAD_REQUEST);
+        if (request == null){
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        if (idLogin == null || idLogin.equals("") || request.getIdFriend() == null) {
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(request.getIdFriend()) == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Integer idFriend = request.getIdFriend();
         friendService.unFriend(idLogin,idFriend);
