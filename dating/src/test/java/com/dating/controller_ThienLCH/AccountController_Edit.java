@@ -1,11 +1,6 @@
 package com.dating.controller_ThienLCH;
 
 import com.dating.dto.account.AccountDto;
-import com.dating.model.Role;
-import com.dating.model.gender.Gender;
-import com.dating.model.job.Job;
-import com.dating.model.location.Location;
-import com.dating.model.message.MessageStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -32,7 +26,6 @@ public class AccountController_Edit {
      * author: thienlch
      * date: 14/11/2023
      * goal: edit account with id equal ""
-     *
      * @return HttpStatus 4xx
      */
     @Test
