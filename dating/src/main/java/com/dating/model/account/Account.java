@@ -58,7 +58,7 @@ public class Account {
     private String regisDate;
     @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = false)
     private String avatar;
-    @Column(name = "expire",columnDefinition = "date",nullable = false)
+    @Column(name = "expire",columnDefinition = "date")
     private String expire;
     @Column(name = "marital_status",columnDefinition = "varchar(255)",nullable = false)
     private String maritalStatus;
