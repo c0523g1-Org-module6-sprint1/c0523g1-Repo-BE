@@ -88,15 +88,15 @@ public class AccountController {
     return null;
     }
 
-    @PatchMapping("/accounts/{id}")
-    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
-        Account account = iAccountService.findAccountById(id);
-        if (account == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-       iAccountService.deleteAccount(id);
-       return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PatchMapping("/accounts/{id}")
+//    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
+//        Account account = iAccountService.findAccountById(id);
+//        if (account == null){
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//       iAccountService.deleteAccount(id);
+//       return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 //    @PatchMapping("/personal-page/edit/{id}")
 //    @ResponseBody
