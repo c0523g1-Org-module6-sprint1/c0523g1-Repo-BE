@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.search_name;
+package com.dating.controller.search_name;
 
 import com.dating.dto.search_name.SearchNameDto;
 import com.dating.service.search_name.ISearchNameService;

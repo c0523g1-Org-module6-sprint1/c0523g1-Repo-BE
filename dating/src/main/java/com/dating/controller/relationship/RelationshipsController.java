@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.relationship;
+package com.dating.controller.relationship;
 
 import com.dating.model.relationship.Relationships;
 import com.dating.service.relationship.ISendInvitedService;
