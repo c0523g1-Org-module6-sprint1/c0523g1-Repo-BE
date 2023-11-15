@@ -1,23 +1,29 @@
 package com.dating.dto;
 
-import com.dating.model.Role;
+
 import com.dating.validation.LoginRequestValidation;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class LoginRequestDto implements Validator {
 
-    private Integer id;
-    private String userName;
+    private static final long serialVersionUID = 5926469583028550707L;
+
+    private String username;
     private String password;
-    private Role role;
+
+    public LoginRequestDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public LoginRequestDto() {
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -27,7 +33,7 @@ public class LoginRequestDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         LoginRequestDto loginRequestDto = (LoginRequestDto) target;
-        LoginRequestValidation.usernameValidator(loginRequestDto.getUserName(), errors);
+        LoginRequestValidation.usernameValidator(loginRequestDto.getUsername(), errors);
         LoginRequestValidation.usernameValidator(loginRequestDto.getPassword(), errors);
     }
 }

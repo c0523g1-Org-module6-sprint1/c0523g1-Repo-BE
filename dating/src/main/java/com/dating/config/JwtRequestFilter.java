@@ -1,7 +1,6 @@
 package com.dating.config;
 
 import com.dating.service.security.IJwtUserDetailsService;
-import com.dating.service.security.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -3,18 +3,18 @@ package com.dating.controller.security;
 
 import com.dating.config.JwtTokenUtil;
 import com.dating.dto.LoginRequestDto;
+import com.dating.model.account.Account;
 import com.dating.payload.request.LoginRequest;
 import com.dating.payload.response.JwtResponse;
-import com.dating.service.security.JwtUserDetailsService;
+import com.dating.service.security.ISecurityService;
+import com.dating.service.security.impl.JwtUserDetailsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +34,11 @@ public class SecurityController {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
+    @Autowired
+    private ISecurityService securityService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * method authenticationUser
@@ -43,32 +48,36 @@ public class SecurityController {
      * return JwtResponse
      */
     @PostMapping("/login")
-    public ResponseEntity<?> authenticationUser(@Valid @RequestBody LoginRequestDto loginRequestDto,
-                                                BindingResult bindingResult) throws Exception {
+    public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequestDto loginRequestDto,
+                                                     BindingResult bindingResult) throws Exception {
         new LoginRequestDto().validate(loginRequestDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         LoginRequest loginRequest = new LoginRequest();
         BeanUtils.copyProperties(loginRequestDto, loginRequest);
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginRequestDto.getUserName(), loginRequestDto.getPassword()
-            ));
-        } catch (DisabledException e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            Account account = this.
+                    securityService.findByUsername(loginRequest.getUsername())
+                    .orElseThrow(() -> new IllegalArgumentException());
+
+            if (account != null) {
+//                passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())
+                if (account.getPassword().contains(loginRequest.getPassword())) {
+                    UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(account.getUserName());
+                    String jwtToken = jwtTokenUtil.generateToken(userDetails);
+                    return ResponseEntity.ok().body(new JwtResponse(jwtToken));
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            System.out.println("Exception while get account by username - controller method");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        final UserDetails userDetails = jwtUserDetailsService
-                .loadUserByUsername(loginRequest.getUsername());
-
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new JwtResponse(token));
     }
 
     /**

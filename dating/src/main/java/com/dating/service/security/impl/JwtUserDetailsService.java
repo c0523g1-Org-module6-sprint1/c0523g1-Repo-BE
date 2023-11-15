@@ -1,14 +1,13 @@
-package com.dating.service.security;
+package com.dating.service.security.impl;
 
 import com.dating.dto.JwtResponseUserDetail;
-import com.dating.model.Role;
 import com.dating.model.account.Account;
-import com.dating.repository.account.IAccountRepository;
+import com.dating.repository.security.ISecurityRepository;
+import com.dating.service.security.IJwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class JwtUserDetailsService implements IJwtUserDetailsService {
 
 
     @Autowired
-    private IAccountRepository accountRepository;
+    private ISecurityRepository securityRepository;
 
     /**
      * method loadUserByUsername
@@ -31,7 +30,7 @@ public class JwtUserDetailsService implements IJwtUserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account existedAccount = this.accountRepository.findAccountByUserNameAndAndIsDeletedIsFalse(username);
+        Account existedAccount = this.securityRepository.findByUserName(username);
 
         if (existedAccount == null) {
             throw new UsernameNotFoundException("User with username: " + username + " was not found in database");

@@ -11,7 +11,7 @@ public class SecurityAuthorizationTest {
 
     @RequestMapping({"/member/test"})
     public String member() {
-        return "Customer author";
+        return "Member author";
     }
 
     @RequestMapping({"/admin/test"})
@@ -21,7 +21,7 @@ public class SecurityAuthorizationTest {
 
     @RequestMapping({"/public/test"})
     public String publicLink() {
-        return "Member author";
+        return "Public author";
     }
 
 }
