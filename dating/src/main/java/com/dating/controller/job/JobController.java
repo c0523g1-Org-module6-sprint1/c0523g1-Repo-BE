@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.job;
+package com.dating.controller.job;
 
 import com.dating.model.job.Job;
 import com.dating.service.job.IJobService;

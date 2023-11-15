@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.account;
+package com.dating.controller.account;
 
 import com.dating.service.account.IChangePasswordService;
 import org.springframework.beans.factory.annotation.Autowired;

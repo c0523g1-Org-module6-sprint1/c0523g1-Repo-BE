@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.security;
+package com.dating.controller.security;
 
 
 import com.dating.jwt.JwtUtility;

@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.top_100;
+package com.dating.controller.top_100;
 
 import com.dating.dto.top_100.TopHunderedDto;
 import com.dating.service.search_advanced_top_100.IAccountsService;
