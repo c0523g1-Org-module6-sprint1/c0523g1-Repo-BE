@@ -9,10 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 public interface IAccountService extends UserDetailsService {
+  
     Account findByUsername(String userName);
     Account findByEmail(String email);
     void createNewAccount(Account account);
     Page<Account> findAll(Pageable pageable,String username);
+  
     void deleteAccount(Integer id);
     void findAccountById(Integer id);
     void updateAccount(Account account);

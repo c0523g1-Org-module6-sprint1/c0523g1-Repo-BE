@@ -1,6 +1,5 @@
-package com.dating.controller.post;
+package com.dating.trivn_controller.post;
 
-import com.dating.model.post.Post;
 import com.dating.model.post.PrivacyPost;
 import com.dating.service.post.IPrivacyPostService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -39,9 +39,14 @@ public class AccountService implements IAccountService {
         accountRepository.deleteAccountId(id);
     }
 
+
+
+
+
     @Override
-    public void findAccountById(Integer id) {
+    public Account findAccountById(Integer id) {
         accountRepository.findAccountById(id);
+        return null;
     }
 
 

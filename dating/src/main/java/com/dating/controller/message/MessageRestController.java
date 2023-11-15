@@ -1,4 +1,4 @@
-package com.dating.controller.message;
+package com.dating.trivn_controller.message;
 
 import com.dating.dto.MessageDto;
 import com.dating.model.account.Account;
