@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IChangePasswordRepository extends JpaRepository<Account,Integer> {
-//    @Query(value = "")
-//    void updatePassword(String password);
+
+
+
 }
