@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/hobbyDetails")
+@RequestMapping("/api/public/hobbyDetails")
 public class HobbyDetailController {
     @Autowired
     private IHobbyDetailService hobbyDetailService;

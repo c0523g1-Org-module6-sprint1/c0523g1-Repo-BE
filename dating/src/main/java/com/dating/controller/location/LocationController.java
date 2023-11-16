@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/locations")
+@RequestMapping("/api/public/locations")
 public class LocationController {
     @Autowired
     private ILocationService locationService;
