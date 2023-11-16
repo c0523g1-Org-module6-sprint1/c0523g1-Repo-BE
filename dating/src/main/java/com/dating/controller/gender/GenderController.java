@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.gender;
+package com.dating.controller.gender;
 
 import com.dating.model.gender.Gender;
 import com.dating.service.gender.IGenderService;

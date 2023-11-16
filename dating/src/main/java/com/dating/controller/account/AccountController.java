@@ -1,5 +1,6 @@
 package com.dating.controller.account;
 
+import com.dating.dto.account.AccountDTOs;
 import com.dating.model.account.Account;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
@@ -39,11 +40,11 @@ public class AccountController {
      * @return
      */
     @GetMapping("/accounts")
-    public ResponseEntity<Page<Account>> showAccountList(
+    public ResponseEntity<?> showAccountList(
             @PageableDefault(size = 5) Pageable pageable,
             @RequestParam(value = "username_like", defaultValue = "") String username
     ) {
-        Page<Account> accountList = iAccountService.findAll(pageable, username);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -56,11 +57,11 @@ public class AccountController {
      * @param id
      * @return
      */
-    @PatchMapping ("/accounts/{id}")
+    @PatchMapping ("/accounts")
     public ResponseEntity<?> handleWarning(@RequestParam Integer id) {
         WarningDetails warningDetails = new WarningDetails();
        Account account = iAccountService.findAccountById(id);
-       if (account != null){
+       if (account == null){
            warningDetails.setAccount(account);
            warningDetails.incrementFaultAmount();
        }

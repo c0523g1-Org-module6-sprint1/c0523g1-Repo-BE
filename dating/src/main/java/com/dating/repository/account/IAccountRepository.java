@@ -2,6 +2,8 @@ package com.dating.repository.account;
 
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
+import com.dating.model.hobby.Hobby;
+import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,9 +36,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
-
-
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
+
     /**
      * author: TriVN
      * date: 13/11/2023
@@ -80,18 +82,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     Account findAccountById(@Param("id") int id);
 
-    /**
-     * method addNewAccount
-     * Create SangPQ
-     * Date 13-11-2023
-     * param Account account
-     * return Integer
-     */
-    @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id)\n" +
-            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id})", nativeQuery = true)
-    Integer addNewAccount(Account account);
-
 
     /**
      * author: TriVN
@@ -103,14 +93,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "UPDATE accounts SET is_deleted = 1", nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
 
-    @Query(value = "SELECT * from genders where id = :id", nativeQuery = true)
-    Gender findGender(@Param("id") Integer genderId);
-
-    @Query(value = "SELECT * FROM location where id = :id", nativeQuery = true)
-    Location findLocation(@Param("id") Integer locationId);
-
-    @Query(value = "select * from jobs where id = :id", nativeQuery = true)
-    Job findJob(@Param("id") Integer jobId);
     /**
      * author: thienlch
      * date: 13/11/2023
@@ -125,6 +107,11 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             "////" +
             "}", nativeQuery = true)
     void EditAccount(@Param("account") Account account);
+
+
+
+
+
 }
 
 
