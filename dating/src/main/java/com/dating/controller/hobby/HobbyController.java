@@ -1,9 +1,7 @@
 package com.dating.controller.hobby;
 
 import com.dating.model.hobby.Hobby;
-import com.dating.model.job.Job;
 import com.dating.service.hobby.IHobbyService;
-import com.dating.service.job.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

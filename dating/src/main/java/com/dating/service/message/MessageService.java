@@ -28,11 +28,13 @@ public class MessageService implements IMessageService{
 
     @Override
     public List<Messages> getMessage(Integer accountId) {
+
         return messageRepository.findMessageByAccountId(accountId);
     }
 
     @Override
     public List<Account> getFriendList(Integer accountId) {
+
         List<Relationships> relationships = messageRelationshipRepository.findFriendListByAccountId(accountId);
         List<Account> result = new ArrayList<>();
         for (Relationships value : relationships) {
@@ -56,6 +58,7 @@ public class MessageService implements IMessageService{
             }
         }
         return unknowmess;
+
     }
 
     @Override
