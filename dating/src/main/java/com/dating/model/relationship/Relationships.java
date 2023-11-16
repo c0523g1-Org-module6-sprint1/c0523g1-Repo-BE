@@ -24,15 +24,15 @@ public class Relationships {
     private boolean isDeleted;
 
     @ManyToOne
-    @JoinColumn(name = "relationship_status_id", referencedColumnName = "id")
+    @JoinColumn(name = "relationship_status_id", referencedColumnName = "id",nullable = false)
     private RelationshipStatus relationshipStatus;
 
     @OneToOne
-    @JoinColumn(name = "sender_account_id", referencedColumnName = "id")
+    @JoinColumn(name = "sender_account_id", referencedColumnName = "id",nullable = false)
     private Account senderAccount;
 
     @OneToOne
-    @JoinColumn(name = "receiver_account_id", referencedColumnName = "id")
+    @JoinColumn(name = "receiver_account_id", referencedColumnName = "id",nullable = false)
     private Account receiverAccount;
 
 }

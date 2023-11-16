@@ -10,11 +10,16 @@ public interface IAccountService extends UserDetailsService {
     Account findByUsername(String userName);
     Account findByEmail(String email);
 
-    Boolean createNewAccount(Account account);
+    void createNewAccount(Account account);
     Page<AccountDTOs> findAll(Pageable pageable, String username);
 
     void deleteAccount(Integer id);
     Account findAccountById(Integer id);
     void updateAccount(Account account);
 
+    //LongTND triển khai
+    Account findByID(Integer id);
+
+    //LongTND triển khai
+    Account findAccountByUserName(String name);
 }
