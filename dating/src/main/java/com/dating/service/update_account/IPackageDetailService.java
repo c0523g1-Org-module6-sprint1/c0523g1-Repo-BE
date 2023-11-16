@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IPackageDetailService {
     List<PackageDetail> findAll();
-    void setMoneyAccount(Account account, int newMoney);
-    void setAccountTypes(AccountTypes accountTypes);
+    void setMoneyAccount(int accountId, int newMoney);
+    void setAccountTypes(int accountId, int accountTypesId);
 }
