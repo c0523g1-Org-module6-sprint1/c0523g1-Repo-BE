@@ -29,7 +29,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * Create SangPQ
      * Date 13-11-2023
      * param String userName
-     * return Account
+     * return Account or null
      */
     @Query(value = " select * from accounts " +
             " where user_name like :username" +
@@ -61,7 +61,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * Create SangPQ
      * Date 13-11-2023
      * param String email
-     * return Account
+     * return Account or null
      */
     @Query(value = "select * from accounts " +
             "where email like :email " +
@@ -74,13 +74,13 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * Create SangPQ
      * Date 13-11-2023
      * param String email
-     * return Account
+     * return Account or null
      */
     @Query(value = "select * from accounts " +
             "where id like :id " +
             "and is_deleted = 0",
             nativeQuery = true)
-    Account findAccountById(@Param("id") int id);
+    Account findAccountById(@Param("id") Integer id);
 
 
     /**

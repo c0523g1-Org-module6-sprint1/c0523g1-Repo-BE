@@ -3,6 +3,9 @@ package com.dating.trivn_controller.account.account_register;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.Role;
 import com.dating.model.account.Account;
+import com.dating.model.gender.Gender;
+import com.dating.model.job.Job;
+import com.dating.model.location.Location;
 import com.dating.service.account.IAccountService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/user")
+@RequestMapping("/api/public/user")
 public class AccountRegisterController {
 
     @Autowired
@@ -33,16 +36,17 @@ public class AccountRegisterController {
      * create by SangPQ
      * date 13-11-2023
      * param AccountDto accountDto,BindingResult bindingResult
-     * return ResponseEntity
+     * return ResponseEntity or null
      */
     @PostMapping("/register")
-    public ResponseEntity<Object> login(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> register(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult) {
         new AccountDto().validate(accountDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().stream().map(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
             return new ResponseEntity<>(errorMap, HttpStatus.OK);
         }
+
         Account accountUserName = accountService.findByUsername(accountDto.getUserName());
         Account accountEmail = accountService.findByEmail(accountDto.getEmail());
         if (accountUserName != null) {
@@ -66,7 +70,12 @@ public class AccountRegisterController {
 //                return new ResponseEntity<>("Đăng kí thất bại, vui lòng thử lại", HttpStatus.OK);
 //            }
 //            return new ResponseEntity<>(newAccount, HttpStatus.ACCEPTED);
+
             BeanUtils.copyProperties(accountDto,account);
+            account.setIsDeleted(false);
+            account.setGender(new Gender(accountDto.getGender(),false));
+            account.setLocation(new Location(accountDto.getLocation(),false));
+            account.setJob(new Job(accountDto.getJob(),false));
             account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
             Role role = new Role();
             role.setId(2);

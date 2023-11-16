@@ -1,10 +1,6 @@
 package com.dating.service.account;
 
 import com.dating.model.account.Account;
-import com.dating.model.gender.Gender;
-import com.dating.model.hobby.Hobby;
-import com.dating.model.job.Job;
-import com.dating.model.location.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +12,7 @@ public interface IAccountService extends UserDetailsService {
     Page<Account> findAll(Pageable pageable,String username);
   
     void deleteAccount(Integer id);
-    void findAccountById(Integer id);
+    Account findAccountById(Integer id);
     void updateAccount(Account account);
 
 }

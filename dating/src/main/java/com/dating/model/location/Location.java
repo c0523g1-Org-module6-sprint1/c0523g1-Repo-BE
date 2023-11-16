@@ -19,4 +19,9 @@ public class Location {
     private int id;
     private String name;
     private boolean isDeleted;
+
+    public Location(int id, boolean isDeleted) {
+        this.id = id;
+        this.isDeleted = isDeleted;
+    }
 }
