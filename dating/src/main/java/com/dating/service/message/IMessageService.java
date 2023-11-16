@@ -8,4 +8,5 @@ public interface IMessageService {
     List<Account> getFriendList(Integer accountId);
     void setBusy(Boolean isBusy, Integer accountId);
     void createMessage (Messages messages);
+
 }

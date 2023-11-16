@@ -115,16 +115,14 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
-     * @return HttpStatus
+     * @return void
      */
     @Transactional
     @Modifying
     @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
-            "birthday = :#{#account.birthday}, location = :#{#account.location.id}," +
-            "job = :#{#account.job.id}, hobbies = :#{#account" +
-            "////" +
-            "}", nativeQuery = true)
-    void EditAccount(@Param("account") Account account);
+            "birthday = :#{#account.birthday}, location = :#{#account.location.id}, avatar = :#{#account.avatar}" +
+            "job = :#{#account.job.id} where id = :#{#account.id} ", nativeQuery = true)
+    void editAccount(@Param("account") Account account);
 }
 
 

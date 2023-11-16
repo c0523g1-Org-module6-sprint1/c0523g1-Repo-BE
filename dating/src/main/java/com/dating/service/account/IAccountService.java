@@ -19,5 +19,7 @@ public interface IAccountService extends UserDetailsService {
     Job findJob(Integer jobId);
     void updateAccount(Account account);
 
+    Account getAccountByID(Integer id);
+
 
 }

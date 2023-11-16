@@ -48,10 +48,10 @@ public class AccountService implements IAccountService {
 
 
 
-    @Override
-    public Account findById(Integer id) {
-        return accountRepository.findById(id).get();
-    }
+//    @Override
+//    public Account findById(Integer id) {
+//        return accountRepository.findById(id).get();
+//    }
 
     @Override
     public void findAccountById(Integer id) {
@@ -73,7 +73,13 @@ public class AccountService implements IAccountService {
         return accountRepository.findJob(jobId);
     }
     public void updateAccount(Account account) {
-        accountRepository.EditAccount(account);
+        accountRepository.editAccount(account);
+    }
+
+    //thiensmoke viết
+    @Override
+    public Account getAccountByID(Integer id) {
+        return accountRepository.findAccountById(id);
     }
 
     @Override

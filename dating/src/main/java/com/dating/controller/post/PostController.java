@@ -86,6 +86,7 @@ public class PostController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteForAdmin(@PathVariable Integer id) {
         boolean check = iPostService.deleteForAdmin(id);
@@ -97,8 +98,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}/{accountId}")
-    public ResponseEntity<String> deleteForThePostOwner(@PathVariable Integer id,@PathVariable Integer accountId) {
-        boolean check = iPostService.deleteForThePostOwner(id,accountId);
+    public ResponseEntity<String> deleteForThePostOwner(@PathVariable Integer id, @PathVariable Integer accountId) {
+        boolean check = iPostService.deleteForThePostOwner(id, accountId);
         if (check) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Success deleted");
         } else {
