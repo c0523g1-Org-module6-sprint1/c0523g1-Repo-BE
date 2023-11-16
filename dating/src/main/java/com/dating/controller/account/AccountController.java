@@ -55,8 +55,10 @@ public class AccountController {
     }
 
 
+
     @PatchMapping("/api/personal-page/edit/{id}")
     public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
+
         Account account = iAccountService.findAccountById(id);
 
         if (account == null || accountDto == null) {

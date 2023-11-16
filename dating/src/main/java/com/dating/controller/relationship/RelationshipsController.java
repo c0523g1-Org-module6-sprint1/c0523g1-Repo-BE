@@ -72,5 +72,21 @@ public class RelationshipsController {
         return new ResponseEntity<>(account,HttpStatus.OK);
     }
 
+    /**
+     * Method findAccountByUserName
+     * Create by LongTND
+     * Date 15/11/2023
+     * @Param userName
+     * @Return Account
+     */
+    @GetMapping("/api/public/{name}")
+    public ResponseEntity<Account> findAccountByUserName(@PathVariable String name){
+        Account account = accountService.findAccountByUserName(name);
+        if (account == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(account,HttpStatus.OK);
+    }
+
 
 }

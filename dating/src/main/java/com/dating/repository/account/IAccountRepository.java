@@ -130,7 +130,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
-<<<<<<< HEAD
      * @return void
      */
     @Transactional
@@ -161,6 +160,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      */
     @Query(value = "select * from accounts where user_name = :user_name",nativeQuery = true)
     Account getAccountByUserName(@Param("user_name") String userName);
+
 
 }
 
