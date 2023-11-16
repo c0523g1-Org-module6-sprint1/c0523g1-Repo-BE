@@ -3,6 +3,8 @@ package com.dating.repository.account;
 import com.dating.dto.account.AccountDTOs;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
+import com.dating.model.hobby.Hobby;
+import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +36,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
-
-
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
 
     /**
@@ -87,6 +88,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     Account findAccountById(@Param("id") int id);
 
+
     /**
      * method addNewAccount
      * Create SangPQ
@@ -114,6 +116,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
 
+
     @Query(value = "SELECT * from genders where id = :id", nativeQuery = true)
     Gender findGender(@Param("id") Integer genderId);
 
@@ -137,6 +140,11 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " job = :#{#account.job.id}, hobbies = :#{#account " +
             " } ", nativeQuery = true)
     void EditAccount(@Param("account") Account account);
+
+
+
+
+
 }
 
 
