@@ -79,7 +79,7 @@ public class RelationshipsController {
      * @Param userName
      * @Return Account
      */
-    @GetMapping("/{name}")
+    @GetMapping("/api/public/{name}")
     public ResponseEntity<Account> findAccountByUserName(@PathVariable String name){
         Account account = accountService.findAccountByUserName(name);
         if (account == null){

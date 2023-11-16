@@ -18,6 +18,7 @@ public class HobbyDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "hobby_id",referencedColumnName = "id")

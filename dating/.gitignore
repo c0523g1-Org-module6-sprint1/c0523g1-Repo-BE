@@ -1,11 +1,10 @@
 HELP.md
-.gradle
-build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### STS ###
+.DS_Store
+.idea
+.gitignore
 .apt_generated
 .classpath
 .factorypath
@@ -13,12 +12,14 @@ build/
 .settings
 .springBeans
 .sts4-cache
+.gradle
+build/
+
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
 *.iws
 *.iml
 *.ipr

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/privacy-post")
+@RequestMapping("/api/public/privacy-post")
 public class PrivacyPostController {
     @Autowired
     private IPrivacyPostService iPrivacyPostService;
