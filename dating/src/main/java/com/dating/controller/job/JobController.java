@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.job;
+package com.dating.controller.job;
 
 import com.dating.model.job.Job;
 import com.dating.service.job.IJobService;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/api/public/jobs")
 public class JobController {
     @Autowired
     private IJobService jobService;

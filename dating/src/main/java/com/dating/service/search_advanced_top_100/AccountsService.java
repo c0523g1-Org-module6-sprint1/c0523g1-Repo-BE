@@ -15,9 +15,9 @@ public class AccountsService  implements IAccountsService {
     private IAccountsRepository accountsRepository;
 
     @Override
-
-    public List<SearchAvancedDto> getAll(String name, String birthday, int genderId, int hobbyId, int locationId, int jobId, int hobbyDetailId) {
-        return null;
+    public List<SearchAvancedDto> getAll(String name, String birthday, int genderId,  int locationId, int jobId, int hobbyDetailId) {
+        return accountsRepository.findAll(name, birthday, genderId,  locationId, jobId,hobbyDetailId);
+//        return null;
     }
 
     @Override

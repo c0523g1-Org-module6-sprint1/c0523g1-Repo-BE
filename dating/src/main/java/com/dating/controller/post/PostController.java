@@ -87,6 +87,7 @@ public class PostController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteForAdmin(@PathVariable Integer id) {
         boolean check = iPostService.deleteForAdmin(id);

@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.top_100;
+package com.dating.controller.top_100;
 
 import com.dating.dto.top_100.TopHunderedDto;
 import com.dating.service.search_advanced_top_100.IAccountsService;
@@ -14,13 +14,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/top_hundered")
+@RequestMapping("/api/public/top_hundered")
 public class AccountTopController {
     @Autowired
     private IAccountsService accountsService;
 
     @GetMapping("")
-    public ResponseEntity<List<TopHunderedDto>> getAll() {
+    public ResponseEntity<List<TopHunderedDto>> displayTopHundered() {
         List<TopHunderedDto> accounts = accountsService.findAll();
         if (accounts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
