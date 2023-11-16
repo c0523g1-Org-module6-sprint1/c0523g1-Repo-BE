@@ -1,50 +1,85 @@
 package com.dating.config;
 
-import com.dating.jwt.JwtFilter;
-import com.dating.service.impl.AccountDetailServiceImpl;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AccountDetailServiceImpl accountDetailService;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private JwtFilter jwtFilter;
+    private UserDetailsService jwtUserDetailsService;
 
-    @Override
+    @Autowired
+    private JwtRequestFilter jwtFilter;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+
+    /**
+     * method authenticationManagerBean()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param N/A
+     * return authenticationManagerBean()
+     */
+
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * method passwordEncoder()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param N/A
+     * return new BCryptPasswordEncoder()
+     */
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
+
+    /**
+     * method configure()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param HttpSecurity
+     * return void
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**") // Chấp nhận mọi đường dẫn
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); }
+                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/api/member/**").hasAnyAuthority("MEMBER", "ADMIN")
+                .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated().and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 }

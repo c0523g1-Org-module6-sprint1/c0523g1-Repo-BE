@@ -19,4 +19,9 @@ public class Gender {
     private int id;
     private String name;
     private boolean isDeleted;
+
+    public Gender(int id, boolean isDeleted) {
+        this.id = id;
+        this.isDeleted = isDeleted;
+    }
 }
