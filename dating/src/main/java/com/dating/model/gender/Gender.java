@@ -20,4 +20,5 @@ public class Gender {
     private String name;
     @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private boolean isDeleted;
+
 }

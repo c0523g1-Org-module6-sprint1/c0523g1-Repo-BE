@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountTopController_getAll {
+public class AccountTopController_displayTopHundered {
     @Autowired
     private MockMvc mockMvc;
 
@@ -27,7 +27,7 @@ public class AccountTopController_getAll {
      */
 
     @Test
-    public void getAll_3() throws Exception {
+    public void displayTopHundered_5() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/public/top_hundered"))
@@ -35,8 +35,7 @@ public class AccountTopController_getAll {
                 .andExpect(status().is2xxSuccessful());
     }
     @Test
-    public void getAll_2() throws Exception {
-
+    public void displayTopHundered_6() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/public/top_hundered"))

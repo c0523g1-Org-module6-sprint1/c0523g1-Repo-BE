@@ -1,10 +1,12 @@
 package com.dating.HanhNTM_controller;
 
-import com.dating.dto.search_advanced.SearchAvancedDto;
+import com.dating.dto.search_advanced.SearchAdvanced;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -15,10 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountsController_getAll {
+public class AccountsController_searchAdvanced {
 
     @Autowired
     private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
 
     /**
      * method searchAdvanced
@@ -29,19 +32,19 @@ public class AccountsController_getAll {
      */
 
     @Test
-    public void getAll_1() throws Exception {
+    public void searchAdvanced_5() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/public/search_advanced/"))
+                                .get("/api/public/search_advanced"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
     @Test
-    public void getAll_4() throws Exception {
+    public void searchAdvanced_6() throws Exception {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/public/search_advanced/"))
+                                .get("/api/public/search_advanced"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$[0].name").value("Mỹ Hạnh"))
@@ -50,7 +53,30 @@ public class AccountsController_getAll {
                 .andExpect(jsonPath("$[0].job").value("it"));
     }
 
-    
+    @Test
+    public void searchAdvanced_1() throws Exception{
+        SearchAdvanced searchAdvanced = new SearchAdvanced();
+        searchAdvanced.setName("");
+        searchAdvanced.setAvatar("");
+        searchAdvanced.setLocation("");
+        searchAdvanced.setJob("");
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/public/search_advanced",searchAdvanced.getName(),searchAdvanced.getAvatar(),searchAdvanced.getLocation(),searchAdvanced.getJob()))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 //    @Test
 //    public void getAll_5() throws Exception {

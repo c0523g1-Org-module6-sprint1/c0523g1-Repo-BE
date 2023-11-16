@@ -15,13 +15,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/top_hundered")
+@RequestMapping("/api/public/top_hundered")
 public class AccountTopController {
     @Autowired
     private IAccountsService accountsService;
 
     @GetMapping("")
-    public ResponseEntity<List<TopHunderedDto>> getAll() {
+    public ResponseEntity<List<TopHunderedDto>> displayTopHundered() {
         List<TopHunderedDto> accounts = accountsService.findAll();
         if (accounts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
