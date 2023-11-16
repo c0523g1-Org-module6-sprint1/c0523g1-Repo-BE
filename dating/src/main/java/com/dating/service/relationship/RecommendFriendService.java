@@ -11,7 +11,22 @@ public class RecommendFriendService implements IRecommendFriendService{
     @Autowired
     private IRecommendFriendRepository recommendFriendRepository;
     @Override
-    public List<IRecommendFriendDto> findAllRecommendFriend() {
-        return recommendFriendRepository.findAllRecommendFriend();
+    public List<IRecommendFriendDto> findAllRecommendFriend(int accountID) {
+        return recommendFriendRepository.findAllRecommendFriend(accountID);
+    }
+
+    @Override
+    public List<IRecommendFriendDto> sortByJob(int accountID) {
+        return recommendFriendRepository.sortByJob(accountID);
+    }
+
+    @Override
+    public List<IRecommendFriendDto> sortByLocation(int accountID) {
+        return recommendFriendRepository.sortByLocation(accountID);
+    }
+
+    @Override
+    public List<IRecommendFriendDto> sortByHobby(int accountID) {
+        return recommendFriendRepository.sortByHobby(accountID);
     }
 }

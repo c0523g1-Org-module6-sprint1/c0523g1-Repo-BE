@@ -2,12 +2,11 @@ package com.dating.dto.relationship;
 
 public interface IInvitedFriendDto {
     Integer getId();
+    String getDateRequest();
 
     String getNameAccount();
 
-    String getDateRequest();
-
     String getAvatarAccount();
-boolean getIsDeleted();
+
 
 }

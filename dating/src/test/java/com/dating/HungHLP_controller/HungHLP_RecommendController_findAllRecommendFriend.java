@@ -13,41 +13,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class HungHLP_InvitedController_findAllInvitedFriend {
-
-    /**
-     * Param accountID
-     * description success display  invited friend list
-     * HungHLP 16-11-2023
-     * return invited friend list
-     *
-     * @throws Exception
-     */
-
+public class HungHLP_RecommendController_findAllRecommendFriend {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    public void findAll_5() throws Exception {
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders
-                                .get("/api/public/invited")
-                                .param("accountID", String.valueOf(1))
-                                .param("accountCheckId", String.valueOf(2)))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].nameAccount").value("Ronaldo delima"))
-                .andExpect(jsonPath("$[0].id").value(2))
-                .andExpect(jsonPath("$[0].avatarAccount").value("http://beedoctor.vn/wp-content/uploads/2020/03/ronaldo-beo-2.jpg"))
-                .andExpect(jsonPath("$[0].dateRequest").value("2023-10-11 00:00:00.0"));
-    }
-
-
     /**
-     * Invited Friend List
+     * Danh sach rong
      * Param accountID
      * HungHLP 15-11-2023
-     *
+     * @throws Exception
+     */
+
+    @Test
+    public void findAll_5() throws Exception {
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/public/recommend"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    /**
+     * list friend recommend
+     * Param accountID
+     * HungHLP 15-11-2023
      * @throws Exception
      */
     @Test
@@ -55,10 +45,15 @@ public class HungHLP_InvitedController_findAllInvitedFriend {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/public/invited"))
+                                .get("/api/public/recommend"))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$[0].nameAccount").value("Kaka"))
+                .andExpect(jsonPath("$[0].nameGender").value("male"))
+                .andExpect(jsonPath("$[0].avatarAccount").value("https://allimages.sgp1.digitaloceanspaces.com/tipeduvn/2022/08/1661163206_695_Tuyen-tap-hinh-nen-Kaka-full-HD-dep-khong-the.jpg"))
+                .andExpect(jsonPath("$[0].nameLocation").value("Hà Nội"))
+                .andExpect(jsonPath("$[0].jobAccount").value("doctor"))
+                .andExpect(jsonPath("$[0].hobbyAccount").value("music"));
 
     }
 }
