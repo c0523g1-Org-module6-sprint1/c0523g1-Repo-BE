@@ -34,13 +34,13 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "    FROM relationships rel " +
             "    JOIN relationship_status relta ON rel.relationship_status_id = relta.id " +
             "    WHERE rel.relationship_status_id = 2 " +
-            "        AND (rel.receiver_account_id = 1 XOR rel.sender_account_id = 1) " +
+            "        AND (rel.receiver_account_id = :idLogin XOR rel.sender_account_id = :idLogin) " +
             ") subquery ON acc.id = CASE " +
-            "    WHEN subquery.receiver_account_id = 1 THEN subquery.sender_account_id " +
+            "    WHEN subquery.receiver_account_id = :idLogin THEN subquery.sender_account_id " +
             "    ELSE subquery.receiver_account_id " +
             "END " +
             "WHERE acc.name LIKE CONCAT('%', :name, '%')",nativeQuery = true)
-    List<IFriendDto> findAllFriendByName(@Param("name") String name);
+    List<IFriendDto> findAllFriendByName(@Param("idLogin") Integer idLogin,@Param("name") String name);
 
     /**
      * method delete
@@ -63,4 +63,6 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
             "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin)",nativeQuery = true)
     void unFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
+
+
 }

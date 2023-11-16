@@ -31,12 +31,13 @@ public class FriendControler {
      * @param name : Select type to search
      * @return list friend management
      */
-    @GetMapping("")
+    @GetMapping("/{idLogin}")
     public ResponseEntity<?> findAll(
+            @PathVariable Integer idLogin,
             @RequestParam(value = "name", defaultValue = "") String name
-    ) {
+    ){
         List<IFriendDto> friendDtoList = new ArrayList<>();
-        friendDtoList = friendService.findAllFriendByName(name);
+        friendDtoList = friendService.findAllFriendByName(idLogin,name);
         if (name == null || name.equals("") ){
             return new ResponseEntity<>("Giá trị name truyền vào không thể null!", HttpStatus.BAD_REQUEST);
         }
