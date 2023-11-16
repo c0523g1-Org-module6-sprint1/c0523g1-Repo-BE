@@ -1,5 +1,6 @@
 package com.dating.repository.account;
 
+import com.dating.dto.account.AccountDTOs;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
 import com.dating.model.job.Job;
@@ -18,7 +19,6 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     /**
@@ -36,6 +36,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
 
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
+
     /**
      * author: TriVN
      * date: 13/11/2023
@@ -44,14 +45,20 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * @return HttpStatus
      */
 
-    @Query(value = "select acc.user_name as user_name, acc.regis_date as regis_date, acc.money as money,wd.fault_amount as fault_amount,wd.description as description, wd.date as date_warning, acct.name as type_account" +
-            "            from warning_details wd" +
-            "            JOIN warning w on wd.warning_id = w.id " +
-            "            JOIN accounts acc on wd.account_id = acc.id " +
-            "            join package_detail pd on pd.account_id = acc.id" +
-            "            join account_types acct on acct.id = pd.account_type_id" +
-            "            where user_name like :username and  acc.is_deleted = 0;", nativeQuery = true)
-    Page<Account> findAllAccount(Pageable pageable, @Param("username") String username);
+    @Query(value = " select acc.user_name as userName , " +
+            " acc.regis_date as regisDate , " +
+            " acc.money as money , " +
+            " wd.fault_amount as faultAmount " +
+            " ,wd.`description` as `description` " +
+            " , wd.`date` as dateWarning " +
+            " , acct.`name` as typeAccount " +
+            " from accounts acc " +
+            " join warning_details wd on acc.id = wd.account_id  " +
+            " JOIN warning w on wd.warning_id =  w.id " +
+            " join package_detail pd on acc.id = pd.account_id   " +
+            " join account_types acct on pd.account_types_id = acct.id  " +
+            " where acc.user_name like concat('%', :username, '%')  ", nativeQuery = true)
+    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username);
 
 
     /**
@@ -61,9 +68,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param String email
      * return Account
      */
-    @Query(value = "select * from accounts " +
-            "where email like :email " +
-            "and is_deleted = 0",
+    @Query(value = " select * from accounts " +
+            " where email like :email " +
+            " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByEmail(@Param("email") String email);
 
@@ -74,9 +81,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param String email
      * return Account
      */
-    @Query(value = "select * from accounts " +
-            "where id like :id " +
-            "and is_deleted = 0",
+    @Query(value = " select * from accounts " +
+            " where id = :id " +
+            " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountById(@Param("id") int id);
 
@@ -87,8 +94,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * param Account account
      * return Integer
      */
+    @Transactional
     @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id)\n" +
+    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id) " +
             "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id})", nativeQuery = true)
     Integer addNewAccount(Account account);
 
@@ -100,7 +108,10 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      *
      * @return HttpStatus
      */
-    @Query(value = "UPDATE accounts SET is_deleted = 1", nativeQuery = true)
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " +
+            " accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
     void deleteAccountId(@Param("id") Integer id);
 
     @Query(value = "SELECT * from genders where id = :id", nativeQuery = true)
@@ -111,19 +122,20 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(value = "select * from jobs where id = :id", nativeQuery = true)
     Job findJob(@Param("id") Integer jobId);
+
     /**
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
+     *
      * @return HttpStatus
      */
     @Transactional
     @Modifying
-    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
-            "birthday = :#{#account.birthday}, location = :#{#account.location.id}," +
-            "job = :#{#account.job.id}, hobbies = :#{#account" +
-            "////" +
-            "}", nativeQuery = true)
+    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}, " +
+            " birthday = :#{#account.birthday}, location = :#{#account.location.id}, " +
+            " job = :#{#account.job.id}, hobbies = :#{#account " +
+            " } ", nativeQuery = true)
     void EditAccount(@Param("account") Account account);
 }
 
