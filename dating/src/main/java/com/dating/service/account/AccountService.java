@@ -56,6 +56,18 @@ public class AccountService implements IAccountService {
     }
 
 
+    //hàm này LongTND triển khai
+    @Override
+    public Account findByID(Integer id) {
+        return accountRepository.findAccountByID(id);
+    }
+
+    @Override
+    public Account findAccountByUserName(String name) {
+        return accountRepository.getAccountByUserName(name);
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
