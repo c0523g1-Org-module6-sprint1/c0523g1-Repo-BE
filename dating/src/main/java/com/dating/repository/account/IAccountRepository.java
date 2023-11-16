@@ -123,6 +123,29 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             "////" +
             "}", nativeQuery = true)
     void EditAccount(@Param("account") Account account);
+
+    /**
+     * author: LongTND
+     * date :14/11/2023
+     * goal: get account by ID
+     * @return account
+     */
+    @Query(value = "select * from accounts " +
+            "where id = :id " +
+            "and is_deleted = 0",
+            nativeQuery = true)
+    Account findAccountByID(@Param("id") int id);
+
+    /**
+     * author: LongTND
+     * date: 14/11/2023
+     * goal: get account by user_name
+     * @return account
+     */
+    @Query(value = "select * from accounts where user_name = :user_name",nativeQuery = true)
+    Account getAccountByUserName(@Param("user_name") String userName);
 }
+
+
 
 

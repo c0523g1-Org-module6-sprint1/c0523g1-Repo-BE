@@ -18,4 +18,9 @@ public interface IAccountService extends UserDetailsService {
     void deleteAccount(Integer id);
     void updateAccount(Account account);
 
+    //LongTND triển khai
+    Account findByID(Integer id);
+
+    //LongTND triển khai
+    Account findAccountByUserName(String name);
 }
