@@ -4,6 +4,7 @@ HELP.md
 ### STS ###
 .DS_Store
 .idea
+.gitignore
 .apt_generated
 .classpath
 .factorypath
