@@ -1,9 +1,7 @@
 package com.dating.controller.hobby_detail;
 
 import com.dating.model.hobby_detail.HobbyDetail;
-import com.dating.model.location.Location;
 import com.dating.service.hobby_detail.IHobbyDetailService;
-import com.dating.service.location.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/hobbyDetails")
+@RequestMapping("/api/public/hobbyDetails")
 public class HobbyDetailController {
     @Autowired
     private IHobbyDetailService hobbyDetailService;

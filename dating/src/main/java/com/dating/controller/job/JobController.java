@@ -1,7 +1,6 @@
 package com.dating.controller.job;
 
 import com.dating.model.job.Job;
-import com.dating.model.location.Location;
 import com.dating.service.job.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/api/public/jobs")
 public class JobController {
     @Autowired
     private IJobService jobService;

@@ -18,5 +18,11 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private boolean isDeleted;
+
+    public Job(int id, boolean isDeleted) {
+        this.id = id;
+        this.isDeleted = isDeleted;
+    }
 }

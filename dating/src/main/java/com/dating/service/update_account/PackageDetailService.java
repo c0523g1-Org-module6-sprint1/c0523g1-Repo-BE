@@ -18,12 +18,12 @@ public class PackageDetailService implements IPackageDetailService{
     }
 
     @Override
-    public void setMoneyAccount(Account account, int newMoney) {
-
+    public void setMoneyAccount(int accountId, int newMoney) {
+        packageDetailRepository.setMoneyAccount(accountId, newMoney);
     }
 
     @Override
-    public void setAccountTypes(AccountTypes accountTypes) {
-
+    public void setAccountTypes(int accountId, int accountTypesId) {
+        packageDetailRepository.setAccountTypes(accountId, accountTypesId);
     }
 }

@@ -1,6 +1,5 @@
 package com.dating.commons.account;
 
-import org.springframework.security.access.method.P;
 import org.springframework.validation.Errors;
 
 public class ValidateAccount {
@@ -16,7 +15,6 @@ public class ValidateAccount {
     private static final String EMAIL = "email";
     private static final String EMAIL_REGEX  = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
-    private static final String CONFIRM_PASSWORD = "confirmPassword";
 
     public static void checkValidateAccountUserName(String name, Errors errors){
         if (name == null || name.trim().length() == 0){

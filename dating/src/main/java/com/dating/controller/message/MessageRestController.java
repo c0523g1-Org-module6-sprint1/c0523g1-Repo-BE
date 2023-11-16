@@ -1,10 +1,7 @@
 package com.dating.controller.message;
-
-import com.dating.dto.MessageDto;
 import com.dating.model.account.Account;
 import com.dating.model.message.Messages;
 import com.dating.service.message.IMessageService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,90 +12,90 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/message/")
+@RequestMapping("/api/public/message/")
 public class MessageRestController {
     @Autowired
     private IMessageService messageService;
-    @GetMapping("friendMessage/{id}")
-    public ResponseEntity<List<Messages>> getFriendMessage(Integer id){
-        List<Messages> messagesList = messageService.getMessage(id);
-        List<Account> friendList = messageService.getFriendList(id);
 
-        List<Messages> friendMess = new ArrayList<>();
-        List<Messages> unknowMess = new ArrayList<>();
+    private Integer accountIdfake = 1;
 
-        for (Messages messages : messagesList) {
-            Account accountCheck;
-            Account receiver = messages.getReceiverAccount();
-            Account sender = messages.getSenderAccount();
-
-            if (id == receiver.getId()) {
-                accountCheck = sender;
-            } else {
-                accountCheck = receiver;
-            }
-
-            if (friendList.contains(accountCheck)) {
-                friendMess.add(messages);
-            } else {
-                unknowMess.add(messages);
-            }
-        }
-        if (friendMess.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("account")
+    public ResponseEntity<Account> getOwnAccount(){
+        Account account = messageService.findAccountById(accountIdfake);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity<>(friendMess, HttpStatus.OK);
+            return new ResponseEntity<>(account, HttpStatus.OK);
         }
     }
-    @GetMapping("unknowMessage/{id}")
-    public ResponseEntity<List<Messages>> getUnknowMessage(Integer id){
-        List<Messages> messagesList = messageService.getMessage(id);
-        List<Account> friendList = messageService.getFriendList(id);
-
-        List<Messages> friendMess = new ArrayList<>();
-        List<Messages> unknowMess = new ArrayList<>();
-
-        for (Messages messages : messagesList) {
-            Account accountCheck;
-            Account receiver = messages.getReceiverAccount();
-            Account sender = messages.getSenderAccount();
-
-            if (id == receiver.getId()) {
-                accountCheck = sender;
-            } else {
-                accountCheck = receiver;
+    @GetMapping("chatlist")
+    public ResponseEntity<List<Account>> getFriendList(
+            @RequestParam(required = false, defaultValue = "") String name){
+        Account account = messageService.findAccountById(accountIdfake);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            List<Account> friendList = messageService.getFriendList(accountIdfake);
+            List<Account> result = new ArrayList<>();
+            for (Account friend : friendList) {
+                if (friend.getUserName().contains(name)){
+                    result.add(friend);
+                }
             }
-
-            if (friendList.contains(accountCheck)) {
-                friendMess.add(messages);
+            if (result.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
-                unknowMess.add(messages);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
-        if (friendMess.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("unknowlist")
+    public ResponseEntity<List<Messages>> getUnknowMess(){
+        Account account = messageService.findAccountById(accountIdfake);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity<>(unknowMess, HttpStatus.OK);
+            List<Messages> unknowMess = messageService.getUnknowList(accountIdfake);
+            if (unknowMess.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(unknowMess, HttpStatus.OK);
+            }
         }
     }
-    @GetMapping("friendList")
-    public ResponseEntity<List<Account>> getFriend(Integer id){
-        List<Account> friendList = messageService.getFriendList(id);
-        if (friendList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("Chatbox/{id}")
+    public ResponseEntity<?> checkContact(@PathVariable(required = false) Integer id){
+        Account account = messageService.findAccountById(accountIdfake);
+        if (id == null || account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity<>(friendList, HttpStatus.OK);
+            Messages messages = messageService.getMessageByAccountId(accountIdfake, id);
+            if (messages == null) {
+                Messages newMess = messageService.createMessage(accountIdfake, id);
+                return new ResponseEntity<>(newMess, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(messages, HttpStatus.OK);
+            }
         }
     }
-    @PostMapping("createMessage")
-    public ResponseEntity<?> createMessage(@RequestBody MessageDto messageDto){
-        if (messageDto == null) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteChatbox(@PathVariable(required = false) Integer id){
+        if (id != null){
+            messageService.deleteMessage(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            Messages messages = new Messages();
-            BeanUtils.copyProperties(messageDto, messages);
-
-            return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
+    @PostMapping("/setbusy")
+    public ResponseEntity<?> setBusyMode(@RequestParam(name = "busyMode", defaultValue = "false") Boolean busyMode){
+        Account account = messageService.findAccountById(accountIdfake);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            messageService.setBusy(busyMode, accountIdfake);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
 }
