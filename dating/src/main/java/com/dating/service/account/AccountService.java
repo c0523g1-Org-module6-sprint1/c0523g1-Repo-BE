@@ -1,4 +1,5 @@
 package com.dating.service.account;
+import com.dating.dto.account.AccountDTOs;
 import com.dating.model.account.Account;
 import com.dating.repository.account.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Page<Account> findAll(Pageable pageable, String username) {
+    public Page<AccountDTOs> findAll(Pageable pageable, String username) {
         return accountRepository.findAllAccount(pageable, username);
     }
 

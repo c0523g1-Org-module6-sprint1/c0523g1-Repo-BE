@@ -23,7 +23,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
@@ -42,7 +42,7 @@ public class AccountController {
     @GetMapping("/accounts")
     public ResponseEntity<?> showAccountList(
             @PageableDefault(size = 5) Pageable pageable,
-            @RequestParam(value = "username_like", defaultValue = "") String username
+            @RequestParam( defaultValue = "",required = false) String username
     ) {
         Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
@@ -57,8 +57,8 @@ public class AccountController {
      * @param id
      * @return
      */
-    @PatchMapping ("/accounts")
-    public ResponseEntity<?> handleWarning(@RequestParam Integer id) {
+    @PatchMapping ("/accounts/{id}")
+    public ResponseEntity<?> handleWarning(@PathVariable Integer id) {
         WarningDetails warningDetails = new WarningDetails();
        Account account = iAccountService.findAccountById(id);
        if (account == null){

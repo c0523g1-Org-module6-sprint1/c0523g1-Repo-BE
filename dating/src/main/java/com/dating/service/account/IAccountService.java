@@ -1,5 +1,6 @@
 package com.dating.service.account;
 
+import com.dating.dto.account.AccountDTOs;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
 import com.dating.model.hobby.Hobby;
@@ -12,9 +13,10 @@ public interface IAccountService extends UserDetailsService {
   
     Account findByUsername(String userName);
     Account findByEmail(String email);
-    void createNewAccount(Account account);
-    Page<Account> findAll(Pageable pageable,String username);
-  
+
+    Boolean createNewAccount(Account account);
+    Page<AccountDTOs> findAll(Pageable pageable, String username);
+
     void deleteAccount(Integer id);
     void findAccountById(Integer id);
     void updateAccount(Account account);
