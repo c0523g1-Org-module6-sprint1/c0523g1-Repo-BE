@@ -20,4 +20,6 @@ public interface ISendInvitedRepository extends JpaRepository<Relationships,Inte
                            @Param("status") int status,
                            @Param("sendAccountID") int sendAccountID,
                            @Param("receiveAccountID") int receiveAccountID);
+
+
 }
