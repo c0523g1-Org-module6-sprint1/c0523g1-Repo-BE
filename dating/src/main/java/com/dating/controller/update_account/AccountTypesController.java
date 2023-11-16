@@ -1,4 +1,4 @@
-package com.dating.controller.update_account;
+package com.dating.trivn_controller.update_account;
 
 import com.dating.model.update_account.AccountTypes;
 import com.dating.service.update_account.IAccountTypesService;

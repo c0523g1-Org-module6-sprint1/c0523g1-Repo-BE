@@ -10,6 +10,7 @@ public class LikeDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(columnDefinition = "datetime")
     private LocalDateTime date;
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted ;
