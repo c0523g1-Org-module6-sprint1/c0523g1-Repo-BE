@@ -12,31 +12,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MessageRestController_getChatList {
+public class MessageRestController_getChatbox {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getChatList_1 () throws Exception {
+    public void getChatBox_6() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/public/message/chatlist")
-                                .param("name", ""))
+                        MockMvcRequestBuilders.get("/api/public/message/Chatbox/{id}", ""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+    @Test
+    public void getChatBox_7() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/public/message/Chatbox/{id}", "999"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+    @Test
+    public void getChatBox_8() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/public/message/Chatbox/{id}", "69"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
     @Test
-    public void getChatList_2 () throws Exception {
+    public void getChatBox_9() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/public/message/chatlist")
-                                .param("name", "aaaa"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
-    @Test
-    public void getChatList_3 () throws Exception {
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/public/message/chatlist")
-                                .param("name", "a"))
+                        MockMvcRequestBuilders.get("/api/public/message/Chatbox/{id}", "2"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }

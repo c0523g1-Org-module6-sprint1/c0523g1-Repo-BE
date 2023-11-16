@@ -6,21 +6,30 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MessageRestController_getAccount {
+public class MessageRestController_setBusyMode {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getOwnAccount_1 () throws Exception {
+    public void setBusymode_10 () throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/public/message/account"))
+                        MockMvcRequestBuilders.get("/api/public/message/unknowlist/")
+                                .param("busyMode", "false"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
-
+    @Test
+    public void setBusymode_11 () throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/public/message/unknowlist/")
+                                .param("busyMode", "true"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
 }

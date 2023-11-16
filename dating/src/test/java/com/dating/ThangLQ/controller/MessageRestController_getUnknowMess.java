@@ -12,22 +12,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MessageRestController_getFriendList {
+public class MessageRestController_getUnknowMess {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getFriendList_5 () throws Exception {
+    public void getUnknowList_5 () throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/public/friends/",""))
+                        MockMvcRequestBuilders.get("/api/public/message/unknowlist/"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
-    @Test
-    public void getFriendList_6 () throws Exception {
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/public/friends/",""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is2xxSuccessful());
     }
 }
