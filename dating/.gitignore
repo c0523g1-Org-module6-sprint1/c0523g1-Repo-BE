@@ -11,6 +11,9 @@ HELP.md
 .settings
 .springBeans
 .sts4-cache
+.gradle
+build/
+
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
