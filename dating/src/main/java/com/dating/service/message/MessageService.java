@@ -22,16 +22,14 @@ public class MessageService implements IMessageService{
 
     @Override
     public List<Messages> getMessage(Integer accountId) {
-//        List<Messages> messagesList = messageRepository.findMessagesBySenderAccount_IdOrReceiverAccount_Id(accountId, accountId);
-//        return messagesList;
-        return null;
+        List<Messages> messagesList = messageRepository.findMessagesBySenderAccount_IdOrReceiverAccount_Id(accountId, accountId);
+        return messagesList;
     }
 
     @Override
     public List<Account> getFriendList(Integer accountId) {
-//        List<Account> friendList = friendListRepository.findAccountsByRelationshipsSet_SenderAccount_IdOrRelationshipsSet_ReceiverAccountAndGender_Id(accountId, accountId);
-//        return friendList;
-        return null;
+        List<Account> friendList = friendListRepository.findAccountsByRelationshipsSet_SenderAccount_IdOrRelationshipsSet_ReceiverAccountAndGender_Id(accountId, accountId);
+        return friendList;
     }
 
     @Override

@@ -39,12 +39,12 @@ public class AccountDto implements Validator {
 //    private Integer roleId;
 //    private Integer locationId;
 //    private Integer hobbyId;
-    private Gender gender;
-    private Job job;
-    private Role role;
-    private Location location;
-    private Hobby hobby;
-    private MessageStatus messageStatus;
+    private Integer gender;
+    private Integer job;
+    private Integer role;
+    private Integer location;
+//    private Hobby hobby;
+//    private MessageStatus messageStatus;
 
 
     @Override
