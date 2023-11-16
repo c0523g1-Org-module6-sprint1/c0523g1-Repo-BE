@@ -55,10 +55,9 @@ public class AccountService implements IAccountService{
         accountRepository.EditAccount(account);
     }
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
-
-
 }

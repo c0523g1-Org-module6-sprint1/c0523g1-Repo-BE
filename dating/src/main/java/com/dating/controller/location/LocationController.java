@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.location;
+package com.dating.controller.location;
 
 import com.dating.model.location.Location;
 import com.dating.service.location.ILocationService;

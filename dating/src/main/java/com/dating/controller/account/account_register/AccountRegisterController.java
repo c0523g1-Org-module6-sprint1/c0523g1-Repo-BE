@@ -1,2 +1,2 @@
-package com.dating.HauNH_controller.account.account_register;public class AccountRegisterController {
+package com.dating.controller.account.account_register;public class AccountRegisterController {
 }

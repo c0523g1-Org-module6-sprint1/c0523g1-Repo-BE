@@ -124,6 +124,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             "////" +
             "}", nativeQuery = true)
     void EditAccount(@Param("account") Account account);
+
 }
 
 

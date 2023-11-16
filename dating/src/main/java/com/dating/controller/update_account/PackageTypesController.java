@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.update_account;
+package com.dating.controller.update_account;
 
 import com.dating.model.update_account.PackageTypes;
 import com.dating.service.update_account.IPackageTypesService;
@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/packageTypes")
+@RequestMapping("/api/public/packageTypes")
 public class PackageTypesController {
     @Autowired
     private IPackageTypesService packageTypesService;
     @GetMapping("")
-    public ResponseEntity<List<PackageTypes>> getAll(){
+    public ResponseEntity<List<PackageTypes>> findAll(){
         List<PackageTypes> packageTypesList = packageTypesService.findAll();
+//        List<PackageTypes> packageTypesList = new ArrayList<>();
         if(packageTypesList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {

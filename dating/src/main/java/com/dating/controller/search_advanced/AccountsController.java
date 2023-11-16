@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.search_advanced;
+package com.dating.controller.search_advanced;
 
 import com.dating.model.account.Account;
 import com.dating.service.search_advanced_top_100.IAccountsService;

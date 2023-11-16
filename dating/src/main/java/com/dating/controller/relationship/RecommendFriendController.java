@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.relationship;
+package com.dating.controller.relationship;
 
 import com.dating.model.account.Account;
 import com.dating.model.relationship.RelationshipStatus;

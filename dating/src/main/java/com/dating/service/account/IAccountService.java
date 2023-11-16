@@ -17,5 +17,4 @@ public interface IAccountService extends UserDetailsService {
     Page<Account> findAll(Pageable pageable,String username);
     void deleteAccount(Integer id);
     void updateAccount(Account account);
-
 }

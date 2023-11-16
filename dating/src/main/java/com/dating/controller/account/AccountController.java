@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.account;
+package com.dating.controller.account;
 
 import com.dating.model.account.Account;
 import com.dating.service.account.IAccountService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/public/admin")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
@@ -29,6 +29,7 @@ public class AccountController {
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
+
 
 
 //    @PatchMapping("/personal-page/edit/{id}")

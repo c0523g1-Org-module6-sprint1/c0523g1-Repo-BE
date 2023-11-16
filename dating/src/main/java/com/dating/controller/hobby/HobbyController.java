@@ -1,4 +1,4 @@
-package com.dating.HauNH_controller.hobby;
+package com.dating.controller.hobby;
 
 import com.dating.model.hobby.Hobby;
 import com.dating.service.hobby.IHobbyService;
