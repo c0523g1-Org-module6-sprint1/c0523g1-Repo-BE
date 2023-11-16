@@ -8,6 +8,7 @@ build/
 ### STS ###
 .DS_Store
 .idea
+.gradle
 .apt_generated
 .classpath
 .factorypath
