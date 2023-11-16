@@ -33,6 +33,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "accounts")
+
+
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +58,7 @@ public class Account {
     private String regisDate;
     @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = false)
     private String avatar;
-    @Column(name = "expire",columnDefinition = "date",nullable = false)
+    @Column(name = "expire",columnDefinition = "date")
     private String expire;
     @Column(name = "marital_status",columnDefinition = "varchar(255)",nullable = false)
     private String maritalStatus;
@@ -120,8 +123,6 @@ public class Account {
     private Set<LikeDetail>likeDetails;
 
 
- 
-  
     @JsonBackReference
     @OneToMany(mappedBy = "accountSender")
     private Set<GiftRecord> giftRecords;

@@ -1,6 +1,5 @@
 package com.dating.controller.location;
 
-import com.dating.model.gender.Gender;
 import com.dating.model.location.Location;
 import com.dating.service.location.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
