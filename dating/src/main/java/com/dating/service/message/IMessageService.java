@@ -4,8 +4,14 @@ import com.dating.model.message.Messages;
 import java.util.List;
 
 public interface IMessageService {
+    Account findAccountById(Integer id);
     List<Messages> getMessage(Integer accountId);
     List<Account> getFriendList(Integer accountId);
+    List<Messages> getUnknowList(Integer accountId);
     void setBusy(Boolean isBusy, Integer accountId);
-    void createMessage (Messages messages);
+    Messages createMessage (Integer ownAccountId, Integer friendAccountId);
+    void deleteMessage (Integer messagesId);
+    Messages getMessageById (Integer messageId);
+    Messages getMessageByAccountId (Integer ownAccountId, Integer friendAccountId);
+
 }
