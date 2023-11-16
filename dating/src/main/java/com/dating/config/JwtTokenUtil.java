@@ -1,5 +1,6 @@
 package com.dating.config;
 
+import com.dating.model.account.Account;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.Serializable;

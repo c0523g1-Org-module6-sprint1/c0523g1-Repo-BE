@@ -12,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
@@ -24,9 +23,6 @@ import javax.validation.Valid;
 @CrossOrigin("*")
 @RequestMapping("/api/public")
 public class SecurityController {
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -45,7 +41,7 @@ public class SecurityController {
      * Create ThienBB
      * Date 13-11-2023
      * param LoginRequestDto
-     * return JwtResponse
+     * return Jwt string
      */
     @PostMapping("/login")
     public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequestDto loginRequestDto,
@@ -60,22 +56,21 @@ public class SecurityController {
 
         try {
             Account account = this.
-                    securityService.findByUsername(loginRequest.getUsername())
+                    securityService.findByUsername(loginRequest.getUsername().toLowerCase())
                     .orElseThrow(() -> new IllegalArgumentException());
 
             if (account != null) {
-//                passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())
-                if (account.getPassword().contains(loginRequest.getPassword())) {
+                if (passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())) {
                     UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(account.getUserName());
-                    String jwtToken = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok().body(new JwtResponse(jwtToken));
+                    String jwt = jwtTokenUtil.generateToken(userDetails);
+                    return ResponseEntity.ok().body(new JwtResponse(jwt));
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            System.out.println("Exception while get account by username - controller method");
+            System.out.println("Exception while get account by username in controller method");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
