@@ -52,8 +52,10 @@ public class AccountService implements IAccountService {
 
 
     public void updateAccount(Account account) {
-        accountRepository.EditAccount(account);
+        accountRepository.editAccount(account);
     }
+
+
 
 
     //hàm này LongTND triển khai
