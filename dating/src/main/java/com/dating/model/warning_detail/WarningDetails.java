@@ -44,4 +44,7 @@ public class WarningDetails {
         this.warning = warning;
         this.account = account;
     }
+    public void incrementFaultAmount() {
+        faultAmount++;
+    }
 }

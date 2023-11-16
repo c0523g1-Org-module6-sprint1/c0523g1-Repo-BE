@@ -1,7 +1,6 @@
 package com.dating.controller.top_100;
 
 import com.dating.dto.top_100.TopHunderedDto;
-import com.dating.model.account.Account;
 import com.dating.service.search_advanced_top_100.IAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
