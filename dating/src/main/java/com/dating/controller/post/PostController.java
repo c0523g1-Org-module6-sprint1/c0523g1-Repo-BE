@@ -1,5 +1,6 @@
 package com.dating.controller.post;
 
+import com.dating.dto.post.PostDto;
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @CrossOrigin("*")
-@RequestMapping("/newsfeed/post")
+@RestController
+@RequestMapping("/api/public/newsfeed/post")
 public class PostController {
     @Autowired
     private IPostService iPostService;
@@ -36,7 +37,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/{accountId}")
+    @GetMapping("/account/{accountId}")
     public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable Integer accountId) {
         List<Post> posts = iPostService.showListOfAnAccount(accountId);
         if (posts.isEmpty()) {
@@ -66,7 +67,7 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{accountId}/{postId}")
+    @PatchMapping("/post-owner/{accountId}/{postId}")
     public ResponseEntity<String> updateForThePostOwner(@PathVariable Integer accountId, @PathVariable Integer postId, @RequestBody Post post) {
         boolean check = iPostService.updateForThePostOwner(post.getContent(), post.getImage(), accountId, postId, post.getPrivacyPost().getId());
         if (check) {
@@ -76,9 +77,9 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{postId}")
-    public ResponseEntity<String> updateForAdmin(@PathVariable Integer postId, @RequestBody Post post) {
-        boolean check = iPostService.updateForAdmin(post.getContent(), post.getImage(), postId, post.getPrivacyPost().getId());
+    @PatchMapping("/admin/{postId}")
+    public ResponseEntity<String> updateForAdmin(@PathVariable Integer postId, @RequestBody PostDto postDto) {
+        boolean check = iPostService.updateForAdmin(postDto.getContent(), postDto.getImage(), postId, postDto.getPrivacyPostId());
         if (check) {
             return ResponseEntity.status(HttpStatus.OK).body("Updated Created");
         } else {

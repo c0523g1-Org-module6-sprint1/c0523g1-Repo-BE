@@ -14,7 +14,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "datetime", nullable = false)
+    @Column(columnDefinition = "datetime")
     private LocalDateTime date;
 
     @Column(columnDefinition = "longtext")
@@ -41,15 +41,19 @@ public class Post {
     public Post() {
     }
 
-    public Post(LocalDateTime date, String content, String image, boolean isDeleted, PrivacyPost privacyPost, Account account, Set<LikeDetail> likeDetails, Set<Comments> comments) {
+    public Post(LocalDateTime date, String content, String image) {
+        this.date = date;
+        this.content = content;
+        this.image = image;
+    }
+
+    public Post(LocalDateTime date, String content, String image, boolean isDeleted, PrivacyPost privacyPost, Account account) {
         this.date = date;
         this.content = content;
         this.image = image;
         this.isDeleted = isDeleted;
         this.privacyPost = privacyPost;
         this.account = account;
-        this.likeDetails = likeDetails;
-        this.comments = comments;
     }
 
     public Integer getId() {
