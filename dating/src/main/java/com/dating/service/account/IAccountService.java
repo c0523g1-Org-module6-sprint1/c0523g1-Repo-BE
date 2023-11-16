@@ -1,6 +1,7 @@
 package com.dating.service.account;
 
 import com.dating.dto.account.AccountDTOs;
+import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +24,5 @@ public interface IAccountService extends UserDetailsService {
 
     //LongTND triển khai
     Account findAccountByUserName(String name);
+    Account setEditAccount(AccountDto accountDto);
 }
