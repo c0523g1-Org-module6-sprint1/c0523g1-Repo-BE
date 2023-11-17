@@ -1,5 +1,6 @@
-package com.dating.trivn_controller.search_name;
+package com.dating.controller.search_name;
 
+import com.dating.dto.search_name.MainPageDto;
 import com.dating.dto.search_name.SearchNameDto;
 import com.dating.service.search_name.ISearchNameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,32 @@ import java.util.List;
 @RequestMapping("/api")
 public class SearchNameController {
     @Autowired
-    private ISearchNameService accountService;
+    private ISearchNameService searchNameService;
+
+    /**
+     * method searchByName
+     * Create LienDTM
+     * Date 13-11-2023
+     * param String name
+     * return new Object: SearchNameDto
+     */
     @GetMapping("/public/search-name/{name}")
     public ResponseEntity<List<SearchNameDto>> searchByName(@PathVariable String name){
-        List<SearchNameDto> accounts = accountService.searchByName(name);
+        List<SearchNameDto> accounts = searchNameService.searchByName(name);
         if(accounts.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            em hay làm NO_CONTENT nhưng để khớp với checklist nên để BAD_REQUEST
         }else {
             return new ResponseEntity<>(accounts,HttpStatus.OK);
+        }
+    }
+    @GetMapping("/public/search-name/user/{userName}")
+    public ResponseEntity<MainPageDto> findByUserName(@PathVariable String userName){
+        MainPageDto mainPageDto = searchNameService.findByUserName(userName);
+        if(mainPageDto == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else {
+            return new ResponseEntity<>(mainPageDto,HttpStatus.OK);
         }
     }
 }

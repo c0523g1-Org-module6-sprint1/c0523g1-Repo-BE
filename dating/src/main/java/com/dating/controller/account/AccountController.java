@@ -1,9 +1,13 @@
 package com.dating.controller.account;
 
+
+import com.dating.dto.account.AccountDTOs;
+import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
 import com.dating.service.warning_detail.IWarningDetailService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +26,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
@@ -39,15 +43,30 @@ public class AccountController {
      * @return
      */
     @GetMapping("/accounts")
-    public ResponseEntity<Page<Account>> showAccountList(
+    public ResponseEntity<?> showAccountList(
             @PageableDefault(size = 5) Pageable pageable,
-            @RequestParam(value = "username_like", defaultValue = "") String username
+            @RequestParam( defaultValue = "",required = false) String username
     ) {
-        Page<Account> accountList = iAccountService.findAll(pageable, username);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+
+
+    @PatchMapping("/api/personal-page/edit/{id}")
+    public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
+
+        Account account = iAccountService.findAccountById(id);
+
+        if (account == null || accountDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        BeanUtils.copyProperties(accountDto, account);
+        iAccountService.setEditAccount(accountDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -57,10 +76,10 @@ public class AccountController {
      * @return
      */
     @PatchMapping ("/accounts/{id}")
-    public ResponseEntity<?> handleWarning(@RequestParam Integer id) {
+    public ResponseEntity<?> handleWarning(@PathVariable Integer id) {
         WarningDetails warningDetails = new WarningDetails();
        Account account = iAccountService.findAccountById(id);
-       if (account != null){
+       if (account == null){
            warningDetails.setAccount(account);
            warningDetails.incrementFaultAmount();
        }

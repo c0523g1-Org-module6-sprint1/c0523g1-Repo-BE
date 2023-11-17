@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.post;
+package com.dating.controller.post;
 
 import com.dating.model.post.PrivacyPost;
 import com.dating.service.post.IPrivacyPostService;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/privacy-post")
+@RequestMapping("/api/public/privacy-post")
 public class PrivacyPostController {
     @Autowired
     private IPrivacyPostService iPrivacyPostService;
