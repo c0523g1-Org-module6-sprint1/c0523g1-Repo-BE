@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.post;
+package com.dating.controller.post;
 
 import com.dating.model.post.PrivacyPost;
 import com.dating.service.post.IPrivacyPostService;

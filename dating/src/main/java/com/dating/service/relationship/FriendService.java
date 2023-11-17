@@ -12,8 +12,8 @@ public class FriendService implements IFriendService{
     @Autowired
     private IRelationshipRepository iRelationshipRepository;
     @Override
-    public List<IFriendDto> findAllFriendByName(String name) {
-        return iRelationshipRepository.findAllFriendByName(name);
+    public List<IFriendDto> findAllFriendByName(Integer idLogin,String name) {
+        return iRelationshipRepository.findAllFriendByName(idLogin,name);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.hobby_detail;
+package com.dating.controller.hobby_detail;
 
 import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.service.hobby_detail.IHobbyDetailService;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/hobbyDetails")
+@RequestMapping("/api/public/hobbyDetails")
 public class HobbyDetailController {
     @Autowired
     private IHobbyDetailService hobbyDetailService;

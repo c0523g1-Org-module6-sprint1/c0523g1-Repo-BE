@@ -1,4 +1,4 @@
-package com.dating.trivn_controller.gender;
+package com.dating.controller.gender;
 
 import com.dating.model.gender.Gender;
 import com.dating.service.gender.IGenderService;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/genders")
+@RequestMapping("/api/public/genders")
 public class GenderController {
     @Autowired
     private IGenderService genderService;
