@@ -47,7 +47,7 @@ public class AccountController {
             @PageableDefault(size = 5) Pageable pageable,
             @RequestParam( defaultValue = "",required = false) String username
     ) {
-        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
+        Page<Account> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
