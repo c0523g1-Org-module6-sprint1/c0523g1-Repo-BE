@@ -2,14 +2,10 @@ package com.dating.service.message;
 
 import com.dating.model.account.Account;
 import com.dating.model.message.Messages;
-import com.dating.model.relationship.Relationships;
 import com.dating.repository.message.IMessageAccountRepository;
-import com.dating.repository.message.IMessageRelationshipRepository;
 import com.dating.repository.message.IMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +14,6 @@ public class MessageService implements IMessageService{
     private IMessageRepository messageRepository;
     @Autowired
     private IMessageAccountRepository messageAccountRepository;
-    @Autowired
-    private IMessageRelationshipRepository messageRelationshipRepository;
 
     @Override
     public Account findAccountById(Integer id) {
@@ -33,31 +27,17 @@ public class MessageService implements IMessageService{
     }
 
     @Override
-    public List<Account> getFriendList(Integer accountId) {
-
-        List<Relationships> relationships = messageRelationshipRepository.findFriendListByAccountId(accountId);
-        List<Account> result = new ArrayList<>();
-        for (Relationships value : relationships) {
-            if (value.getSenderAccount().getId() == accountId) {
-                result.add(value.getReceiverAccount());
-            } else {
-                result.add(value.getSenderAccount());
-            }
-        }
+    public List<Account> getFriendList(Integer accountId, String name) {
+        String searchName = "%" + name + "%";
+        List<Account> result = messageAccountRepository.getFriendList(accountId, searchName);
         return result;
     }
 
     @Override
-    public List<Messages> getUnknowList(Integer accountId) {
-        List<Account> friendList = getFriendList(accountId);
-        List<Messages> messagesList = getMessage(accountId);
-        List<Messages> unknowmess = new ArrayList<>();
-        for (Messages messages : messagesList){
-            if (!friendList.contains(messages.getSenderAccount()) && (messages.getSenderAccount().getId() != accountId)){
-                unknowmess.add(messages);
-            }
-        }
-        return unknowmess;
+    public List<Account> getUnknowList(Integer accountId, String name) {
+        String searchName = "%" + name + "%";
+        List<Account> result = messageAccountRepository.getUnknowList(accountId, searchName);
+        return result;
 
     }
 
@@ -75,11 +55,9 @@ public class MessageService implements IMessageService{
 
     @Override
     public Messages createMessage(Integer ownAccountId, Integer friendAccountId) {
-        String path;
+        String path = "mess-" + friendAccountId + "-" + ownAccountId;
         if (ownAccountId < friendAccountId) {
             path = "mess-" + ownAccountId + "-" + friendAccountId;
-        } else {
-            path = "mess-" + friendAccountId + "-" + ownAccountId;
         }
         messageRepository.createMessage(ownAccountId, friendAccountId, path);
         Messages newMess = messageRepository.getLastMess();
