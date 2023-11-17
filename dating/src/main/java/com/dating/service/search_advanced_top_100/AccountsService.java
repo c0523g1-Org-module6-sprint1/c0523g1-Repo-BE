@@ -16,7 +16,9 @@ public class AccountsService implements IAccountsService {
 
     @Override
     public List<SearchAvancedDto> getAll(SearchAdvanced searchAdvanced) {
-        return accountsRepository.findAll("%" + searchAdvanced.getName() + "%", searchAdvanced.getBirthdayFrom(), searchAdvanced.getBirthdayEnd(), searchAdvanced.getGender(), searchAdvanced.getLocation(), searchAdvanced.getJob(), searchAdvanced.getHobby());
+        return accountsRepository.findAll("%" + searchAdvanced.getName() + "%", searchAdvanced.getBirthdayFrom(),
+                searchAdvanced.getBirthdayEnd(), searchAdvanced.getGender(), searchAdvanced.getLocation(), searchAdvanced.getJob(),
+                searchAdvanced.getHobby());
     }
 
     @Override

@@ -13,5 +13,5 @@ public interface TopHunderedDto {
      String getAvatar();
      String  getAccountTypes();
      double getMoney();
-
+int getCountLike();
 }

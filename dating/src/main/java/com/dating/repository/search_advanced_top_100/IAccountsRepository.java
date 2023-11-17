@@ -31,14 +31,24 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
                                    @Param("hobbyDetailId") int hobbyDetailId);
 
     @Transactional
-    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as account_type, accounts.money, count(like_detail.id) AS count_like " +
+    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.money as money, count(like_detail.id) AS countLike " +
             " FROM accounts " +
-            " JOIN package_detail ON accounts.id = package_detail.account_id " +
-            " JOIN account_types ON package_detail.account_types_id = account_types.id " +
-            " JOIN like_detail ON like_detail.account_id = accounts.id " +
+            " left JOIN package_detail ON accounts.id = package_detail.account_id " +
+            " left JOIN account_types ON package_detail.account_types_id = account_types.id " +
+            " left JOIN like_detail ON like_detail.account_id = accounts.id " +
             " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.money " +
-            " ORDER BY count_like DESC " +
+            " ORDER BY countLike DESC " +
             " LIMIT 100 ",
             nativeQuery = true)
     List<TopHunderedDto> findAllByAccount();
+//    @Transactional
+//    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.money as money" +
+//            " FROM accounts " +
+//            " JOIN package_detail ON accounts.id = package_detail.account_id " +
+//            " JOIN account_types ON package_detail.account_types_id = account_types.id " +
+//            " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.money " +
+//            " ORDER BY money DESC " +
+//            " LIMIT 100 ",
+//            nativeQuery = true)
+//    List<TopHunderedDto> findAllByAccount();
 }
