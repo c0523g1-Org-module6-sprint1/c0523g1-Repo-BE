@@ -2,6 +2,9 @@ package com.dating.commons.account;
 
 import org.springframework.validation.Errors;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class ValidateAccount {
     private ValidateAccount(){
         throw new IllegalArgumentException("Utility Class");
@@ -13,6 +16,7 @@ public class ValidateAccount {
     private static final String USER_NAME = "userName";
     private static final String PASSWORD = "password";
     private static final String EMAIL = "email";
+    private static final String BIRTHDAY = "birthday";
     private static final String EMAIL_REGEX  = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
 
@@ -46,6 +50,15 @@ public class ValidateAccount {
             errors.rejectValue(EMAIL,"",CHAR_LENGTH_GREATER_HUNDRED);
         } else if (!email.matches(EMAIL_REGEX)) {
             errors.rejectValue(EMAIL,"","Bạn đã nhập sai định dạng email");
+        }
+    }
+    public static void checkValidateAccountBirthday(String birthday,Errors errors){
+        if (birthday == null){
+            errors.rejectValue(BIRTHDAY,"","Vui lòng bổ sung ngày sinh");
+        } else if (birthday.trim().equals("")) {
+            errors.rejectValue(BIRTHDAY,"","Vui lòng nhập ngày sinh");
+        } else if (!LocalDate.now().minusYears(18).isAfter(LocalDate.parse(birthday)) || LocalDate.now().minusYears(18).isEqual(LocalDate.parse(birthday))) {
+            errors.rejectValue(BIRTHDAY,"","Ngày sinh chưa đủ 18 tuổi");
         }
     }
 }
