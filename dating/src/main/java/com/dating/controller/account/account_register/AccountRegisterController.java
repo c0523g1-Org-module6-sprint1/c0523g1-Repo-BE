@@ -55,22 +55,6 @@ public class AccountRegisterController {
             return new ResponseEntity<>("Email đã tồn tại", HttpStatus.OK);
         } else {
             Account account = new Account();
-//            newAccount.setUserName(accountDto.getUserName());
-//            newAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-//            newAccount.setBirthday(accountDto.getBirthday());
-//            newAccount.setEmail(accountDto.getEmail());
-//            Gender gender = accountService.findGender(accountDto.getGenderId());
-//            Location location = accountService.findLocation(accountDto.getLocationId());
-//            Job job = accountService.findJob(accountDto.getJobId());
-//            newAccount.setGender(gender);
-//            newAccount.setLocation(location);
-//            newAccount.setJob(job);
-//            Boolean checkAddNewAccount = accountService.createNewAccount(newAccount,"ROLE_MEMBER");
-//            if (!Boolean.TRUE.equals(checkAddNewAccount)) {
-//                return new ResponseEntity<>("Đăng kí thất bại, vui lòng thử lại", HttpStatus.OK);
-//            }
-//            return new ResponseEntity<>(newAccount, HttpStatus.ACCEPTED);
-
             BeanUtils.copyProperties(accountDto,account);
             account.setIsDeleted(false);
             account.setGender(new Gender(accountDto.getGender(),false));
