@@ -1,6 +1,9 @@
 package com.dating.repository.relationship;
 
+import com.dating.dto.relationships.IRelationshipsDTO;
+import com.dating.model.relationship.RelationshipStatus;
 import com.dating.model.relationship.Relationships;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +23,9 @@ public interface ISendInvitedRepository extends JpaRepository<Relationships,Inte
                            @Param("status") int status,
                            @Param("sendAccountID") int sendAccountID,
                            @Param("receiveAccountID") int receiveAccountID);
+
+
+    @Query(value = "select * from relationships where sender_account_id = :idSent and receiver_account_id = :idReceiver",nativeQuery = true)
+    Relationships getRelationshipsStatus(@Param("idSent") int idSent, @Param("idReceiver") int idReceiver );
+
 }

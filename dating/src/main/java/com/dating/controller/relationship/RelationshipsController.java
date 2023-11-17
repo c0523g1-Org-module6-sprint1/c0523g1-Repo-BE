@@ -1,5 +1,6 @@
 package com.dating.controller.relationship;
 
+import com.dating.dto.relationships.IRelationshipsDTO;
 import com.dating.dto.relationships.RelationshipsDTO;
 import com.dating.model.account.Account;
 import com.dating.model.relationship.RelationshipStatus;
@@ -35,25 +36,25 @@ public class RelationshipsController {
      * @param relationshipsDTO
      * @return status
      */
-    @PostMapping("/api/sent-invite/")
+    @PostMapping("/api/public/sent-invite/")
     public ResponseEntity<?> saveInviteFriend(@RequestBody RelationshipsDTO relationshipsDTO){
 
-        if (relationshipsDTO == null || relationshipsDTO.getReceiverAccount() == null || relationshipsDTO.getSendAccount() == null){
+        if (relationshipsDTO == null || relationshipsDTO.getSendAccount() == null || relationshipsDTO.getSendAccount() == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Relationships relationships = new Relationships();
         BeanUtils.copyProperties(relationshipsDTO,relationships);
         Account sendAccount = new Account();
-        sendAccount.setId(relationshipsDTO.getSendAccount().getId());
+        sendAccount.setId(relationshipsDTO.getSendAccount());
         Account receiverAccount = new Account();
-        receiverAccount.setId(relationshipsDTO.getReceiverAccount().getId());
+        receiverAccount.setId(relationshipsDTO.getReceiverAccount());
         relationships.setSenderAccount(sendAccount);
         relationships.setReceiverAccount(receiverAccount);
         RelationshipStatus relationshipStatus = relationshipStatusService.findStatusByID(1);
         relationships.setRelationshipStatus(relationshipStatus);
         relationships.setDateRequest(LocalDateTime.now());
         sendInvitedService.saveInvited(relationships);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
@@ -63,7 +64,7 @@ public class RelationshipsController {
      * @Param id
      * @Return Account
      */
-    @GetMapping("/api/personal-page/{id}")
+    @GetMapping("/api/public/personal-page/{id}")
     public ResponseEntity<Account> findAccountByID(@PathVariable Integer id){
         Account account = accountService.findByID(id);
         if (account == null){
@@ -72,5 +73,38 @@ public class RelationshipsController {
         return new ResponseEntity<>(account,HttpStatus.OK);
     }
 
+    /**
+     * Method findAccountByUserName
+     * Create by LongTND
+     * Date 15/11/2023
+     * @Param userName
+     * @Return Account
+     */
+    @GetMapping("/api/public/{name}")
+    public ResponseEntity<Account> findAccountByUserName(@PathVariable String name){
+        Account account = accountService.findAccountByUserName(name);
+        if (account == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(account,HttpStatus.OK);
+    }
+
+    /**
+     * Method getStatusRelationships
+     * Create by LongTND
+     * Date 16/11/2023
+     * @Param null
+     * @Return status ID
+     */
+
+    @GetMapping("/api/public/status/{idSent}/{idReceiver}")
+    public ResponseEntity<Relationships> getRelationshipStatus(@PathVariable("idSent") int idSent, @PathVariable("idReceiver") int idReceiver){
+        Relationships relationships =sendInvitedService.getRelationshipsStatus(idSent,idReceiver);
+        if (relationships == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(relationships,HttpStatus.OK);
+
+    }
 
 }

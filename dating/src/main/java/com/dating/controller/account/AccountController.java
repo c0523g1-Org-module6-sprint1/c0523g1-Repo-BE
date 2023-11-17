@@ -1,10 +1,13 @@
 package com.dating.controller.account;
 
+
 import com.dating.dto.account.AccountDTOs;
+import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
 import com.dating.service.warning_detail.IWarningDetailService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,6 +52,21 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+
+
+    @PatchMapping("/api/personal-page/edit/{id}")
+    public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
+
+        Account account = iAccountService.findAccountById(id);
+
+        if (account == null || accountDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        BeanUtils.copyProperties(accountDto, account);
+        iAccountService.setEditAccount(accountDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**

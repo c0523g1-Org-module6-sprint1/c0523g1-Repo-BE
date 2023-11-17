@@ -9,6 +9,7 @@ public interface IMessageService {
     List<Account> getFriendList(Integer accountId, String name);
     List<Account> getUnknowList(Integer accountId, String name);
     void setBusy(Boolean isBusy, Integer accountId);
+
     Messages createMessage (Integer ownAccountId, Integer friendAccountId);
     void deleteMessage (Integer messagesId);
     Messages getMessageById (Integer messageId);

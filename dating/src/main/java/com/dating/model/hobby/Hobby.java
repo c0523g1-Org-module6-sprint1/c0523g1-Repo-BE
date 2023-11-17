@@ -21,9 +21,14 @@ public class Hobby {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private boolean isDeleted;
 
     @JsonBackReference
     @OneToMany(mappedBy = "hobby")
     private Set<HobbyDetail> hobbyDetailSet;
+
+    public Hobby(int id) {
+        this.id = id;
+    }
 }

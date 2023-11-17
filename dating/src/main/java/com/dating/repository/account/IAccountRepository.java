@@ -130,16 +130,27 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
-     *
-     * @return HttpStatus
+     * @return void
      */
     @Transactional
     @Modifying
-    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}, " +
-            " birthday = :#{#account.birthday}, location = :#{#account.location.id}, " +
-            " job = :#{#account.job.id}, hobbies = :#{#account " +
-            " } ", nativeQuery = true)
-    void EditAccount(@Param("account") Account account);
+    @Query(value = "update accounts set name = :#{#account.name}, gender_id = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location_id = :#{#account.location.id}, avatar = :#{#account.avatar}" +
+            "job_id = :#{#account.job.id} where id = :#{#account.id} ", nativeQuery = true)
+    void editAccount(@Param("account") Account account);
+
+    @Transactional
+    @Modifying
+//    @Query(value = "INSERT INTO `accounts` (`birthday`, `email`, `password`, `user_name`, `gender_id`, `job_id`, `location_id`) " +
+//            "VALUES (:birthday, :email, :password, :userName, :genderId, :jobId, :locationId);",nativeQuery = true)
+//    void createNewAccount(String userName, String password, String birthday, int genderId, int jobId,int locationId, String email);
+//    @Query(value = "insert into accounts (user_name,password,email,birthday,gender_id,location_id,job_id) " +
+//            "values (:#{#account.userName},:#{#account.password},:#{#account.email},:#{#account.birthday}," +
+//            ":#{#account.gender.id}),:#{#account.location.id},:#{#account.job.id}", nativeQuery = true)
+    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id) \n" +
+            "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})",nativeQuery = true)
+    Integer createNewAccount(Account account);
 
 
     /**
