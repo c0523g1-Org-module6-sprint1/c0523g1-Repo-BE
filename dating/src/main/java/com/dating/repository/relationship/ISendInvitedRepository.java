@@ -3,6 +3,7 @@ package com.dating.repository.relationship;
 import com.dating.dto.relationships.IRelationshipsDTO;
 import com.dating.model.relationship.RelationshipStatus;
 import com.dating.model.relationship.Relationships;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
