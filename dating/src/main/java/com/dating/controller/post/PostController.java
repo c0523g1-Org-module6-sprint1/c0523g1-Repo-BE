@@ -37,9 +37,9 @@ public class PostController {
         }
     }
 
-    @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable Integer accountId) {
-        List<Post> posts = iPostService.showListOfAnAccount(accountId);
+    @GetMapping("/account/{userName}")
+    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable String userName) {
+        List<Post> posts = iPostService.showListOfAnAccount(userName);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
