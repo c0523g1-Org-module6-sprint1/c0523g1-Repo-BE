@@ -34,8 +34,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> showListOfAnAccount(Integer accountId) {
-        return iPostRepository.showListOfAnAccount(accountId);
+    public List<Post> showListOfAnAccount(String userName) {
+        return iPostRepository.showListOfAnAccount(userName);
     }
 
     @Override

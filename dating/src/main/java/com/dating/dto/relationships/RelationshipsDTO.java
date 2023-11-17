@@ -14,9 +14,9 @@ public class RelationshipsDTO {
 
     private Integer id;
 
-    private AccountDTO sendAccount;
+    private Integer sendAccount;
 
-    private AccountDTO receiverAccount;
+    private Integer receiverAccount;
 
 
 
