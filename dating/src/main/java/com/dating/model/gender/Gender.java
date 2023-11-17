@@ -25,4 +25,8 @@ public class Gender {
         this.id = id;
         this.isDeleted = isDeleted;
     }
+
+    public Gender(int id) {
+        this.id = id;
+    }
 }
