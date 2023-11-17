@@ -58,6 +58,7 @@ public class AccountService implements IAccountService {
 
 
 
+
     //hàm này LongTND triển khai
     @Override
     public Account findByID(Integer id) {
@@ -70,10 +71,9 @@ public class AccountService implements IAccountService {
     }
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
-
-
 }

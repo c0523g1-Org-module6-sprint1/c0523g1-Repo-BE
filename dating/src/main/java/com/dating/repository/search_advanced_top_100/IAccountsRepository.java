@@ -44,6 +44,7 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
             nativeQuery = true)
     List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthday") String birthday, @Param("genderId") int genderId,  @Param("locationId") int locationId,@Param("jobId") int jobId, @Param("hobbyDetailId") int hobbyDetailId);
 
+
     @Transactional
     @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as account_type, accounts.money, count(like_detail.id) AS count_like " +
             " FROM accounts " +
