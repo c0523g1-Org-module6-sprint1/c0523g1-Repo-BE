@@ -134,9 +134,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      */
     @Transactional
     @Modifying
-    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}," +
-            "birthday = :#{#account.birthday}, location = :#{#account.location.id}, avatar = :#{#account.avatar}" +
-            "job = :#{#account.job.id} where id = :#{#account.id} ", nativeQuery = true)
+    @Query(value = "update accounts set name = :#{#account.name}, gender_id = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location_id = :#{#account.location.id}, avatar = :#{#account.avatar}" +
+            "job_id = :#{#account.job.id} where id = :#{#account.id} ", nativeQuery = true)
     void editAccount(@Param("account") Account account);
 
 

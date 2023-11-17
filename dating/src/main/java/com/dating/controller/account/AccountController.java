@@ -2,6 +2,7 @@ package com.dating.controller.account;
 
 
 import com.dating.dto.account.AccountDTOs;
+import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
@@ -55,17 +56,16 @@ public class AccountController {
 
 
 
-    @PatchMapping("/personal-page/edit/{id}")
-    public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDTOs accountDto) {
+    @PatchMapping("/api/personal-page/edit/{id}")
+    public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
+
         Account account = iAccountService.findAccountById(id);
 
         if (account == null || accountDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        Account accountMain = new Account();
-        BeanUtils.copyProperties(accountDto, accountMain);
-        iAccountService.updateAccount(accountMain);
+        BeanUtils.copyProperties(accountDto, account);
+        iAccountService.setEditAccount(accountDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
