@@ -35,7 +35,7 @@ public class MessageRestController {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            List<Account> friendList = messageService.getFriendList(accountIdfake);
+            List<Account> friendList = messageService.getFriendList(accountIdfake, name);
             List<Account> result = new ArrayList<>();
             for (Account friend : friendList) {
                 if (friend.getUserName().contains(name)){
@@ -50,12 +50,13 @@ public class MessageRestController {
         }
     }
     @GetMapping("unknowlist")
-    public ResponseEntity<List<Messages>> getUnknowMess(){
+    public ResponseEntity<List<Account>> getUnknowMess(
+            @RequestParam(required = false, defaultValue = "") String name){
         Account account = messageService.findAccountById(accountIdfake);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            List<Messages> unknowMess = messageService.getUnknowList(accountIdfake);
+            List<Account> unknowMess = messageService.getUnknowList(accountIdfake, name);
             if (unknowMess.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
