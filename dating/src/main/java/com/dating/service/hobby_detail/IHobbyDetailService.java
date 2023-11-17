@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IHobbyDetailService {
     List<HobbyDetail>  getAll();
+
+    List<HobbyDetail> getListById(int id);
 }

@@ -25,4 +25,8 @@ public class Location {
         this.id = id;
         this.isDeleted = isDeleted;
     }
+
+    public Location(int id) {
+        this.id = id;
+    }
 }
