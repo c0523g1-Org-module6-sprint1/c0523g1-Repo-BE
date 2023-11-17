@@ -12,7 +12,7 @@ public interface IAccountService extends UserDetailsService {
     Account findByEmail(String email);
 
     Boolean createNewAccount(Account account);
-    Page<Account> findAll(Pageable pageable,String username);
+    Page<AccountDTOs> findAll(Pageable pageable,String username);
   
 
     void deleteAccount(Integer id);

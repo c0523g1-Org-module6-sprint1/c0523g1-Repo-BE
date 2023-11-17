@@ -17,11 +17,9 @@ public class MessageRestController {
     @Autowired
     private IMessageService messageService;
 
-    private Integer accountIdfake = 1;
-
     @GetMapping("account")
-    public ResponseEntity<Account> getOwnAccount(){
-        Account account = messageService.findAccountById(accountIdfake);
+    public ResponseEntity<Account> getOwnAccount(@RequestParam Integer accountId){
+        Account account = messageService.findAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
@@ -30,12 +28,13 @@ public class MessageRestController {
     }
     @GetMapping("chatlist")
     public ResponseEntity<List<Account>> getFriendList(
-            @RequestParam(required = false, defaultValue = "") String name){
-        Account account = messageService.findAccountById(accountIdfake);
+            @RequestParam(required = false, defaultValue = "") String name,
+            @RequestParam Integer accountId){
+        Account account = messageService.findAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            List<Account> friendList = messageService.getFriendList(accountIdfake, name);
+            List<Account> friendList = messageService.getFriendList(accountId, name);
             List<Account> result = new ArrayList<>();
             for (Account friend : friendList) {
                 if (friend.getUserName().contains(name)){
@@ -51,12 +50,13 @@ public class MessageRestController {
     }
     @GetMapping("unknowlist")
     public ResponseEntity<List<Account>> getUnknowMess(
-            @RequestParam(required = false, defaultValue = "") String name){
-        Account account = messageService.findAccountById(accountIdfake);
+            @RequestParam(required = false, defaultValue = "") String name,
+            @RequestParam Integer accountId){
+        Account account = messageService.findAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            List<Account> unknowMess = messageService.getUnknowList(accountIdfake, name);
+            List<Account> unknowMess = messageService.getUnknowList(accountId, name);
             if (unknowMess.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
@@ -64,15 +64,16 @@ public class MessageRestController {
             }
         }
     }
-    @GetMapping("Chatbox/{id}")
-    public ResponseEntity<?> checkContact(@PathVariable(required = false) Integer id){
-        Account account = messageService.findAccountById(accountIdfake);
+    @GetMapping("Chatbox")
+    public ResponseEntity<?> checkContact(@RequestParam Integer id,
+                                          @RequestParam Integer accountId){
+        Account account = messageService.findAccountById(accountId);
         if (id == null || account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            Messages messages = messageService.getMessageByAccountId(accountIdfake, id);
+            Messages messages = messageService.getMessageByAccountId(accountId, id);
             if (messages == null) {
-                Messages newMess = messageService.createMessage(accountIdfake, id);
+                Messages newMess = messageService.createMessage(accountId, id);
                 return new ResponseEntity<>(newMess, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(messages, HttpStatus.OK);
@@ -89,12 +90,13 @@ public class MessageRestController {
         }
     }
     @PostMapping("/setbusy")
-    public ResponseEntity<?> setBusyMode(@RequestParam(name = "busyMode", defaultValue = "false") Boolean busyMode){
-        Account account = messageService.findAccountById(accountIdfake);
+    public ResponseEntity<?> setBusyMode(@RequestParam(name = "busyMode", defaultValue = "false") Boolean busyMode,
+                                         @RequestParam Integer accountId){
+        Account account = messageService.findAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            messageService.setBusy(busyMode, accountIdfake);
+            messageService.setBusy(busyMode, accountId);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
