@@ -26,9 +26,7 @@ public class InvitedFriendService implements IInvitedFriendService {
     }
 
     @Override
-    public void accept(Integer accountID, Integer idFriend) {
-        repository.acceptInvited(accountID,idFriend);
+    public void accept(Integer invitedID) {
+        repository.acceptInvited(invitedID);
     }
-
-
 }

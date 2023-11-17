@@ -7,6 +7,7 @@ public interface IInvitedFriendDto {
     String getNameAccount();
 
     String getAvatarAccount();
+    Integer getSendID();
 
 
 }

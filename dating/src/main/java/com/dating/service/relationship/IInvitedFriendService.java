@@ -11,7 +11,7 @@ public interface IInvitedFriendService {
     List<IInvitedFriendDto> findAllInvitedFriend(Integer accountID);
 
     void delete(int id);
-    void accept( Integer accountID, Integer idFriend);
+    void accept( Integer invitedID);
 
 
 }

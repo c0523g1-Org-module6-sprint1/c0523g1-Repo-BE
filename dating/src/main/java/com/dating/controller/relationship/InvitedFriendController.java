@@ -1,6 +1,8 @@
 package com.dating.controller.relationship;
 
 import com.dating.dto.relationship.IInvitedFriendDto;
+import com.dating.dto.relationships.RelationshipsDTO;
+import com.dating.model.account.Account;
 import com.dating.model.relationship.Relationships;
 import com.dating.service.account.IAccountService;
 import com.dating.service.relationship.IInvitedFriendService;
@@ -21,15 +23,13 @@ public class InvitedFriendController {
     @Autowired
     private IAccountService accountService;
 
-    @GetMapping("")
-    public ResponseEntity<List<IInvitedFriendDto>> findAll(
-            @RequestParam(value = "accountID", required = false) Integer accountID
-    ) {
-        List<IInvitedFriendDto> invitedFriend = iInvitedFriendService.findAllInvitedFriend(accountID);
-        if (invitedFriend.isEmpty()) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findAll(@PathVariable(value = "id", required = false) Integer accountID) {
+        List<IInvitedFriendDto> invitedList = iInvitedFriendService.findAllInvitedFriend(accountID);
+        if (invitedList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(invitedFriend, HttpStatus.OK);
+            return new ResponseEntity<>(invitedList, HttpStatus.OK);
         }
     }
 
@@ -40,23 +40,20 @@ public class InvitedFriendController {
     }
 
 
-    @DeleteMapping ("/accept")
+    @PutMapping("/accept/{invitedID}")
     public ResponseEntity<?> acceptInvited(
-            @RequestParam(value = "accountID", required = false) Integer accountID,
-            @RequestParam(value = "idFriend", required = false) Integer idFriend
+            @PathVariable(value = "invitedID", required = false) Integer invitedID
     ) {
-        if (accountID == null || idFriend == null) {
-            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.
-                    BAD_REQUEST
-            );
+        if(accountService.findAccountById(invitedID )==null){
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
-        if (accountService.findAccountById(accountID) == null || accountService.findAccountById(idFriend) == null){
-            return new ResponseEntity<>(HttpStatus.
-                    BAD_REQUEST);
+        if (invitedID == null) {
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        } else {
+            iInvitedFriendService.accept(invitedID);
+            return new ResponseEntity<>(HttpStatus.OK);
+
         }
-        iInvitedFriendService.accept(accountID,idFriend);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
 
