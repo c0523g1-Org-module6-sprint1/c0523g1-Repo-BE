@@ -11,7 +11,7 @@ public interface IAccountService extends UserDetailsService {
     Account findByEmail(String email);
 
     void createNewAccount(Account account);
-    Page<AccountDTOs> findAll(Pageable pageable, String username);
+    Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount);
 
     void deleteAccount(Integer id);
     Account findAccountById(Integer id);

@@ -20,7 +20,7 @@ public class WarningDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private LocalDateTime date;
-    private Long description;
+    private String description;
 
     private Integer faultAmount;
     private Boolean isDeleted;
@@ -35,7 +35,7 @@ public class WarningDetails {
     public WarningDetails() {
     }
 
-    public WarningDetails(Integer id, LocalDateTime date, Long description, Integer faultAmount, Boolean isDeleted, Warning warning, Account account) {
+    public WarningDetails(Integer id, LocalDateTime date, String description, Integer faultAmount, Boolean isDeleted, Warning warning, Account account) {
         this.id = id;
         this.date = date;
         this.description = description;
