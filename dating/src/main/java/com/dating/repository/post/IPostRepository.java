@@ -51,7 +51,7 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      * Method: showListOfAnAccount,
      * Create: DatNC,
      * Date  : 13/11/2023
-     * param : Integer accountId
+     * param : String userName
      * return: List<Post> (displays a list of posts for this account)
      */
     @Query(value = "SELECT * FROM case.post\n" +
