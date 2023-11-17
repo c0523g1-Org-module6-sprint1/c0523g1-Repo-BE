@@ -2,7 +2,6 @@ package com.dating.service.giftService;
 
 import com.dating.dto.GiftRecordDto.GiftRecordDto;
 import com.dating.model.gift.Gift;
-import com.dating.model.gift.GiftRecord;
 import com.dating.repository.Gift.IGiftRecordRepository;
 import com.dating.repository.Gift.IGiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,16 @@ public class GiftService implements IGiftService{
         return iGiftRepository.getAll();
     }
 
+    @Override
+    public void add(int quantity,Integer accountReceiver,Integer accountSender, int gift) {
+        iGiftRecordRepository.insertGiftRecord(
+                quantity,
+                accountReceiver,
+                accountSender,
+                gift
+        );
+    }
+
 
     /**
      * method add
@@ -37,15 +46,7 @@ public class GiftService implements IGiftService{
      * Date 13-11-2023
      */
 
-    @Override
-    public void add(GiftRecordDto giftRecordDto) {
-        iGiftRecordRepository.insertGiftRecord(
-                giftRecordDto.getQuantity(),
-                giftRecordDto.getAccountReceiverId(),
-                giftRecordDto.getAccountSenderId(),
-                giftRecordDto.getGiftId()
-        );
-    }
+
 
 
     /**
