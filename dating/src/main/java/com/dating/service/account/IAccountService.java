@@ -8,7 +8,7 @@ public interface IAccountService extends UserDetailsService {
   
     Account findByUsername(String userName);
     Account findByEmail(String email);
-    void createNewAccount(Account account);
+    Boolean createNewAccount(Account account);
     Page<Account> findAll(Pageable pageable,String username);
   
     void deleteAccount(Integer id);

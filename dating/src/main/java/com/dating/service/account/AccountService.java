@@ -25,8 +25,14 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void createNewAccount(Account account) {
-        accountRepository.save(account);
+    public Boolean createNewAccount(Account account) {
+        Account newAccount = accountRepository.findAccountByUserName(account.getUserName());
+        if (newAccount == null){
+            Integer amount = accountRepository.createNewAccount(account);
+//            Account accountAfterCreate = accountRepository.findAccountByUserName(account.getUserName());
+            return amount > 0;
+        }
+        return false;
     }
 
     @Override
