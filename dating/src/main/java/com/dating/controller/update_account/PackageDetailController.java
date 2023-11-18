@@ -1,5 +1,6 @@
 package com.dating.controller.update_account;
 
+import com.dating.dto.update_account.AccountDto;
 import com.dating.dto.update_account.PackageDetailDto;
 import com.dating.model.update_account.PackageDetail;
 import com.dating.service.update_account.IPackageDetailService;
@@ -43,6 +44,11 @@ public class PackageDetailController {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
         packageDetailService.setAccountTypes(packageDetail.getAccount(), packageDetail.getAccountTypes());
+        return ResponseEntity.ok("Sửa thành công");
+    }
+    @PatchMapping("/setMoneyAccount")
+    public ResponseEntity<String> setMoneyAccount(@RequestBody AccountDto accountDto) {
+        packageDetailService.setMoneyAccount(accountDto.getIdAccount(), accountDto.getNewMoney());
         return ResponseEntity.ok("Sửa thành công");
     }
 }

@@ -1,5 +1,6 @@
 package com.dating.controller.update_account;
 
+import com.dating.dto.update_account.PackageDto;
 import com.dating.model.update_account.PackageTypes;
 import com.dating.service.update_account.IPackageTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,15 @@ public class PackageTypesController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
             return new ResponseEntity<>(packageTypesList,HttpStatus.OK);
+        }
+    }
+    @GetMapping("/packageAccount")
+    public ResponseEntity<List<PackageDto>> findAllPackageAccount(){
+        List<PackageDto> packageDtos = packageTypesService.findAllPackageAccount();
+        if(packageDtos.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(packageDtos,HttpStatus.OK);
         }
     }
 }
