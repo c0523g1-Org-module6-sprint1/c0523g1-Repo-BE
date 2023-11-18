@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/member/friend")
+@RequestMapping("api/public/friend")
 public class FriendControler {
     @Autowired
     private IFriendService friendService;
