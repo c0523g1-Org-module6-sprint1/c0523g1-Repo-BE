@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PackageDto {
-    private int money;
-    private String expire;
-    private String name;
+public class DateDto {
+    private String date;
+    private int idAccount;
 }

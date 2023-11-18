@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface IPackageDetailRepository extends JpaRepository<PackageDetail, Integer> {
@@ -48,10 +50,10 @@ public interface IPackageDetailRepository extends JpaRepository<PackageDetail, I
             "WHERE id= :idAccount", nativeQuery = true)
     void setMoneyAccount(int idAccount, int newMoney);
 
-//    @Modifying
-//    @Transactional
-//    @Query(value = "UPDATE case.accounts " +
-//            "SET expire = :date " +
-//            "WHERE id= :idAccount", nativeQuery = true)
-//    void registrationDate(Date date, int idAccount);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE case.accounts \n" +
+            "SET expire = :date, regis_date = :regisDate\n" +
+            "WHERE id= :idAccount", nativeQuery = true)
+    void registrationDate(LocalDate date, LocalDate regisDate, int idAccount);
 }

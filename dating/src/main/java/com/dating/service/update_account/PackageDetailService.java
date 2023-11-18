@@ -7,6 +7,8 @@ import com.dating.repository.update_account.IPackageDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 @Service
 public class PackageDetailService implements IPackageDetailService{
@@ -25,5 +27,10 @@ public class PackageDetailService implements IPackageDetailService{
     @Override
     public void setAccountTypes(int accountId, int accountTypesId) {
         packageDetailRepository.setAccountTypes(accountId, accountTypesId);
+    }
+
+    @Override
+    public void registrationDate(LocalDate date, LocalDate regisDate, int idAccount) {
+        packageDetailRepository.registrationDate(date,regisDate, idAccount);
     }
 }

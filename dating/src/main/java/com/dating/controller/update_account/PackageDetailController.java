@@ -1,6 +1,7 @@
 package com.dating.controller.update_account;
 
 import com.dating.dto.update_account.AccountDto;
+import com.dating.dto.update_account.DateDto;
 import com.dating.dto.update_account.PackageDetailDto;
 import com.dating.model.update_account.PackageDetail;
 import com.dating.service.update_account.IPackageDetailService;
@@ -9,7 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -30,25 +32,41 @@ public class PackageDetailController {
         }
     }
 
-    //    @PatchMapping("/setAccountTypes/{accountId}/{accountTypesId}")
-//    public ResponseEntity<String> setAccountTypes(@PathVariable Integer accountId, @PathVariable Integer accountTypesId) {
-//        if (accountId == null || accountTypesId == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        packageDetailService.setAccountTypes(accountId, accountTypesId);
-//        return ResponseEntity.ok("Sửa thành công");
-//    }
     @PatchMapping("")
     public ResponseEntity<String> setAccountTypes(@RequestBody PackageDetailDto packageDetail) {
-//        if (packageDetail.getAccount().getId() == null || packageDetail.getAccountTypes().getId() == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
         packageDetailService.setAccountTypes(packageDetail.getAccount(), packageDetail.getAccountTypes());
         return ResponseEntity.ok("Sửa thành công");
     }
+
     @PatchMapping("/setMoneyAccount")
     public ResponseEntity<String> setMoneyAccount(@RequestBody AccountDto accountDto) {
         packageDetailService.setMoneyAccount(accountDto.getIdAccount(), accountDto.getNewMoney());
         return ResponseEntity.ok("Sửa thành công");
     }
+
+    @PatchMapping("/registrationDate/{date}/{regisDate}/{idAccount}")
+    public ResponseEntity<String> registrationDate(
+            @PathVariable(value = "date", required = false) String date,
+            @PathVariable(value = "regisDate", required = false) String regisDate,
+            @PathVariable(value = "idAccount", required = false) int idAccount) {
+        LocalDate newDate1 = null;
+        LocalDate newDate2 = null;
+        if (date != null && regisDate != null) {
+            newDate1 = LocalDate.parse(date);
+            newDate2 = LocalDate.parse(regisDate);
+            packageDetailService.registrationDate(newDate1, newDate2, idAccount);
+            return ResponseEntity.ok("Sửa thành công");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+//    @PatchMapping("/registrationDate")
+//    public ResponseEntity<String> registrationDate(@RequestBody DateDto dateDto) {
+//        LocalDate newDate = null;
+//        if (dateDto.getDate() != null) {
+//            newDate = LocalDate.parse(dateDto.getDate());
+//            packageDetailService.registrationDate(newDate, dateDto.getIdAccount());
+//            return ResponseEntity.ok("Sửa thành công");
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 }

@@ -1,5 +1,6 @@
 package com.dating.service.update_account;
 
+import com.dating.dto.update_account.IPackageDto;
 import com.dating.dto.update_account.PackageDto;
 import com.dating.model.update_account.PackageTypes;
 import com.dating.repository.update_account.IPackageTypesRepository;
@@ -17,7 +18,7 @@ public class PackageTypesService implements IPackageTypesService{
     }
 
     @Override
-    public List<PackageDto> findAllPackageAccount() {
-        return packageTypesRepository.findAllPackageAccount();
+    public List<IPackageDto> findAllPackageAccount(int idAccount) {
+        return packageTypesRepository.findPackageAccount(idAccount);
     }
 }
