@@ -7,15 +7,44 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 public interface IAccountService extends UserDetailsService {
-  
+    /**
+     * method findByUsername
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String userName
+     * return Account or null
+     */
     Account findByUsername(String userName);
+
+    /**
+     * method findByEmail
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String email
+     * return Account or null
+     */
     Account findByEmail(String email);
 
+    /**
+     * method createNewAccount
+     * Create SangPQ
+     * Date 16-11-2023
+     * param Account account
+     * return Boolean
+     */
     Boolean createNewAccount(Account account);
     Page<AccountDTOs> findAll(Pageable pageable,String username);
   
 
     void deleteAccount(Integer id);
+
+    /**
+     * method findAccountById
+     * Create SangPQ
+     * Date 13-11-2023
+     * param Integer id
+     * return Account
+     */
     Account findAccountById(Integer id);
     void updateAccount(Account account);
 
