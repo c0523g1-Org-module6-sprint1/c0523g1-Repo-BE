@@ -32,6 +32,11 @@ public class LikeDetail {
         this.post = post;
     }
 
+    public LikeDetail( Account account, Post post) {
+        this.account = account;
+        this.post = post;
+    }
+
     public Integer getId() {
         return id;
     }
