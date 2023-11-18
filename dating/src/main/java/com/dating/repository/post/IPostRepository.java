@@ -51,12 +51,13 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      * Method: showListOfAnAccount,
      * Create: DatNC,
      * Date  : 13/11/2023
-     * param : Integer accountId
+     * param : String userName
      * return: List<Post> (displays a list of posts for this account)
      */
     @Query(value = "SELECT * FROM case.post\n" +
-            "where is_deleted = 0 and account_id = :accountId", nativeQuery = true)
-    List<Post> showListOfAnAccount(@Param("accountId") Integer accountId);
+            "join accounts on post.account_id = accounts.id\n" +
+            "where post.is_deleted = 0 and accounts.user_name = :userName", nativeQuery = true)
+    List<Post> showListOfAnAccount(@Param("userName") String userName);
     /**
      * Method: getPostById,
      * Create: DatNC,

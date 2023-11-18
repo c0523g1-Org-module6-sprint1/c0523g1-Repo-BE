@@ -11,49 +11,45 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface IAccountsRepository extends JpaRepository<Account, Integer> {
-//    @Transactional
-//    @Query(value = " SELECT accounts.id, accounts.name, location.name as location , jobs.name as job , accounts.avatar  " +
-//            " FROM accounts " +
-//            " JOIN location ON accounts.location_id = location.id  " +
-//            " JOIN genders ON genders.id = accounts.gender_id " +
-//            " JOIN jobs ON jobs.id = accounts.job_id " +
-//            " JOIN hobby_detail on hobby_detail.account_id = accounts.id " +
-//            " JOIN hobbies ON hobby_detail.hobby_id = hobbies.id " +
-//            " WHERE accounts.name LIKE :name AND genders.id = :id AND accounts.birthday LIKE :birthday AND jobs.id = :id AND location.id = :id  AND hobbies.id = :id",
-//            nativeQuery = true)
-//    List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthday") String birthday,@Param("genderId")  int genderId,@Param("hobbyId") int hobbyId,@Param("locationId") int locationId,@Param("jobId") int jobId,@Param("hobbyDetailId") int hobbyDetailId);
-
-
     @Transactional
-    @Query(value = "SELECT accounts.id, accounts.name, location.name as location, jobs.name as job, accounts.avatar " +
+    @Query(value = "SELECT accounts.id as id, accounts.name as name, location.name as location, jobs.name as job, accounts.avatar as avatar " +
             "FROM accounts " +
             "JOIN location ON accounts.location_id = location.id " +
             "JOIN genders ON genders.id = accounts.gender_id " +
             "JOIN jobs ON jobs.id = accounts.job_id " +
-            "JOIN hobby_detail ON hobby_detail.account_id = accounts.id " +
-            "JOIN hobbies ON hobbies.id = hobby_detail.hobby_id " +
-
-//            "JOIN hobby_detail ON hobby_detail.account_id = accounts.id " +
-//            "JOIN hobbies ON hobby_detail.hobby_id = hobbies.id " +
-            "WHERE accounts.name LIKE %:name% " +
+            "left JOIN hobby_detail ON hobby_detail.account_id = accounts.id " +
+            "left JOIN hobbies ON hobbies.id = hobby_detail.hobby_id " +
+            "WHERE accounts.name like :name " +
             "AND genders.id = :genderId " +
-            "AND accounts.birthday LIKE %:birthday% " +
+            "AND YEAR(CURRENT_DATE()) - YEAR(accounts.birthday) BETWEEN :birthdayFrom AND :birthdayEnd " +
             "AND jobs.id = :jobId " +
             "AND location.id = :locationId " +
-            "AND hobby_detail.id = :hobbyDetailId",
+            "AND hobbies.id = :hobbyDetailId ",
             nativeQuery = true)
-    List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthday") String birthday, @Param("genderId") int genderId,  @Param("locationId") int locationId,@Param("jobId") int jobId, @Param("hobbyDetailId") int hobbyDetailId);
+    List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthdayFrom") int birthdayFrom, @Param("birthdayEnd")
+    int birthdayEnd, @Param("genderId") int genderId, @Param("locationId") int locationId, @Param("jobId") int jobId,
+                                   @Param("hobbyDetailId") int hobbyDetailId);
 
 
     @Transactional
-    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as account_type, accounts.money, count(like_detail.id) AS count_like " +
+    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.money as money, count(like_detail.id) AS countLike " +
             " FROM accounts " +
-            " JOIN package_detail ON accounts.id = package_detail.account_id " +
-            " JOIN account_types ON package_detail.account_types_id = account_types.id " +
-            " JOIN like_detail ON like_detail.account_id = accounts.id " +
+            " left JOIN package_detail ON accounts.id = package_detail.account_id " +
+            " left JOIN account_types ON package_detail.account_types_id = account_types.id " +
+            " left JOIN like_detail ON like_detail.account_id = accounts.id " +
             " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.money " +
-            " ORDER BY count_like DESC " +
+            " ORDER BY countLike DESC " +
             " LIMIT 100 ",
             nativeQuery = true)
     List<TopHunderedDto> findAllByAccount();
+//    @Transactional
+//    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.money as money" +
+//            " FROM accounts " +
+//            " JOIN package_detail ON accounts.id = package_detail.account_id " +
+//            " JOIN account_types ON package_detail.account_types_id = account_types.id " +
+//            " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.money " +
+//            " ORDER BY money DESC " +
+//            " LIMIT 100 ",
+//            nativeQuery = true)
+//    List<TopHunderedDto> findAllByAccount();
 }

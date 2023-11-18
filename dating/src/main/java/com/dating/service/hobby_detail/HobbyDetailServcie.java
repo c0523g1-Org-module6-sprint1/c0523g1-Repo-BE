@@ -14,4 +14,9 @@ public class HobbyDetailServcie implements IHobbyDetailService{
     public List<HobbyDetail> getAll() {
         return hobbyDetailRepository.getAllBy();
     }
+
+    @Override
+    public List<HobbyDetail> getListById(int id) {
+        return null;
+    }
 }

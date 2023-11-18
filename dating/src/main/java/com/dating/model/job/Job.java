@@ -25,4 +25,8 @@ public class Job {
         this.id = id;
         this.isDeleted = isDeleted;
     }
+
+    public Job(int id) {
+        this.id = id;
+    }
 }

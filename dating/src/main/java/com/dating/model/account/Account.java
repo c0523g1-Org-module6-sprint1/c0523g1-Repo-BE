@@ -56,7 +56,7 @@ public class Account {
     private Double money;
     @Column(name = "regis_date",columnDefinition = "date",nullable = false)
     private String regisDate;
-    @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = false)
+    @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = true)
     private String avatar;
     @Column(name = "expire",columnDefinition = "date")
     private String expire;

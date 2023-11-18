@@ -27,4 +27,8 @@ public class Hobby {
     @JsonBackReference
     @OneToMany(mappedBy = "hobby")
     private Set<HobbyDetail> hobbyDetailSet;
+
+    public Hobby(int id) {
+        this.id = id;
+    }
 }
