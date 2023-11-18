@@ -20,12 +20,26 @@ public class MessageService implements IMessageService{
         return messageAccountRepository.selectAccountById(id);
     }
 
+    /**
+     * method getMessage
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer messageId
+     * return new Object: List<Messages>
+     */
     @Override
     public List<Messages> getMessage(Integer accountId) {
 
         return messageRepository.findMessageByAccountId(accountId);
     }
 
+    /**
+     * method getFriendList
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer accountId, String searchName
+     * return new Object: List<Account>
+     */
     @Override
     public List<Account> getFriendList(Integer accountId, String name) {
         String searchName = "%" + name + "%";
@@ -33,6 +47,13 @@ public class MessageService implements IMessageService{
         return result;
     }
 
+    /**
+     * method getUnknowList
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer accountId, String searchName
+     * return new Object: List<Account>
+     */
     @Override
     public List<Account> getUnknowList(Integer accountId, String name) {
         String searchName = "%" + name + "%";
@@ -41,6 +62,13 @@ public class MessageService implements IMessageService{
 
     }
 
+    /**
+     * method setBusy
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Boolean isBusy, Integer accountId
+     * return new Object: void
+     */
     @Override
     public void setBusy(Boolean isBusy, Integer accountId) {
         Account account = findAccountById(accountId);
@@ -53,6 +81,13 @@ public class MessageService implements IMessageService{
         }
     }
 
+    /**
+     * method createMessage
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer ownAccountId, Integer friendAccountId
+     * return new Object: Messages
+     */
     @Override
     public Messages createMessage(Integer ownAccountId, Integer friendAccountId) {
         String path = "mess-" + friendAccountId + "-" + ownAccountId;
@@ -64,6 +99,13 @@ public class MessageService implements IMessageService{
         return newMess;
     }
 
+    /**
+     * method deleteMessage
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer messagesId
+     * return new Object: void
+     */
     @Override
     public void deleteMessage(Integer messagesId) {
         if (getMessageById(messagesId) != null){
@@ -71,15 +113,28 @@ public class MessageService implements IMessageService{
         }
     }
 
+    /**
+     * method getMessageById
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer messagesId
+     * return new Object: Messages
+     */
     @Override
     public Messages getMessageById(Integer messageId) {
         return messageRepository.getMessageById(messageId);
     }
 
+    /**
+     * method getMessageByAccountId
+     * Create ThangLQ
+     * Date 13-11-2023
+     * param Integer ownAccountId, Integer friendAccountId
+     * return new Object: Messages
+     */
     @Override
     public Messages getMessageByAccountId(Integer ownAccountId, Integer friendAccountId) {
         Messages messagesList = messageRepository.isContacted(ownAccountId, friendAccountId);
         return messagesList;
     }
-
 }
