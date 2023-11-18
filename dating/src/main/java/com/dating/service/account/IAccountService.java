@@ -33,7 +33,7 @@ public interface IAccountService extends UserDetailsService {
      * return Boolean
      */
     Boolean createNewAccount(Account account);
-    Page<Account> findAll(Pageable pageable,String username);
+    Page<AccountDTOs> findAll(Pageable pageable,String username);
   
 
     void deleteAccount(Integer id);
