@@ -22,18 +22,18 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class AccountDto implements Validator {
     private Integer id;
-    private String name;
+//    private String name;
     private String userName;
     private String password;
     private String birthday;
     private String email;
-    private String phoneNumber;
-    private Double money;
-    private String regisDate;
-    private String avatar;
-    private String expire;
-    private String maritalStatus;
-    private Integer point;
+//    private String phoneNumber;
+//    private Double money;
+//    private String regisDate;
+//    private String avatar;
+//    private String expire;
+//    private String maritalStatus;
+//    private Integer point;
 //    private Integer genderId;
 //    private Integer jobId;
 //    private Integer roleId;
@@ -41,7 +41,7 @@ public class AccountDto implements Validator {
 //    private Integer hobbyId;
     private Integer gender;
     private Integer job;
-    private Integer role;
+//    private Integer role;
     private Integer location;
 //    private Hobby hobby;
 //    private MessageStatus messageStatus;
@@ -58,5 +58,6 @@ public class AccountDto implements Validator {
         ValidateAccount.checkValidateAccountUserName(accountDto.getUserName(),errors);
         ValidateAccount.checkValidateAccountPassword(accountDto.getPassword(), errors);
         ValidateAccount.checkValidateAccountEmail(accountDto.getEmail(), errors);
+        ValidateAccount.checkValidateAccountBirthday(accountDto.getBirthday(),errors);
     }
 }

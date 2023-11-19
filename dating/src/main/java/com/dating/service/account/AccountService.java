@@ -20,24 +20,52 @@ public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
+    /**
+     * method findByUsername
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String userName
+     * return Account
+     */
+
     @Override
     public Account findByUsername(String userName) {
         return accountRepository.findAccountByUserName(userName);
     }
 
+    /**
+     * method findByEmail
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String email
+     * return Account
+     */
     @Override
     public Account findByEmail(String email) {
         return accountRepository.findAccountByEmail(email);
     }
 
+    /**
+     * method createNewAccount
+     * Create SangPQ
+     * Date 13-11-2023
+     * param Account account
+     * return Boolean
+     */
     @Override
-    public void createNewAccount(Account account) {
-        accountRepository.save(account);
+    public Boolean createNewAccount(Account account) {
+        Account newAccount = accountRepository.findAccountByUserName(account.getUserName());
+        if (newAccount == null){
+            Integer amount = accountRepository.createNewAccount(account);
+//            Account accountAfterCreate = accountRepository.findAccountByUserName(account.getUserName());
+            return amount > 0;
+        }
+        return false;
     }
 
     @Override
-    public Page<AccountDTOs> findAll(Pageable pageable, String username) {
-        return accountRepository.findAllAccount(pageable, username);
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return null;
     }
 
     @Override
@@ -77,6 +105,13 @@ public class AccountService implements IAccountService {
 
 
 
+    /**
+     * method loadUserByUsername
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String username
+     * return UserDetails
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;

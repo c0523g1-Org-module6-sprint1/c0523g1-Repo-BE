@@ -55,7 +55,7 @@ public class GiftController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("không tìm tìm thấy");
         }
-        String nameReceiver = String.valueOf(giftRecordDto.getAccountSenderId());
+        String nameReceiver = String.valueOf(giftRecordDto.getAccountReceiverId());
         String nameSender = String.valueOf(giftRecordDto.getAccountSenderId());
 
 
@@ -71,16 +71,16 @@ public class GiftController {
 //        50
         // tính tiền
         double money = iGiftService.sum(giftRecordDto.getQuantity(), price);
-
         // trừ tiền
         boolean flag =  iChangePasswordService.updateMoney(money,accountSender.getUserName() );
         if (flag == false) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Không đủ tiền để thực hiện giao dịch");
         }
         int resultPoint = price * giftRecordDto.getQuantity();
+
         // give point
         iChangePasswordService.giftPoint(accountSender.getUserName(),resultPoint);
-        iGiftService.add(giftRecordDto);
+        iGiftService.add(giftRecordDto.getQuantity(),accountReceiver.getId(),accountSender.getId(),giftRecordDto.getGiftId());
         return ResponseEntity.ok("tặng thành công!");
     }
 

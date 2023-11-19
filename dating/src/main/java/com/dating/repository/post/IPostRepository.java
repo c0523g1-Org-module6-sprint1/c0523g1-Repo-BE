@@ -37,26 +37,50 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
     List<Post> showListPublic();
 
     /**
-     * Method: showListFriend,
+     * Method: showListNewsfeed,
      * Create: DatNC,
      * Date  : 13/11/2023
-     * param : no
-     * return: List<Post> (have privacy is friend)
+     * param : loggedInAccountId
+     * return: List<Post> (have relationship friend and privacy is public or friend)
      */
-    @Query(value = "SELECT * FROM case.post\n" +
-            "where is_deleted = 0 and privacy_post_id = 2", nativeQuery = true)
-    List<Post> showListFriend();
+    @Query(value = "SELECT p.*\n" +
+            "FROM post p\n" +
+            "WHERE (p.account_id = :loggedInAccountId AND p.privacy_post_id IN (1, 2))\n" +
+            "   OR (p.account_id IN (\n" +
+            "        SELECT CASE\n" +
+            "                 WHEN r.receiver_account_id = :loggedInAccountId THEN r.sender_account_id\n" +
+            "                 ELSE r.receiver_account_id\n" +
+            "               END AS friend_id\n" +
+            "        FROM relationships r\n" +
+            "        WHERE r.relationship_status_id = 2\n" +
+            "        AND (r.receiver_account_id = :loggedInAccountId OR r.sender_account_id = :loggedInAccountId)\n" +
+            "      )\n" +
+            "      AND p.privacy_post_id IN (1, 2))\n" +
+            "   OR (p.account_id NOT IN (\n" +
+            "        SELECT CASE\n" +
+            "                 WHEN r.receiver_account_id = :loggedInAccountId THEN r.sender_account_id\n" +
+            "                 ELSE r.receiver_account_id\n" +
+            "               END AS friend_id\n" +
+            "        FROM relationships r\n" +
+            "        WHERE r.relationship_status_id = 2\n" +
+            "        AND (r.receiver_account_id = :loggedInAccountId OR r.sender_account_id = :loggedInAccountId)\n" +
+            "      )\n" +
+            "      AND p.privacy_post_id = 1" +
+            ")ORDER BY p.date DESC", nativeQuery = true)
+    List<Post> showListNewsfeed(@Param("loggedInAccountId") Integer loggedInAccountId);
 
     /**
      * Method: showListOfAnAccount,
      * Create: DatNC,
      * Date  : 13/11/2023
-     * param : Integer accountId
+     * param : String userName
      * return: List<Post> (displays a list of posts for this account)
      */
     @Query(value = "SELECT * FROM case.post\n" +
-            "where is_deleted = 0 and account_id = :accountId", nativeQuery = true)
-    List<Post> showListOfAnAccount(@Param("accountId") Integer accountId);
+            "join accounts on post.account_id = accounts.id\n" +
+            "where post.is_deleted = 0 and accounts.user_name = :userName", nativeQuery = true)
+    List<Post> showListOfAnAccount(@Param("userName") String userName);
+
     /**
      * Method: getPostById,
      * Create: DatNC,

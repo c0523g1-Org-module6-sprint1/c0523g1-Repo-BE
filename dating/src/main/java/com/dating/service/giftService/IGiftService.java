@@ -9,7 +9,7 @@ import java.util.List;
 public interface IGiftService {
     List<Gift> getAll();
 
-    void add(GiftRecordDto giftRecordDto);
+    void add( int quantity,Integer accountReceiver,Integer accountSender, int gift);
 
     int findPrice(int id);
 
