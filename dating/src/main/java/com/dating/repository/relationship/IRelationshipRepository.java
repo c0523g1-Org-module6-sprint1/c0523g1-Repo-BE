@@ -20,7 +20,7 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
      */
 
     @Query(value = "SELECT " +
-            "acc.id AS id, " +
+            "acc.id AS id, acc.user_name as usernameAccount, " +
             "acc.name AS nameAccount, " +
             "l.name AS nameLocation, " +
             "g.name AS nameGender, " +
@@ -59,7 +59,7 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
 
     @Transactional
     @Modifying
-    @Query(value = "update relationships as rel set rel.is_deleted = 1 " +
+    @Query(value = "delete  from relationships as rel  " +
             "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
             "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin)",nativeQuery = true)
     void unFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
