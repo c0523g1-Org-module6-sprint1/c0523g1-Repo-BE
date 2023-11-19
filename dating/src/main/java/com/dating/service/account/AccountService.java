@@ -79,8 +79,8 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findAccountById(Integer id) {
-        accountRepository.findAccountById(id);
-        return null;
+      return accountRepository.findAccountById(id);
+
     }
 
 
@@ -120,10 +120,10 @@ public class AccountService implements IAccountService {
     public Account setEditAccount (AccountDto accountDto){
         Account account = new Account();
         BeanUtils.copyProperties(accountDto,account);
-//        Location location = new Location(accountDto.getLocation());
-//        account.setLocation(location);
-//        account.setJob(new Job(accountDto.getJob()));
-//        account.setGender(new Gender(accountDto.getGender()));
+        Location location = new Location(accountDto.getLocation());
+        account.setLocation(location);
+        account.setJob(new Job(accountDto.getJob()));
+        account.setGender(new Gender(accountDto.getGender()));
 
 //        account.setId(accountDto.getId());
 //        account.setName(accountDto.getName());

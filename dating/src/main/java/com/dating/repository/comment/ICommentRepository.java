@@ -22,7 +22,7 @@ public interface ICommentRepository extends JpaRepository<Comments,Integer> {
     @Transactional
     @Modifying
     @Query(value = "insert into comments (date, content, account_id, post_id, id_deleted) " +
-            "values (:#{#comment.date}, :#{#comment.content}, :#{#comment.account}, :#{#comment.post}, false)",nativeQuery = true)
+            "values (:#{#comment.date}, :#{#comment.content}, :#{#comment.account.id}, :#{#comment.post}, false)",nativeQuery = true)
     void createComments(@Param("comment")Comments comments);
     /**
      * Method: getAllComment,
@@ -34,6 +34,27 @@ public interface ICommentRepository extends JpaRepository<Comments,Integer> {
     @Query(value = "select * from comments where id_deleted = 0 ",nativeQuery = true)
     List<Comments> getAllComment();
 
+
+    /**
+     * Method: getAllCommentsByAccountI,
+     * Create: ThienLCH,
+     * Date  : 13/11/2023
+     * param : Integer id
+     * return: select all from table comments with account_id = :id
+     */
+    @Query(value = "select * from comments where account_id = :id and id_deleted = 0 ",nativeQuery = true)
+    List<Comments> getAllCommentsByAccountId(@Param("id") Integer id);
+
+
+    /**
+     * Method: getAllCommentsByPostId,
+     * Create: ThienLCH,
+     * Date  : 13/11/2023
+     * param : Integer id
+     * return: select all from table comments with post_id = :id
+     */
+    @Query(value = "select * from comments where post_id = :id and id_deleted = 0 ", nativeQuery = true)
+    List<Comments> getAllCommentsByPostId (@Param("id") Integer id);
     /**
      * Method: findCommentById,
      * Create: ThienLCH,
@@ -66,6 +87,6 @@ public interface ICommentRepository extends JpaRepository<Comments,Integer> {
      */
     @Transactional
     @Modifying
-    @Query(value = "update comments set content = :#{#comment.content} where id = :id ",nativeQuery = true)
+    @Query(value = "update comments set content = :#{#comment.content} where id = :id  ",nativeQuery = true)
     void editComment(@Param("id")Integer id, @Param("comment") Comments comments);
 }
