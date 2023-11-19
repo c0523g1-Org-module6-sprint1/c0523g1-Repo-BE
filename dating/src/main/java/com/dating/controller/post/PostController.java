@@ -1,5 +1,6 @@
 package com.dating.controller.post;
 
+import com.dating.dto.post.PostDto;
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @CrossOrigin("*")
-@RequestMapping("/newsfeed/post")
+@RestController
+@RequestMapping("/api/public/post")
 public class PostController {
     @Autowired
     private IPostService iPostService;
-
-    @GetMapping("/public")
-    public ResponseEntity<List<Post>> showListPublic() {
-        List<Post> posts = iPostService.showListPublic();
+    @GetMapping("/newsfeed/{loggedInAccountId}")
+    public ResponseEntity<List<Post>> showListNewsfeed(@PathVariable Integer loggedInAccountId) {
+        List<Post> posts = iPostService.showListNewsfeed(loggedInAccountId);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -26,19 +26,9 @@ public class PostController {
         }
     }
 
-    @GetMapping("/friend")
-    public ResponseEntity<List<Post>> showListFriend() {
-        List<Post> posts = iPostService.showListFriend();
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/{accountId}")
-    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable Integer accountId) {
-        List<Post> posts = iPostService.showListOfAnAccount(accountId);
+    @GetMapping("/account/{userName}")
+    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable String userName) {
+        List<Post> posts = iPostService.showListOfAnAccount(userName);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -66,7 +56,7 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{accountId}/{postId}")
+    @PatchMapping("/post-owner/{accountId}/{postId}")
     public ResponseEntity<String> updateForThePostOwner(@PathVariable Integer accountId, @PathVariable Integer postId, @RequestBody Post post) {
         boolean check = iPostService.updateForThePostOwner(post.getContent(), post.getImage(), accountId, postId, post.getPrivacyPost().getId());
         if (check) {
@@ -76,15 +66,16 @@ public class PostController {
         }
     }
 
-    @PutMapping("/{postId}")
-    public ResponseEntity<String> updateForAdmin(@PathVariable Integer postId, @RequestBody Post post) {
-        boolean check = iPostService.updateForAdmin(post.getContent(), post.getImage(), postId, post.getPrivacyPost().getId());
+    @PatchMapping("/admin/{postId}")
+    public ResponseEntity<String> updateForAdmin(@PathVariable Integer postId, @RequestBody PostDto postDto) {
+        boolean check = iPostService.updateForAdmin(postDto.getContent(), postDto.getImage(), postId, postDto.getPrivacyPostId());
         if (check) {
             return ResponseEntity.status(HttpStatus.OK).body("Updated Created");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update post");
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteForAdmin(@PathVariable Integer id) {
@@ -97,8 +88,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}/{accountId}")
-    public ResponseEntity<String> deleteForThePostOwner(@PathVariable Integer id,@PathVariable Integer accountId) {
-        boolean check = iPostService.deleteForThePostOwner(id,accountId);
+    public ResponseEntity<String> deleteForThePostOwner(@PathVariable Integer id, @PathVariable Integer accountId) {
+        boolean check = iPostService.deleteForThePostOwner(id, accountId);
         if (check) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Success deleted");
         } else {

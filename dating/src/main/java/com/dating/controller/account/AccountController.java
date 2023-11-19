@@ -5,8 +5,8 @@ import com.dating.model.account.Account;
 import com.dating.model.update_account.AccountTypes;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
-import com.dating.service.account.ITypeAccountService;
 import com.dating.service.warning_detail.IWarningDetailService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,8 +51,7 @@ public class AccountController {
             @RequestParam(defaultValue = "", required = false) String username,
             @RequestParam(defaultValue = "", required = false) String typeAccount
     ) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username, typeAccount);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -68,10 +67,24 @@ public class AccountController {
         return new ResponseEntity<>(accountTypesList,HttpStatus.OK);
     }
 
+
+
+    @PatchMapping("/api/personal-page/edit/{id}")
+    public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
+
+        Account account = iAccountService.findAccountById(id);
+
+        if (account == null || accountDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        BeanUtils.copyProperties(accountDto, account);
+        iAccountService.setEditAccount(accountDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /**
      * TriVN
      * Lock account
-     *
      * @param id
      * @return
      */
@@ -116,6 +129,16 @@ public class AccountController {
        iAccountService.deleteAccount(id);
        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @PatchMapping("/accounts/{id}")
+//    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
+//        Account account = iAccountService.findAccountById(id);
+//        if (account == null){
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//       iAccountService.deleteAccount(id);
+//       return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 //    @PatchMapping("/personal-page/edit/{id}")
 //    @ResponseBody

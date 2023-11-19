@@ -6,9 +6,10 @@ import java.util.List;
 public interface IMessageService {
     Account findAccountById(Integer id);
     List<Messages> getMessage(Integer accountId);
-    List<Account> getFriendList(Integer accountId);
-    List<Messages> getUnknowList(Integer accountId);
+    List<Account> getFriendList(Integer accountId, String name);
+    List<Account> getUnknowList(Integer accountId, String name);
     void setBusy(Boolean isBusy, Integer accountId);
+
     Messages createMessage (Integer ownAccountId, Integer friendAccountId);
     void deleteMessage (Integer messagesId);
     Messages getMessageById (Integer messageId);

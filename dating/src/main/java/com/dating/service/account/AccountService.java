@@ -26,8 +26,14 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void createNewAccount(Account account) {
-        accountRepository.save(account);
+    public Boolean createNewAccount(Account account) {
+        Account newAccount = accountRepository.findAccountByUserName(account.getUserName());
+        if (newAccount == null){
+            Integer amount = accountRepository.createNewAccount(account);
+//            Account accountAfterCreate = accountRepository.findAccountByUserName(account.getUserName());
+            return amount > 0;
+        }
+        return false;
     }
 
     @Override
@@ -52,8 +58,11 @@ public class AccountService implements IAccountService {
 
 
     public void updateAccount(Account account) {
-        accountRepository.EditAccount(account);
+        accountRepository.editAccount(account);
     }
+
+
+
 
 
     //hàm này LongTND triển khai
@@ -68,10 +77,35 @@ public class AccountService implements IAccountService {
     }
 
 
+
+    /**
+     * method loadUserByUsername
+     * Create SangPQ
+     * Date 13-11-2023
+     * param String username
+     * return UserDetails
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
 
+    public Account setEditAccount (AccountDto accountDto){
+        Account account = new Account();
+        BeanUtils.copyProperties(accountDto,account);
+//        Location location = new Location(accountDto.getLocation());
+//        account.setLocation(location);
+//        account.setJob(new Job(accountDto.getJob()));
+//        account.setGender(new Gender(accountDto.getGender()));
+
+//        account.setId(accountDto.getId());
+//        account.setName(accountDto.getName());
+//        account.setUserName(accountDto.getUserName());
+//        account.setPassword(accountDto.getPassword());
+//        account.setBirthday(accountDto.getBirthday());
+//        account.setEmail(accountDto.getEmail());
+//        account.setPhoneNumber(accountDto.);
+        return account;
+    }
 
 }

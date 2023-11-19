@@ -17,11 +17,17 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private  int code;
     private String name;
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
     private boolean isDeleted;
 
     public Location(int id, boolean isDeleted) {
         this.id = id;
         this.isDeleted = isDeleted;
+    }
+
+    public Location(int id) {
+        this.id = id;
     }
 }

@@ -117,29 +117,35 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     void deleteAccountId(@Param("id") Integer id);
 
 
-    @Query(value = "SELECT * from genders where id = :id", nativeQuery = true)
-    Gender findGender(@Param("id") Integer genderId);
-
-    @Query(value = "SELECT * FROM location where id = :id", nativeQuery = true)
-    Location findLocation(@Param("id") Integer locationId);
-
-    @Query(value = "select * from jobs where id = :id", nativeQuery = true)
-    Job findJob(@Param("id") Integer jobId);
 
     /**
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
-     *
-     * @return HttpStatus
+     * @return void
      */
     @Transactional
     @Modifying
-    @Query(value = "update accounts set name = :#{#account.name}, gender = :#{#account.gender.id}, " +
-            " birthday = :#{#account.birthday}, location = :#{#account.location.id}, " +
-            " job = :#{#account.job.id}, hobbies = :#{#account " +
-            " } ", nativeQuery = true)
-    void EditAccount(@Param("account") Account account);
+    @Query(value = "update accounts set name = :#{#account.name}, gender_id = :#{#account.gender.id}," +
+            "birthday = :#{#account.birthday}, location_id = :#{#account.location.id}, avatar = :#{#account.avatar}" +
+            "job_id = :#{#account.job.id} where id = :#{#account.id} ", nativeQuery = true)
+    void editAccount(@Param("account") Account account);
+
+
+    /**
+     * method createNewAccount
+     * Create SangPQ
+     * Date 16-11-2023
+     * param Account account
+     * return Integer
+     */
+
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id) \n" +
+            "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})",nativeQuery = true)
+    Integer createNewAccount(Account account);
 
 
     /**
