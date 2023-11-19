@@ -1,4 +1,6 @@
 package com.dating.controller.relationship;
+
+import com.dating.dto.relationship.IInvitedFriendDto;
 import com.dating.dto.relationship.IRecommendFriendDto;
 import com.dating.service.relationship.IRecommendFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +21,16 @@ public class RecommendFriendController {
      * Method find All
      * Author HungHLP
      * Create 13-11-2023
+     *
      * @return list  recommend friend
      */
-    @GetMapping("")
-    public ResponseEntity<List<IRecommendFriendDto>> findAll(
-            @RequestParam(value = "accountID",required = false)
-            Integer accountID){
-        List<IRecommendFriendDto> recommendDtoList = null;
-        recommendDtoList = recommendFriendService.findAllRecommendFriend(accountID);
-        return new ResponseEntity<>(recommendDtoList, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findAll(@PathVariable(value = "id", required = false) Integer accountID) {
+        List<IRecommendFriendDto> invitedList = recommendFriendService.findAllRecommendFriend(accountID);
+        if (invitedList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(invitedList, HttpStatus.OK);
+        }
     }
 }

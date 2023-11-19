@@ -31,7 +31,7 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
             "AND (hd.account_id = :accountID OR hd.hobby_id = :accountID)\n" +
             "AND a.gender_id = (SELECT gender_id FROM accounts WHERE id = :accountID)\n" +
             "AND f.sender_account_id IS NULL\n" +
-            "AND f.receiver_account_id IS NULL;",
+            "AND f.receiver_account_id IS NULL",
             nativeQuery = true)
     List<IRecommendFriendDto> findAllRecommendFriend(@Param("accountID")int accountID);
 
@@ -51,7 +51,7 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
             "        where relationships.sender_account_id = :accountID and not relationship_status.name = \"friend\") or\n" +
             "        accounts.id not in (select relationships.sender_account_id\n" +
             "        from relationships left join relationship_status on relationships.relationship_status_id = relationship_status.id\n" +
-            "        where relationships.receiver_account_id = :accountID and not relationship_status.name = \"friend\"));", nativeQuery = true)
+            "        where relationships.receiver_account_id = :accountID and not relationship_status.name = \"friend\"))", nativeQuery = true)
     List<IRecommendFriendDto> sortByLocation(@Param("accountID")int accountID);
 
 
@@ -75,7 +75,7 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
             "AND (hd.account_id = :accountID OR hd.hobby_id = :accountID)\n" +
             "AND a.gender_id = (SELECT gender_id FROM accounts WHERE id = :accountID)\n" +
             "AND f.sender_account_id IS NULL\n" +
-            "AND f.receiver_account_id IS NULL;", nativeQuery = true)
+            "AND f.receiver_account_id IS NULL", nativeQuery = true)
     List<IRecommendFriendDto> sortByHobby(@Param("accountID")int accountID);
 
 

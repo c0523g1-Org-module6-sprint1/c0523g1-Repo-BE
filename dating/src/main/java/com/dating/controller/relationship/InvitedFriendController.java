@@ -44,16 +44,16 @@ public class InvitedFriendController {
     public ResponseEntity<?> acceptInvited(
             @PathVariable(value = "invitedID", required = false) Integer invitedID
     ) {
-        if(accountService.findAccountById(invitedID )==null){
-            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
-        }
-        if (invitedID == null) {
-            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
-        } else {
-            iInvitedFriendService.accept(invitedID);
-            return new ResponseEntity<>(HttpStatus.OK);
+//        if (accountService.findAccountById(invitedID) == null) {
+//            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+//        }
+//        if (invitedID == null) {
+//            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+//        } else {
+        iInvitedFriendService.accept(invitedID);
+        return new ResponseEntity<>(HttpStatus.OK);
 
-        }
     }
 }
+
 
