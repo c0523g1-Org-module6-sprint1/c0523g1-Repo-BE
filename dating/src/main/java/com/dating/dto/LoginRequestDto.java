@@ -30,6 +30,13 @@ public class LoginRequestDto implements Validator {
         return false;
     }
 
+    /**
+     * method validate()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param Object target, Errors errors
+     * return void
+     */
     @Override
     public void validate(Object target, Errors errors) {
         LoginRequestDto loginRequestDto = (LoginRequestDto) target;
