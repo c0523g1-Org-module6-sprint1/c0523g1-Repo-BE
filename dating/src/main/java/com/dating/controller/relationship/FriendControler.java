@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/member/friend")
+@RequestMapping("api/public/friend")
 public class FriendControler {
     @Autowired
     private IFriendService friendService;
@@ -55,9 +55,9 @@ public class FriendControler {
         if (idLogin == null || idFriend == null) {
             return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
-        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
         friendService.blockFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -70,9 +70,9 @@ public class FriendControler {
         if (idLogin == null || idFriend == null) {
             return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
-        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
         friendService.unFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

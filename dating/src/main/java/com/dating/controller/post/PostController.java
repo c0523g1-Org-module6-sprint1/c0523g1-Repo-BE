@@ -17,24 +17,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/public/newsfeed/post")
+@RequestMapping("/api/public/post")
 public class PostController {
     @Autowired
     private IPostService iPostService;
-
-    @GetMapping("/public")
-    public ResponseEntity<List<Post>> showListPublic() {
-        List<Post> posts = iPostService.showListPublic();
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/friend")
-    public ResponseEntity<List<Post>> showListFriend() {
-        List<Post> posts = iPostService.showListFriend();
+    @GetMapping("/newsfeed/{loggedInAccountId}")
+    public ResponseEntity<List<Post>> showListNewsfeed(@PathVariable Integer loggedInAccountId) {
+        List<Post> posts = iPostService.showListNewsfeed(loggedInAccountId);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

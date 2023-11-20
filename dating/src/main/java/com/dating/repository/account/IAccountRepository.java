@@ -58,8 +58,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " JOIN warning w on wd.warning_id =  w.id " +
             " join package_detail pd on acc.id = pd.account_id   " +
             " join account_types acct on pd.account_types_id = acct.id  " +
-            " where acc.user_name like concat('%', :username, '%')  ", nativeQuery = true)
-    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username);
+            " where acc.user_name like concat('%', :username, '%') and acct.`name` like concat('%', :typeAccount, '%') ", nativeQuery = true)
+    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username,@Param("typeAccount") String typeAccount);
 
 
     /**

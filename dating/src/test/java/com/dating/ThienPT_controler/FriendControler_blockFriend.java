@@ -26,25 +26,24 @@ public class FriendControler_blockFriend {
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case success block friend
+     * return status 200
      * @throws Exception
      * */
 
     @Test
     void blockFriend_idLogin_99() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/{idLogin}",2)
-                        .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andDo(print()).andExpect(status().is2xxSuccessful());
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(3)))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case block friend when idLogin is null
      * with [idLogin] = null
      *
@@ -53,40 +52,32 @@ public class FriendControler_blockFriend {
 
     @Test
     void blockFriend_idLogin_25() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = null;
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case block friend when friendBlockDto is null
-     * with [friendBlockDto] = null
+     * date : 16/11/2023
+     * goal: Check case block friend when idFriend is null
+     * with [idFriend] = null
      *
      * @throws Exception
      * */
 
     @Test
-    void blockFriend_friendBlockDto_25() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1;
-        friendBlockDto.setIdFriend(null);
+    void blockFriend_idFriend_25() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block/")
+                                .param("idLogin", String.valueOf(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case block friend when idLogin not found in database
      * with [idLogin] not found in database
      *
@@ -95,40 +86,34 @@ public class FriendControler_blockFriend {
 
     @Test
     void blockFriend_idLogin_27() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1000;
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idLogin", String.valueOf(1000))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case block friend when friendBlockDto not found in database
-     * with [friendBlockDto] not found in database
+     * date : 16/11/2023
+     * goal: Check case block friend when idFriend not found in database
+     * with [idFriend] not found in database
      *
      * @throws Exception
      * */
 
     @Test
-    void blockFriend_friendBlockDto_27() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1;
-        friendBlockDto.setIdFriend(3000);
+    void blockFriend_idFriend_27() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(30000)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case block friend when idLogin can find in database
      * with [idLogin] exist in database
      *
@@ -137,32 +122,28 @@ public class FriendControler_blockFriend {
 
     @Test
     void blockFriend_idLogin_28() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/1")
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case block friend when friendBlockDto can find in database
-     * with [friendBlockDto] exist in database
+     * with [idFriend] exist in database
      *
      * @throws Exception
      * */
 
     @Test
-    void blockFriend_friendBlockDto_28() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
+    void blockFriend_idFriend_28() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/block/1")
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/block")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
