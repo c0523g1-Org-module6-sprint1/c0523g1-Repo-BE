@@ -11,7 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,7 @@ public class CommentController {
         if (commentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>( commentList, HttpStatus.OK);
+            return new ResponseEntity<>(commentList, HttpStatus.OK);
         }
     }
 
@@ -73,14 +75,12 @@ public class CommentController {
      * @return HttpStatus
      */
     @PostMapping("/comment")
-    public ResponseEntity<Object> createComment(@Valid CommentDto commentDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public ResponseEntity<Object> createComment(@RequestBody Comments comments, BindingResult bindingResult) {
+        if (comments.getContent().equals("")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail to create");
         }
-        Comments comments = new Comments();
-        BeanUtils.copyProperties(commentDto, comments);
         iCommentService.saveComment(comments);
-        return new ResponseEntity<>(HttpStatus.OK) ;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -95,10 +95,10 @@ public class CommentController {
     @PutMapping("/comment/{id}")
     public ResponseEntity<Object> editComment(@Valid @PathVariable Integer id,
                                               CommentDto commentDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Updated Fail");
         }
-        if (iCommentService.findCommentById(id) == null){
+        if (iCommentService.findCommentById(id) == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Updated Fail");
         }
         Comments comments = new Comments();
