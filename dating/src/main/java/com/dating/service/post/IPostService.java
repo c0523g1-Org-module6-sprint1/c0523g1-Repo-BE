@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface IPostService {
     boolean create(LocalDateTime date, String content, String image, Integer accountId, Integer privacyId);
-    List<Post> showListPublic();
-    List<Post> showListFriend();
+    List<Post> showListNewsfeed( Integer loggedInAccountId);
     List<Post> showListOfAnAccount( String userName);
     Post getPostById (Integer id);
     boolean updateForThePostOwner(String content, String image, Integer accountId, Integer postId, Integer privacyPostId);
