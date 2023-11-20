@@ -16,7 +16,7 @@ import java.util.*;
 
 public class PaymentController {
 
-    @GetMapping("/pay")
+    @GetMapping("/api/member/pay")
     public String getPay(@RequestParam(name = "sum") long sum)  throws UnsupportedEncodingException{
 
         String vnp_Version = "2.1.0";
