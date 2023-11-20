@@ -155,6 +155,15 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/api/public/personal-page/edit/{id}")
+    public ResponseEntity<Object> getAccountById (@PathVariable("id") Integer id){
+        if (id == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Account account = iAccountService.findAccountById(id);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
 //    @PatchMapping("/accounts/{id}")
 //    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
 //        Account account = iAccountService.findAccountById(id);

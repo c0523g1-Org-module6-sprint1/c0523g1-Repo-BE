@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/public/top_hundered")
+@RequestMapping("/api/member/top_hundered")
 public class AccountTopController {
     @Autowired
     private IAccountsService accountsService;
