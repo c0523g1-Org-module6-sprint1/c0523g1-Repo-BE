@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/public")
+    @RequestMapping("/api/public")
 public class SecurityController {
 
     @Autowired

@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 public interface IGiftRecordRepository extends JpaRepository<GiftRecord, Integer> {
     /**
      * method create
@@ -19,6 +17,6 @@ public interface IGiftRecordRepository extends JpaRepository<GiftRecord, Integer
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO gift_record (quantity, time, account_receiver_id, account_sender_id, gift_id, is_delete) VALUES (:quantity, NOW(), :receiverAccountId, :senderAccountId, :giftId, false)", nativeQuery = true)
-    void insertGiftRecord(@Param("quantity") int quantity, @Param("receiverAccountId") int receiverAccountId, @Param("senderAccountId") int senderAccountId, @Param("giftId") int giftId);
+    void insertGiftRecord(@Param("quantity") int quantity, @Param("receiverAccountId") Integer receiverAccountId, @Param("senderAccountId") Integer senderAccountId, @Param("giftId") int giftId);
 
 }

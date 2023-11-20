@@ -24,18 +24,13 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> showListPublic() {
-        return iPostRepository.showListPublic();
+    public List<Post> showListNewsfeed(Integer loggedInAccountId) {
+        return iPostRepository.showListNewsfeed(loggedInAccountId);
     }
 
     @Override
-    public List<Post> showListFriend() {
-        return iPostRepository.showListFriend();
-    }
-
-    @Override
-    public List<Post> showListOfAnAccount(Integer accountId) {
-        return iPostRepository.showListOfAnAccount(accountId);
+    public List<Post> showListOfAnAccount(String userName) {
+        return iPostRepository.showListOfAnAccount(userName);
     }
 
     @Override

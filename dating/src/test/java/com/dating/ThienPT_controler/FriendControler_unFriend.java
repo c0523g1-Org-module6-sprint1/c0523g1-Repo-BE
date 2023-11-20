@@ -26,25 +26,7 @@ public class FriendControler_unFriend {
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case success unfriend friend
-     * @throws Exception
-     * */
-
-    @Test
-    void unFriend_idLogin_99() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/{idLogin}",2)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
-    }
-
-    /**
-     * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case unfriend when idLogin is null
      * with [idLogin] = null
      *
@@ -53,40 +35,32 @@ public class FriendControler_unFriend {
 
     @Test
     void unFriend_idLogin_25() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = null;
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case unfriend when friendBlockDto is null
-     * with [friendBlockDto] = null
+     * date : 16/11/2023
+     * goal: Check case unfriend when idFriend is null
+     * with [idFriend] = null
      *
      * @throws Exception
      * */
 
     @Test
-    void unFriend_friendBlockDto_25() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1;
-        friendBlockDto.setIdFriend(null);
+    void unFriend_idFriend_25() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idLogin", String.valueOf(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case unfriend when idLogin not found in database
      * with [idLogin] not found in database
      *
@@ -95,40 +69,34 @@ public class FriendControler_unFriend {
 
     @Test
     void unFriend_idLogin_27() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1000;
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idLogin", String.valueOf(1000))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case unfriend when friendBlockDto not found in database
-     * with [friendBlockDto] not found in database
+     * date : 16/11/2023
+     * goal: Check case unfriend when idFriend not found in database
+     * with [idFriend] not found in database
      *
      * @throws Exception
      * */
 
     @Test
-    void unFriend_friendBlockDto_27() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        Integer idLogin = 1;
-        friendBlockDto.setIdFriend(3000);
+    void unFriend_idFriend_27() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/" + idLogin)
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(30000)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
+     * date : 16/11/2023
      * goal: Check case unfriend when idLogin can find in database
      * with [idLogin] exist in database
      *
@@ -137,32 +105,28 @@ public class FriendControler_unFriend {
 
     @Test
     void unFriend_idLogin_28() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/1")
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     /**
      * author: ThienPT
-     * date : 14/11/2023
-     * goal: Check case unfriend when friendBlockDto can find in database
-     * with [friendBlockDto] exist in database
+     * date : 16/11/2023
+     * goal: Check case unfriend when idFriend can find in database
+     * with [idFriend] exist in database
      *
      * @throws Exception
      * */
 
     @Test
-    void unFriend_friendBlockDto_28() throws Exception {
-        FriendBlockDto friendBlockDto = new FriendBlockDto();
-        friendBlockDto.setIdFriend(3);
+    void unFriend_idFriend_28() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/public/relationship/friend/unfriend/1")
-                                .content(this.objectMapper.writeValueAsString(friendBlockDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        MockMvcRequestBuilders.delete("/api/public/friend/unfriend")
+                                .param("idLogin", String.valueOf(1))
+                                .param("idFriend", String.valueOf(3)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 

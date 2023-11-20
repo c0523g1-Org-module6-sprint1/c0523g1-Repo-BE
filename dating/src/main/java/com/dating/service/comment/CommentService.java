@@ -7,6 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Method: Comments Service,
+ * Create: ThienLCH,
+ * Date  : 13/11/2023
+ *
+ * return:
+ */
 @Service
 public class CommentService implements ICommentService{
     @Autowired
@@ -25,6 +32,16 @@ public class CommentService implements ICommentService{
     @Override
     public List<Comments> getAllComments() {
         return iCommentRepository.getAllComment();
+    }
+
+    @Override
+    public List<Comments> getAllCommentsByAccountId(Integer id) {
+        return iCommentRepository.getAllCommentsByAccountId(id);
+    }
+
+    @Override
+    public List<Comments> getAllCommentsByPost_id(Integer id) {
+        return iCommentRepository.getAllCommentsByPostId(id);
     }
 
     @Override

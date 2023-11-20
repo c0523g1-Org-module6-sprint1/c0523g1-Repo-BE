@@ -2,9 +2,6 @@ package com.dating.service.account;
 import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
-import com.dating.model.gender.Gender;
-import com.dating.model.job.Job;
-import com.dating.model.location.Location;
 import com.dating.repository.account.IAccountRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,38 +17,16 @@ public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
-    /**
-     * method findByUsername
-     * Create SangPQ
-     * Date 13-11-2023
-     * param String userName
-     * return Account
-     */
-
     @Override
     public Account findByUsername(String userName) {
         return accountRepository.findAccountByUserName(userName);
     }
 
-    /**
-     * method findByEmail
-     * Create SangPQ
-     * Date 13-11-2023
-     * param String email
-     * return Account
-     */
     @Override
     public Account findByEmail(String email) {
         return accountRepository.findAccountByEmail(email);
     }
 
-    /**
-     * method createNewAccount
-     * Create SangPQ
-     * Date 13-11-2023
-     * param Account account
-     * return Boolean
-     */
     @Override
     public Boolean createNewAccount(Account account) {
         Account newAccount = accountRepository.findAccountByUserName(account.getUserName());
@@ -64,8 +39,8 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Page<Account> findAll(Pageable pageable, String username) {
-        return null;
+    public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
+        return accountRepository.findAllAccount(pageable, username, typeAccount);
     }
 
     @Override
@@ -79,8 +54,8 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findAccountById(Integer id) {
-        accountRepository.findAccountById(id);
-        return null;
+      return accountRepository.findAccountById(id);
+
     }
 
 
@@ -120,10 +95,10 @@ public class AccountService implements IAccountService {
     public Account setEditAccount (AccountDto accountDto){
         Account account = new Account();
         BeanUtils.copyProperties(accountDto,account);
-//        Location location = new Location(accountDto.getLocation());
-//        account.setLocation(location);
-//        account.setJob(new Job(accountDto.getJob()));
-//        account.setGender(new Gender(accountDto.getGender()));
+        Location location = new Location(accountDto.getLocation());
+        account.setLocation(location);
+        account.setJob(new Job(accountDto.getJob()));
+        account.setGender(new Gender(accountDto.getGender()));
 
 //        account.setId(accountDto.getId());
 //        account.setName(accountDto.getName());

@@ -12,14 +12,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/public/newsfeed/post")
+@RequestMapping("/api/public/post")
 public class PostController {
     @Autowired
     private IPostService iPostService;
-
-    @GetMapping("/public")
-    public ResponseEntity<List<Post>> showListPublic() {
-        List<Post> posts = iPostService.showListPublic();
+    @GetMapping("/newsfeed/{loggedInAccountId}")
+    public ResponseEntity<List<Post>> showListNewsfeed(@PathVariable Integer loggedInAccountId) {
+        List<Post> posts = iPostService.showListNewsfeed(loggedInAccountId);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -27,19 +26,9 @@ public class PostController {
         }
     }
 
-    @GetMapping("/friend")
-    public ResponseEntity<List<Post>> showListFriend() {
-        List<Post> posts = iPostService.showListFriend();
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(posts, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable Integer accountId) {
-        List<Post> posts = iPostService.showListOfAnAccount(accountId);
+    @GetMapping("/account/{userName}")
+    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable String userName) {
+        List<Post> posts = iPostService.showListOfAnAccount(userName);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

@@ -12,17 +12,17 @@ public class GiftRecordDto implements Validator {
     @NotNull
     @Min(1)
     private Integer quantity;
-    @NotNull
+
     private Integer giftId;
-    @NotNull
-    private Integer accountSenderId;
-    @NotNull
-    private Integer accountReceiverId;
+
+    private String accountSenderId;
+
+    private String accountReceiverId;
 
     public GiftRecordDto() {
     }
 
-    public GiftRecordDto(Integer quantity, Integer giftId, Integer accountSenderId, Integer accountReceiverId) {
+    public GiftRecordDto(Integer quantity, Integer giftId, String accountSenderId, String accountReceiverId) {
         this.quantity = quantity;
         this.giftId = giftId;
         this.accountSenderId = accountSenderId;
@@ -45,19 +45,19 @@ public class GiftRecordDto implements Validator {
         this.giftId = giftId;
     }
 
-    public Integer getAccountSenderId() {
+    public String getAccountSenderId() {
         return accountSenderId;
     }
 
-    public void setAccountSenderId(Integer accountSenderId) {
+    public void setAccountSenderId(String accountSenderId) {
         this.accountSenderId = accountSenderId;
     }
 
-    public Integer getAccountReceiverId() {
+    public String getAccountReceiverId() {
         return accountReceiverId;
     }
 
-    public void setAccountReceiverId(Integer accountReceiverId) {
+    public void setAccountReceiverId(String accountReceiverId) {
         this.accountReceiverId = accountReceiverId;
     }
 

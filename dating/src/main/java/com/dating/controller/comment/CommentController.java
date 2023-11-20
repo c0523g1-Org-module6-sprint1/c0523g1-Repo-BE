@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api")
+@RequestMapping("/api/public")
 public class CommentController {
     @Autowired
     private ICommentService iCommentService;
@@ -32,11 +32,10 @@ public class CommentController {
     @GetMapping("/comment")
     public ResponseEntity<List<Comments>> showList() {
         List<Comments> commentList = iCommentService.getAllComments();
-//        List<Comments> commentList = new ArrayList<>();
         if (commentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(commentList, HttpStatus.OK);
+            return new ResponseEntity<>( commentList, HttpStatus.OK);
         }
     }
 
@@ -46,7 +45,7 @@ public class CommentController {
         if (comments == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body("okay");
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     /**
@@ -56,6 +55,7 @@ public class CommentController {
      *
      * @return HttpStatus
      */
+    //
     @DeleteMapping("/comment/{id}")
     public ResponseEntity<Object> deleteComment(@PathVariable Integer id) {
         if (id == null) {
@@ -75,12 +75,12 @@ public class CommentController {
     @PostMapping("/comment")
     public ResponseEntity<Object> createComment(@Valid CommentDto commentDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail to delete");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail to create");
         }
         Comments comments = new Comments();
         BeanUtils.copyProperties(commentDto, comments);
         iCommentService.saveComment(comments);
-        return ResponseEntity.status(HttpStatus.OK).body("Fail to delete");
+        return new ResponseEntity<>(HttpStatus.OK) ;
     }
 
 

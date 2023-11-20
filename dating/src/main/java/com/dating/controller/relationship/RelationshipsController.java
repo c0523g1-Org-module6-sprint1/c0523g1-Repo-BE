@@ -101,7 +101,11 @@ public class RelationshipsController {
     public ResponseEntity<Relationships> getRelationshipStatus(@PathVariable("idSent") int idSent, @PathVariable("idReceiver") int idReceiver){
         Relationships relationships =sendInvitedService.getRelationshipsStatus(idSent,idReceiver);
         if (relationships == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Relationships relationships1 = new Relationships();
+            RelationshipStatus relationshipStatus = new RelationshipStatus();
+            relationshipStatus.setId(1);
+            relationships1.setRelationshipStatus(relationshipStatus);
+            return new ResponseEntity<>(relationships1,HttpStatus.OK);
         }
         return new ResponseEntity<>(relationships,HttpStatus.OK);
 

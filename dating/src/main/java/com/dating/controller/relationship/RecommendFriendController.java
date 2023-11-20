@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/member/relationship/recommend")
+@RequestMapping("api/public/recommend")
 public class RecommendFriendController {
     @Autowired
     private IRecommendFriendService recommendFriendService;
@@ -22,9 +22,11 @@ public class RecommendFriendController {
      * @return list  recommend friend
      */
     @GetMapping("")
-    public ResponseEntity<List<IRecommendFriendDto>> findAll(){
+    public ResponseEntity<List<IRecommendFriendDto>> findAll(
+            @RequestParam(value = "accountID",required = false)
+            Integer accountID){
         List<IRecommendFriendDto> recommendDtoList = null;
-        recommendDtoList = recommendFriendService.findAllRecommendFriend();
+        recommendDtoList = recommendFriendService.findAllRecommendFriend(accountID);
         return new ResponseEntity<>(recommendDtoList, HttpStatus.OK);
     }
 }
