@@ -40,31 +40,31 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "name",columnDefinition = "varchar(255)",nullable = false)
+    @Column(name = "name",columnDefinition = "varchar(255)")
     private String name;
-    @Column(name = "user_name",columnDefinition = "varchar(255)",nullable = false,unique = true)
+    @Column(name = "user_name",columnDefinition = "varchar(255)",unique = true)
     private String userName;
-    @Column(name = "password",columnDefinition = "varchar(255)",nullable = false)
+    @Column(name = "password",columnDefinition = "varchar(255)")
     private String password;
-    @Column(name = "birthday",columnDefinition = "date",nullable = false)
+    @Column(name = "birthday",columnDefinition = "date")
     private String birthday;
-    @Column(name = "email",columnDefinition = "varchar(255)",nullable = false)
+    @Column(name = "email",columnDefinition = "varchar(255)")
     private String email;
-    @Column(name = "phone_number",columnDefinition = "varchar(15)",nullable = false)
+    @Column(name = "phone_number",columnDefinition = "varchar(15)")
     private String phoneNumber;
-    @Column(name = "money",columnDefinition = "double",nullable = false)
+    @Column(name = "money",columnDefinition = "double")
     private Double money;
-    @Column(name = "regis_date",columnDefinition = "date",nullable = false)
+    @Column(name = "regis_date",columnDefinition = "date")
     private String regisDate;
-    @Column(name = "avatar",columnDefinition = "varchar(255)",nullable = true)
+    @Column(name = "avatar",columnDefinition = "varchar(255)")
     private String avatar;
     @Column(name = "expire",columnDefinition = "date")
     private String expire;
-    @Column(name = "marital_status",columnDefinition = "varchar(255)",nullable = false)
+    @Column(name = "marital_status",columnDefinition = "varchar(255)")
     private String maritalStatus;
-    @Column(name = "point",columnDefinition = "int",nullable = false)
+    @Column(name = "point",columnDefinition = "int")
     private Integer point;
-    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0",nullable = false)
+    @Column(name = "is_deleted",columnDefinition = "bit(1) default 0")
     private Boolean isDeleted;
 
     @ManyToOne
