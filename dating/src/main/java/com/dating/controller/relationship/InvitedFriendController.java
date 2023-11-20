@@ -43,7 +43,8 @@ public class InvitedFriendController {
     @PutMapping("/accept/{invitedID}")
     public ResponseEntity<?> acceptInvited(
             @PathVariable(value = "invitedID", required = false) Integer invitedID
-    ) {
+    )
+    {
         if(accountService.findAccountById(invitedID )==null){
             return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
