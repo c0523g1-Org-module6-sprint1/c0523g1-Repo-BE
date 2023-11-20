@@ -57,10 +57,10 @@ public class ChangePasswordService implements IChangePasswordService {
     @Override
     public boolean updateMoney(double money, String userName) {
         double money1 = findMoney(userName);
-        if (money * 100 > money1) {
+        if (money * 1000 > money1) {
             return false;
         }
-        Double result = money1 - money * 100;
+        Double result = money1 - (money * 1000);
         iChangePasswordRepository.updateMoney(userName, result);
         return true;
     }
