@@ -1,6 +1,7 @@
 package com.dating.repository.relationship;
 
 import com.dating.dto.relationship.IRecommendFriendDto;
+import com.dating.model.account.Account;
 import com.dating.model.relationship.Relationships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,20 +19,68 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
 
 
 
-    @Query(value = "SELECT a.name AS nameAccount, g.name AS nameGender, l.name AS nameLocation, j.name AS jobAccount, h.name AS hobbyAccount, a.avatar AS avatarAccount FROM accounts a LEFT JOIN roles r ON a.role_id = r.id\n" +
-            "LEFT JOIN genders g ON a.gender_id = g.id\n" +
-            "LEFT JOIN location l ON a.location_id = l.id\n" +
-            "LEFT JOIN jobs j ON a.job_id = j.id\n" +
-            "LEFT JOIN hobby_detail hd ON (hd.account_id = a.id OR hd.hobby_id = a.id)\n" +
-            "LEFT JOIN hobbies h ON hd.hobby_id = h.id\n" +
-            "LEFT JOIN relationships f ON (f.sender_account_id = :accountID AND f.receiver_account_id = a.id) OR (f.sender_account_id = a.id AND f.receiver_account_id = :accountID)\n" +
-            "WHERE a.id <> :accountID\n" +
-            "AND a.location_id = (SELECT location_id FROM accounts WHERE id = :accountID)\n" +
-            "AND a.job_id = (SELECT job_id FROM accounts WHERE id = :accountID)\n" +
-            "AND (hd.account_id = :accountID OR hd.hobby_id = :accountID)\n" +
-            "AND a.gender_id = (SELECT gender_id FROM accounts WHERE id = :accountID)\n" +
-            "AND f.sender_account_id IS NULL\n" +
-            "AND f.receiver_account_id IS NULL",
+    @Query(value = "SELECT \n" +
+            "    location.name AS location,\n" +
+            "    jobs.name AS job,\n" +
+            "    hobbies.name AS hobby,\n" +
+            "    genders.name AS gender,\n" +
+            "    accounts.name AS name,\n" +
+            "    accounts.avatar AS avatar,\n" +
+            "    accounts.id AS id\n" +
+            "FROM \n" +
+            "    location\n" +
+            "LEFT JOIN \n" +
+            "    accounts ON accounts.location_id = location.id\n" +
+            "LEFT JOIN \n" +
+            "    jobs ON accounts.job_id = jobs.id\n" +
+            "LEFT JOIN \n" +
+            "    hobby_detail ON hobby_detail.account_id = accounts.id\n" +
+            "LEFT JOIN \n" +
+            "    hobbies ON hobby_detail.hobby_id = hobbies.id\n" +
+            "LEFT JOIN \n" +
+            "    genders ON accounts.gender_id = genders.id\n" +
+            "WHERE \n" +
+            "    location.id = (\n" +
+            "        SELECT accounts.location_id\n" +
+            "        FROM accounts\n" +
+            "        WHERE accounts.id = :accountID\n" +
+            "    ) OR hobbies.id =(\n" +
+            "     SELECT hobby_detail.account_id = :accountID\n" +
+            "        FROM accounts\n" +
+            "        WHERE accounts.id = :accountID\n" +
+            "    )OR\n" +
+            "    jobs.id=(SELECT accounts.job_id\n" +
+            "        FROM accounts\n" +
+            "        WHERE accounts.id = :accountID\n" +
+            "    )\n" +
+            "    AND NOT EXISTS (\n" +
+            "        SELECT :accountID\n" +
+            "        FROM relationships r\n" +
+            "        WHERE \n" +
+            "            (r.sender_account_id = accounts.id AND r.receiver_account_id = :accountID)\n" +
+            "            OR (r.sender_account_id = :accountID AND r.receiver_account_id = accounts.id)\n" +
+            "            AND r.relationship_status_id IN (1, 2, 3) -- Sử dụng ID của trạng thái mối quan hệ\n" +
+            "    )\n" +
+            "    AND accounts.id <> :accountID -- Tránh trùng lặp với tài khoản đang đăng nhập\n" +
+            "    AND (\n" +
+            "        accounts.id NOT IN (\n" +
+            "            SELECT relationships.receiver_account_id\n" +
+            "            FROM relationships\n" +
+            "            WHERE relationships.sender_account_id = :accountID AND relationships.relationship_status_id IN (1, 2, 3)\n" +
+            "        )\n" +
+            "        OR\n" +
+            "        accounts.id NOT IN (\n" +
+            "            SELECT relationships.sender_account_id\n" +
+            "            FROM relationships\n" +
+            "            WHERE relationships.receiver_account_id = :accountID AND relationships.relationship_status_id IN (1, 2, 3)\n" +
+            "        )\n" +
+            "    )\n" +
+            "    -- Thêm điều kiện để ít nhất một trong ba thuộc tính giống nhau\n" +
+            "    AND (\n" +
+            "        jobs.name IN (SELECT jobs.name FROM accounts WHERE accounts.id = :accountID)\n" +
+            "        OR hobbies.name IN (SELECT hobbies.name FROM hobby_detail WHERE hobby_detail.account_id = :accountID)\n" +
+            "        OR location.id IN (SELECT location.id FROM accounts WHERE accounts.id = :accountID)\n" +
+            "    )\n",
             nativeQuery = true)
     List<IRecommendFriendDto> findAllRecommendFriend(@Param("accountID")int accountID);
 
@@ -43,15 +92,41 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
      * return list  recommend friend sort by location
      */
 
-    @Query(value = "select * from location\n" +
-            "        left join accounts on accounts.location_id = location.id\n" +
-            "        where location.id = (select accounts.location_id from accounts where accounts.id = :accountID)\n" +
-            "        and (accounts.id not in (select relationships.receiver_account_id\n" +
-            "        from relationships left join relationship_status on relationships.relationship_status_id = relationship_status.id\n" +
-            "        where relationships.sender_account_id = :accountID and not relationship_status.name = \"friend\") or\n" +
-            "        accounts.id not in (select relationships.sender_account_id\n" +
-            "        from relationships left join relationship_status on relationships.relationship_status_id = relationship_status.id\n" +
-            "        where relationships.receiver_account_id = :accountID and not relationship_status.name = \"friend\"))", nativeQuery = true)
+    @Query(value = "SELECT \n" +
+            "    location.name AS location,\n" +
+            "    jobs.name AS job,\n" +
+            "    hobbies.name AS hobby,\n" +
+            "    genders.name AS gender,\n" +
+            "    accounts.name AS name,\n" +
+            "    accounts.avatar AS avatar,\n" +
+            "    accounts.id AS id\n" +
+            "FROM \n" +
+            "    location\n" +
+            "LEFT JOIN \n" +
+            "    accounts ON accounts.location_id = location.id\n" +
+            "LEFT JOIN \n" +
+            "    jobs ON accounts.job_id = jobs.id\n" +
+            "LEFT JOIN \n" +
+            "    hobby_detail ON hobby_detail.account_id = accounts.id\n" +
+            "LEFT JOIN \n" +
+            "    hobbies ON hobby_detail.hobby_id = hobbies.id\n" +
+            "LEFT JOIN \n" +
+            "    genders ON accounts.gender_id = genders.id\n" +
+            "WHERE \n" +
+            "    location.id = (\n" +
+            "        SELECT accounts.location_id\n" +
+            "        FROM accounts\n" +
+            "        WHERE accounts.id = :accountID\n" +
+            "    )\n" +
+            "    AND NOT EXISTS (\n" +
+            "        SELECT 1\n" +
+            "        FROM relationships r\n" +
+            "        WHERE \n" +
+            "            (r.sender_account_id = accounts.id AND r.receiver_account_id = :accountID)\n" +
+            "            OR (r.sender_account_id = :accountID AND r.receiver_account_id = accounts.id)\n" +
+            "            AND r.relationship_status_id IN (1, 2, 3) -- Sử dụng ID của trạng thái mối quan hệ\n" +
+            "    )\n" +
+            "    AND accounts.id <> :accountID -- Tránh trùng lặp với tài khoản đang đăng nhập;", nativeQuery = true)
     List<IRecommendFriendDto> sortByLocation(@Param("accountID")int accountID);
 
 
@@ -62,20 +137,41 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
      * Date 14-11-2023
      * return list  recommend friend sort by hobby
      */
-    @Query(value = "SELECT a.name AS nameAccount, g.name AS nameGender, h.name AS hobbyAccount,a.avatar AS avatarAccount FROM accounts a LEFT JOIN roles r ON a.role_id = r.id\n" +
-            "LEFT JOIN genders g ON a.gender_id = g.id\n" +
-            "LEFT JOIN location l ON a.location_id = l.id\n" +
-            "LEFT JOIN jobs j ON a.job_id = j.id\n" +
-            "LEFT JOIN hobby_detail hd ON (hd.account_id = a.id OR hd.hobby_id = a.id)\n" +
-            "LEFT JOIN hobbies h ON hd.hobby_id = h.id\n" +
-            "LEFT JOIN relationships f ON (f.sender_account_id = :accountID AND f.receiver_account_id = a.id) OR (f.sender_account_id = a.id AND f.receiver_account_id = :accountID)\n" +
-            "WHERE a.id <> :accountID\n" +
-            "AND a.location_id = (SELECT location_id FROM accounts WHERE id = :accountID)\n" +
-            "AND a.job_id = (SELECT job_id FROM accounts WHERE id = :accountID)\n" +
-            "AND (hd.account_id = :accountID OR hd.hobby_id = :accountID)\n" +
-            "AND a.gender_id = (SELECT gender_id FROM accounts WHERE id = :accountID)\n" +
-            "AND f.sender_account_id IS NULL\n" +
-            "AND f.receiver_account_id IS NULL", nativeQuery = true)
+    @Query(value = "SELECT \n" +
+            "    location.name AS location,\n" +
+            "    jobs.name AS job,\n" +
+            "    hobbies.name AS hobby,\n" +
+            "    genders.name AS gender,\n" +
+            "    accounts.name AS name,\n" +
+            "    accounts.avatar AS avatar,\n" +
+            "    accounts.id AS id\n" +
+            "FROM \n" +
+            "    location\n" +
+            "LEFT JOIN \n" +
+            "    accounts ON accounts.location_id = location.id\n" +
+            "LEFT JOIN \n" +
+            "    jobs ON accounts.job_id = jobs.id\n" +
+            "LEFT JOIN \n" +
+            "    hobby_detail ON hobby_detail.account_id = accounts.id\n" +
+            "LEFT JOIN \n" +
+            "    hobbies ON hobby_detail.hobby_id = hobbies.id\n" +
+            "LEFT JOIN \n" +
+            "    genders ON accounts.gender_id = genders.id\n" +
+            "WHERE \n" +
+            "    hobbies.id IN (\n" +
+            "        SELECT hobby_detail.hobby_id\n" +
+            "        FROM hobby_detail\n" +
+            "        WHERE hobby_detail.account_id = :accountID\n" +
+            "    )\n" +
+            "    AND NOT EXISTS (\n" +
+            "        SELECT 1\n" +
+            "        FROM relationships r\n" +
+            "        WHERE \n" +
+            "            (r.sender_account_id = accounts.id AND r.receiver_account_id = :accountID)\n" +
+            "            OR (r.sender_account_id = :accountID AND r.receiver_account_id = accounts.id)\n" +
+            "            AND r.relationship_status_id IN (1, 2, 3) -- Sử dụng ID của trạng thái mối quan hệ\n" +
+            "    )\n" +
+            "    AND accounts.id <> :accountID -- Tránh trùng lặp với tài khoản đang đăng nhập;", nativeQuery = true)
     List<IRecommendFriendDto> sortByHobby(@Param("accountID")int accountID);
 
 
@@ -86,15 +182,41 @@ public interface IRecommendFriendRepository extends JpaRepository<Relationships,
      * Date 14-11-2023
      * return list  recommend friend sort by job
      */
-    @Query(value = " select * from jobs\n" +
-            "        left join accounts on accounts.job_id = job_id\n" +
-            "        where job_id = (select accounts.job_id from accounts where accounts.id = :accountID)\n" +
-            "        and (accounts.id not in (select relationships.receiver_account_id\n" +
-            "        from relationships left join relationship_status on relationships.relationship_status_id = relationship_status.id\n" +
-            "        where relationships.sender_account_id = :accountID and not relationship_status.name = \"friend\") or\n" +
-            "        accounts.id not in (select relationships.sender_account_id\n" +
-            "        from relationships left join relationship_status on relationships.relationship_status_id = relationship_status.id\n" +
-            "        where relationships.receiver_account_id = :accountID and not relationship_status.name = \"friend\"));", nativeQuery = true)
+    @Query(value = "SELECT \n" +
+            "    location.name AS location,\n" +
+            "    jobs.name AS job,\n" +
+            "    hobbies.name AS hobby,\n" +
+            "    genders.name AS gender,\n" +
+            "    accounts.name AS name,\n" +
+            "    accounts.avatar AS avatar,\n" +
+            "    accounts.id AS id\n" +
+            "FROM \n" +
+            "    location\n" +
+            "LEFT JOIN \n" +
+            "    accounts ON accounts.location_id = location.id\n" +
+            "LEFT JOIN \n" +
+            "    jobs ON accounts.job_id = jobs.id\n" +
+            "LEFT JOIN \n" +
+            "    hobby_detail ON hobby_detail.account_id = accounts.id\n" +
+            "LEFT JOIN \n" +
+            "    hobbies ON hobby_detail.hobby_id = hobbies.id\n" +
+            "LEFT JOIN \n" +
+            "    genders ON accounts.gender_id = genders.id\n" +
+            "WHERE \n" +
+            "    jobs.id = (\n" +
+            "        SELECT accounts.job_id\n" +
+            "        FROM accounts\n" +
+            "        WHERE accounts.id = :accountID\n" +
+            "    )\n" +
+            "    AND NOT EXISTS (\n" +
+            "        SELECT 1\n" +
+            "        FROM relationships r\n" +
+            "        WHERE \n" +
+            "            (r.sender_account_id = accounts.id AND r.receiver_account_id = :accountID)\n" +
+            "            OR (r.sender_account_id = :accountID AND r.receiver_account_id = accounts.id)\n" +
+            "            AND r.relationship_status_id IN (1, 2, 3) -- Sử dụng ID của trạng thái mối quan hệ\n" +
+            "    )\n" +
+            "    AND accounts.id <> :accountID -- Tránh trùng lặp với tài khoản đang đăng nhập;", nativeQuery = true)
     List<IRecommendFriendDto> sortByJob(@Param("accountID")int accountID);
 
 }

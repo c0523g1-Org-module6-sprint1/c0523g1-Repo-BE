@@ -23,9 +23,18 @@ public class InvitedFriendController {
     @Autowired
     private IAccountService accountService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findAll(@PathVariable(value = "id", required = false) Integer accountID) {
-        List<IInvitedFriendDto> invitedList = iInvitedFriendService.findAllInvitedFriend(accountID);
+    /**
+     * Method find All
+     * Author HungHLP
+     * Create 13-11-2023
+     *Param Integer id, boolean sortDesc
+     * @return list  invited friend DESC, if false return invited friend ASC
+     */
+
+    @GetMapping("/{id}/{sortByDesc}")
+    public ResponseEntity<?> findAll(@PathVariable(value = "id", required = false) Integer accountID,
+                                     @PathVariable(value = "sortByDesc") boolean sortByDesc) {
+        List<IInvitedFriendDto> invitedList = iInvitedFriendService.findAllInvitedFriend(accountID, sortByDesc);
         if (invitedList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
@@ -33,11 +42,27 @@ public class InvitedFriendController {
         }
     }
 
+    /**
+     * Method deleted invited
+     * Author HungHLP
+     * Create 13-11-2023
+     *
+     * @return list  invited friend
+     */
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteInvited(@PathVariable int id) {
         iInvitedFriendService.delete(id);
         return ResponseEntity.ok("Xóa thành công!");
     }
+
+    /**
+     * Method accept invited
+     * Author HungHLP
+     * Create 13-11-2023
+     *
+     * @return list  invited friend
+     */
 
 
     @PutMapping("/accept/{invitedID}")
