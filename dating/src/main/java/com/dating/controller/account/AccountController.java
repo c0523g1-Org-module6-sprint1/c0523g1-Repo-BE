@@ -27,7 +27,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/public")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
@@ -54,23 +54,38 @@ public class AccountController {
             @RequestParam(defaultValue = "", required = false) String typeAccount
     ) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username,typeAccount);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username, typeAccount);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
 
+    /**
+     * TriVN
+     * display typeAccounts
+     *
+     * @return
+     */
     @GetMapping("/typeAccounts")
     public ResponseEntity<List<AccountTypes>> showTypeAccount() {
         List<AccountTypes> accountTypesList = iTypeAccountService.findTypeAccount();
         if (accountTypesList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(accountTypesList,HttpStatus.OK);
+        return new ResponseEntity<>(accountTypesList, HttpStatus.OK);
     }
 
-
+    @PutMapping("/warning")
+    public ResponseEntity<WarningDetails> warningDetails(@RequestBody List<Integer> warningId) {
+        if (warningId == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        for (Integer i:warningId){
+            iTypeAccountService.warning(i);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PatchMapping("/api/personal-page/edit/{id}")
     public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
@@ -123,14 +138,21 @@ public class AccountController {
 //        return null;
 //    }
 
-    @PatchMapping("/accounts/{id}")
-    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
+    /**
+     * TriVN
+     * delete
+     *
+     * @param id
+     * @return
+     */
+    @PatchMapping("/accounts")
+    public ResponseEntity<?> lockAccount(@RequestParam Integer id) {
         Account account = iAccountService.findAccountById(id);
-        if (account == null){
+        if (account == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-       iAccountService.deleteAccount(id);
-       return new ResponseEntity<>(HttpStatus.OK);
+        iAccountService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @PatchMapping("/accounts/{id}")
