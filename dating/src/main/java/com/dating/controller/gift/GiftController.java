@@ -4,6 +4,7 @@ import com.dating.dto.GiftRecordDto.GiftRecordDto;
 import com.dating.model.account.Account;
 import com.dating.model.gift.Gift;
 
+import com.dating.model.gift.GiftRecord;
 import com.dating.service.account.IChangePasswordService;
 import com.dating.service.giftService.IGiftService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class GiftController {
         Account accountSender = iChangePasswordService.findPassword(nameSender);
         Account accountReceiver = iChangePasswordService.findPassword(nameReceiver);
         if (accountSender == null || accountReceiver == null) {
-            return ResponseEntity.badRequest().body("ko tìm thấy");
+            return ResponseEntity.badRequest().body("ko tìm thấy account");
 
         }
         // tìm giá
@@ -100,6 +101,21 @@ public class GiftController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(money, HttpStatus.OK);
+    }
+    /**
+     * method getList
+     * Create QuyNP
+     * Date 13-11-2023
+     */
+    @GetMapping("getList/{userName}")
+    public ResponseEntity<?> getList(@PathVariable String userName) {
+        if (userName == null || userName.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Account accountSender = iChangePasswordService.findPassword(userName);
+        System.out.println(accountSender);
+        List<GiftRecord> list = iGiftService.getListRecord(accountSender.getId());
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }
