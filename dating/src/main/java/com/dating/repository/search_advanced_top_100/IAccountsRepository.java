@@ -20,11 +20,11 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
             "left JOIN hobby_detail ON hobby_detail.account_id = accounts.id " +
             "left JOIN hobbies ON hobbies.id = hobby_detail.hobby_id " +
             "WHERE accounts.name like :name " +
-            "AND genders.id = :genderId " +
-            "AND YEAR(CURRENT_DATE()) - YEAR(accounts.birthday) BETWEEN :birthdayFrom AND :birthdayEnd " +
-            "AND jobs.id = :jobId " +
-            "AND location.id = :locationId " +
-            "AND hobbies.id = :hobbyDetailId ",
+            "and genders.id = :genderId " +
+            "and ((YEAR(CURRENT_DATE()) - YEAR(accounts.birthday) BETWEEN :birthdayFrom AND :birthdayEnd) " +
+            "or jobs.id = :jobId " +
+            "or location.code = :locationId " +
+            "or hobbies.id = :hobbyDetailId) ",
             nativeQuery = true)
     List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthdayFrom") int birthdayFrom, @Param("birthdayEnd")
     int birthdayEnd, @Param("genderId") int genderId, @Param("locationId") int locationId, @Param("jobId") int jobId,
