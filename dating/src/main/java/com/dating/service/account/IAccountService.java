@@ -25,6 +25,8 @@ public interface IAccountService extends UserDetailsService {
      */
     Account findByEmail(String email);
 
+
+    Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount);
     /**
      * method createNewAccount
      * Create SangPQ
@@ -33,9 +35,9 @@ public interface IAccountService extends UserDetailsService {
      * return Boolean
      */
     Boolean createNewAccount(Account account);
+
     Page<Account> findAll(Pageable pageable,String username);
   
-
     void deleteAccount(Integer id);
 
     /**

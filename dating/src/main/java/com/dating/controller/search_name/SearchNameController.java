@@ -28,7 +28,7 @@ public class SearchNameController {
     public ResponseEntity<List<SearchNameDto>> searchByName(@PathVariable String name){
         List<SearchNameDto> accounts = searchNameService.searchByName(name);
         if(accounts.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //            em hay làm NO_CONTENT nhưng để khớp với checklist nên để BAD_REQUEST
         }else {
             return new ResponseEntity<>(accounts,HttpStatus.OK);
@@ -37,7 +37,7 @@ public class SearchNameController {
     @GetMapping("/public/search-name/user/{userName}")
     public ResponseEntity<MainPageDto> findByUserName(@PathVariable String userName){
         MainPageDto mainPageDto = searchNameService.findByUserName(userName);
-        if(mainPageDto == null){
+        if(userName == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
             return new ResponseEntity<>(mainPageDto,HttpStatus.OK);
