@@ -20,8 +20,8 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      */
     @Modifying
     @Query(value = "INSERT INTO post (date, content, image, account_id, privacy_post_id) " +
-            "VALUES (:date, :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
-    void create(@Param("date") LocalDateTime date, @Param("content") String content,
+            "VALUES (NOW(), :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
+    void create( @Param("content") String content,
                 @Param("image") String image, @Param("accountId") Integer accountId,
                 @Param("privacyPostId") Integer privacyPostId);
 
@@ -45,7 +45,7 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      */
     @Query(value = "SELECT p.*\n" +
             "FROM post p\n" +
-            "WHERE (p.account_id = :loggedInAccountId AND p.privacy_post_id IN (1, 2))\n" +
+            "WHERE (p.account_id = :loggedInAccountId AND p.privacy_post_id IN (1, 2,3))\n" +
             "   OR (p.account_id IN (\n" +
             "        SELECT CASE\n" +
             "                 WHEN r.receiver_account_id = :loggedInAccountId THEN r.sender_account_id\n" +
@@ -78,8 +78,8 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      */
     @Query(value = "SELECT * FROM case.post\n" +
             "join accounts on post.account_id = accounts.id\n" +
-            "where post.is_deleted = 0 and accounts.user_name = :userName", nativeQuery = true)
-    List<Post> showListOfAnAccount(@Param("userName") String userName);
+            "where post.is_deleted = 0 and accounts.id = :accountId", nativeQuery = true)
+    List<Post> showListOfAnAccount(@Param("accountId") Integer accountId);
 
     /**
      * Method: getPostById,
