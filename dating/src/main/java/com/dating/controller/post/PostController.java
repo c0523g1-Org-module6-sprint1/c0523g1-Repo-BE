@@ -26,9 +26,9 @@ public class PostController {
         }
     }
 
-    @GetMapping("/account/{userName}")
-    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable String userName) {
-        List<Post> posts = iPostService.showListOfAnAccount(userName);
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<Post>> showListOfAnAccount(@PathVariable Integer accountId) {
+        List<Post> posts = iPostService.showListOfAnAccount(accountId);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -48,7 +48,7 @@ public class PostController {
 
     @PostMapping("/new")
     public ResponseEntity<String> create(@RequestBody Post post) {
-        boolean check = iPostService.create(post.getDate(), post.getContent(), post.getImage(), post.getAccount().getId(), post.getPrivacyPost().getId());
+        boolean check = iPostService.create( post.getContent(), post.getImage(), post.getAccount().getId(), post.getPrivacyPost().getId());
         if (check) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Success Created");
         } else {
