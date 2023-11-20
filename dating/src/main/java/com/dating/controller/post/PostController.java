@@ -1,18 +1,16 @@
 package com.dating.controller.post;
 
 import com.dating.dto.post.PostDto;
+import com.dating.dto.update_account.IPostUpDto;
+import com.dating.dto.update_account.UpPostDto;
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -52,14 +50,9 @@ public class PostController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<String> create(@RequestBody Post post) {
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime formattedDateTime = LocalDateTime.parse(dateTime.format(formatter));
-
-
-
-        boolean check = iPostService.create(formattedDateTime, post.getContent(), post.getImage(), post.getAccount().getId(), post.getPrivacyPost().getId());
+    public ResponseEntity<String> create(@RequestBody UpPostDto post) {
+        System.out.println(post);
+        boolean check = iPostService.create(post.getContent(), post.getImage(), post.getAccountId(), post.getPrivacyPostId());
         if (check) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Success Created");
         } else {

@@ -18,10 +18,11 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      * param : LocalDateTime date, String content, String image, Integer accountId, Integer privacyPostId
      * return: create one post in table post
      */
+    @Transactional
     @Modifying
-    @Query(value = "INSERT INTO post (date, content, image, account_id, privacy_post_id) " +
-            "VALUES (:date, :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
-    void create(@Param("date") LocalDateTime date, @Param("content") String content,
+    @Query(value = "INSERT INTO post (date, content , image, account_id, privacy_post_id) " +
+            "VALUES (NOW(), :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
+    void create(@Param("content") String content,
                 @Param("image") String image, @Param("accountId") Integer accountId,
                 @Param("privacyPostId") Integer privacyPostId);
 
