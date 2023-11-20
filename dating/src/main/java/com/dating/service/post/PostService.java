@@ -14,9 +14,9 @@ public class PostService implements IPostService {
     private IPostRepository iPostRepository;
 
     @Override
-    public boolean create(LocalDateTime date, String content, String image, Integer accountId, Integer privacyId) {
+    public boolean create(String content, String image, Integer accountId, Integer privacyId) {
         try {
-            iPostRepository.create(date, content, image, accountId, privacyId);
+            iPostRepository.create( content, image, accountId, privacyId);
         } catch (Exception exception) {
             return false;
         }
@@ -29,8 +29,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> showListOfAnAccount(String userName) {
-        return iPostRepository.showListOfAnAccount(userName);
+    public List<Post> showListOfAnAccount(Integer accountId) {
+        return iPostRepository.showListOfAnAccount(accountId);
     }
 
     @Override
