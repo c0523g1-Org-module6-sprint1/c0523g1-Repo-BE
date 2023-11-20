@@ -103,7 +103,7 @@ public class RelationshipsController {
         if (relationships == null){
             Relationships relationships1 = new Relationships();
             RelationshipStatus relationshipStatus = new RelationshipStatus();
-            relationshipStatus.setId(1);
+            relationshipStatus.setId(0);
             relationships1.setRelationshipStatus(relationshipStatus);
             return new ResponseEntity<>(relationships1,HttpStatus.OK);
         }
