@@ -1,10 +1,12 @@
 package com.dating.controller.account;
 
 import com.dating.dto.account.AccountDTOs;
+import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.update_account.AccountTypes;
 import com.dating.model.warning_detail.WarningDetails;
 import com.dating.service.account.IAccountService;
+import com.dating.service.account.ITypeAccountService;
 import com.dating.service.warning_detail.IWarningDetailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,8 @@ public class AccountController {
             @RequestParam(defaultValue = "", required = false) String username,
             @RequestParam(defaultValue = "", required = false) String typeAccount
     ) {
-        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username);
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username,typeAccount);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
