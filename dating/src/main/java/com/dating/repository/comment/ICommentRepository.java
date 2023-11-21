@@ -22,7 +22,7 @@ public interface ICommentRepository extends JpaRepository<Comments,Integer> {
     @Transactional
     @Modifying
     @Query(value = "insert into comments (date, content, account_id, post_id, id_deleted) " +
-            "values (:#{#comment.date}, :#{#comment.content}, :#{#comment.account.id}, :#{#comment.post}, false)",nativeQuery = true)
+            "values (:#{#comment.date}, :#{#comment.content}, :#{#comment.account.id}, :#{#comment.post}, false) ",nativeQuery = true)
     void createComments(@Param("comment")Comments comments);
     /**
      * Method: getAllComment,
