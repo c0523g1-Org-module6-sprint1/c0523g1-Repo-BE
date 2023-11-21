@@ -16,7 +16,7 @@ public class PostService implements IPostService {
     @Override
     public boolean create(String content, String image, Integer accountId, Integer privacyId) {
         try {
-            iPostRepository.create( content, image, accountId, privacyId);
+            iPostRepository.create(content, image, accountId, privacyId);
         } catch (Exception exception) {
             return false;
         }
@@ -81,5 +81,30 @@ public class PostService implements IPostService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Post> showListForAdmin() {
+        return iPostRepository.showListForAdmin();
+    }
+
+    @Override
+    public Boolean checkIsFriend(Integer accountId1, Integer accountId2) {
+        Integer record = iPostRepository.checkIsFriend(accountId1, accountId2);
+        if (record > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Post> getListForFriend(Integer accountId) {
+        return iPostRepository.getListForFriend(accountId);
+    }
+
+    @Override
+    public List<Post> getListForStranger(Integer accountId) {
+        return iPostRepository.getListForStranger(accountId);
     }
 }

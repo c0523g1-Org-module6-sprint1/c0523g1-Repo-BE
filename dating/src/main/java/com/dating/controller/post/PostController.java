@@ -1,6 +1,7 @@
 package com.dating.controller.post;
 
 import com.dating.dto.post.PostDto;
+import com.dating.dto.post.UpPostDto;
 import com.dating.model.post.Post;
 import com.dating.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,16 @@ public class PostController {
     @GetMapping("/newsfeed/{loggedInAccountId}")
     public ResponseEntity<List<Post>> showListNewsfeed(@PathVariable Integer loggedInAccountId) {
         List<Post> posts = iPostService.showListNewsfeed(loggedInAccountId);
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(posts, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<Post>> showListForAdmin() {
+        List<Post> posts = iPostService.showListForAdmin();
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -46,9 +57,29 @@ public class PostController {
         }
     }
 
+    @GetMapping("/friend/{accountId}")
+    public ResponseEntity<List<Post>> getListForFriend(@PathVariable Integer accountId) {
+        List<Post> posts = iPostService.getListForFriend(accountId);
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(posts, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/stranger/{accountId}")
+    public ResponseEntity<List<Post>> getListForStranger (@PathVariable Integer accountId) {
+        List<Post> posts = iPostService.getListForStranger(accountId);
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(posts, HttpStatus.OK);
+        }
+    }
+
     @PostMapping("/new")
-    public ResponseEntity<String> create(@RequestBody Post post) {
-        boolean check = iPostService.create( post.getContent(), post.getImage(), post.getAccount().getId(), post.getPrivacyPost().getId());
+    public ResponseEntity<String> create(@RequestBody UpPostDto post) {
+        boolean check = iPostService.create(post.getContent(), post.getImage(), post.getAccountId(), post.getPrivacyPostId());
         if (check) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Success Created");
         } else {
@@ -95,5 +126,11 @@ public class PostController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete post");
         }
+    }
+
+    @GetMapping("/isFriend")
+    public ResponseEntity<Boolean> checkIsFriend (@RequestParam Integer accountId1, Integer accountId2){
+        Boolean isFriend = iPostService.checkIsFriend(accountId1,accountId2);
+        return ResponseEntity.ok(isFriend);
     }
 }
