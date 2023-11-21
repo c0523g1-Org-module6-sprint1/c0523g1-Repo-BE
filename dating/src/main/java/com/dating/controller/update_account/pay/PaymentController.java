@@ -16,13 +16,13 @@ import java.util.*;
 
 public class PaymentController {
 
-    @GetMapping("/api/member/pay")
-    public String getPay(@RequestParam(name = "sum") long sum)  throws UnsupportedEncodingException{
+    @GetMapping("/api/public/pay")
+    public String getPay(@RequestParam(name = "sum") long sum) throws UnsupportedEncodingException {
 
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = sum*100;
+        long amount = sum * 100;
         String bankCode = "NCB";
 
         String vnp_TxnRef = Config.getRandomNumber(8);
