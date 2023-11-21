@@ -37,13 +37,13 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
     List<Post> showListForAdmin();
 
 
-    @Query(value = "SELECT *" +
-            "FROM relationships\n" +
-            "WHERE ((receiver_account_id = :account1 AND sender_account_id = :account2)\n" +
-            "       OR (receiver_account_id = :account2 AND sender_account_id = :account1))\n" +
-            "      AND relationship_status_id = 2\n" +
-            "      AND is_deleted = 0",nativeQuery = true)
-    Relationships checkIsFriend (@Param("account1") Integer accountId1, @Param("account2") Integer accountId2);
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM relationships " +
+            "WHERE ((receiver_account_id = :account1 AND sender_account_id = :account2) " +
+            "       OR (receiver_account_id = :account2 AND sender_account_id = :account1)) " +
+            "      AND relationship_status_id = 2 " +
+            "      AND is_deleted = 0", nativeQuery = true)
+    Integer checkIsFriend(@Param("account1") Integer accountId1, @Param("account2") Integer accountId2);
 
 
     @Query (value = "select * from post\n" +
