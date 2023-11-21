@@ -16,4 +16,9 @@ public class TypeAccountService implements ITypeAccountService {
     public List<AccountTypes> findTypeAccount() {
         return iTypeAccountRepository.displayTypeAccount();
     }
+
+    @Override
+    public void warning(Integer id) {
+        iTypeAccountRepository.warning(id);
+    }
 }

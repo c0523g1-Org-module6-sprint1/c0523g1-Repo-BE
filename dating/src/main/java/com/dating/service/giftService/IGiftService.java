@@ -14,4 +14,6 @@ public interface IGiftService {
     int findPrice(int id);
 
     double sum(int quantity, int gift);
+
+    List<GiftRecord> getListRecord(Integer accountId);
 }

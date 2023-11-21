@@ -2,6 +2,7 @@ package com.dating.service.giftService;
 
 import com.dating.dto.GiftRecordDto.GiftRecordDto;
 import com.dating.model.gift.Gift;
+import com.dating.model.gift.GiftRecord;
 import com.dating.repository.Gift.IGiftRecordRepository;
 import com.dating.repository.Gift.IGiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,10 @@ public class GiftService implements IGiftService{
     @Override
     public double sum(int quantity, int gift) {
         return quantity * gift;
+    }
+
+    @Override
+    public List<GiftRecord> getListRecord(Integer accountId) {
+        return iGiftRecordRepository.getAll(accountId);
     }
 }

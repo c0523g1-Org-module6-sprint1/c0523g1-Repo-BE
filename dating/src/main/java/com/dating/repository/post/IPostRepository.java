@@ -1,13 +1,12 @@
 package com.dating.repository.post;
 
 import com.dating.model.post.Post;
+import com.dating.model.relationship.Relationships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IPostRepository extends JpaRepository<Post, Integer> {
@@ -18,6 +17,7 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      * param : LocalDateTime date, String content, String image, Integer accountId, Integer privacyPostId
      * return: create one post in table post
      */
+    @Transactional
     @Modifying
     @Query(value = "INSERT INTO post (date, content, image, account_id, privacy_post_id) " +
             "VALUES (NOW(), :content, :image, :accountId, :privacyPostId)", nativeQuery = true)
@@ -33,8 +33,26 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      * return: List<Post> (have privacy is public)
      */
     @Query(value = "SELECT * FROM case.post\n" +
-            "where is_deleted = 0 and privacy_post_id = 1", nativeQuery = true)
-    List<Post> showListPublic();
+            "where is_deleted = 0 ORDER BY post.date DESC", nativeQuery = true)
+    List<Post> showListForAdmin();
+
+
+    @Query(value = "SELECT *" +
+            "FROM relationships\n" +
+            "WHERE ((receiver_account_id = :account1 AND sender_account_id = :account2)\n" +
+            "       OR (receiver_account_id = :account2 AND sender_account_id = :account1))\n" +
+            "      AND relationship_status_id = 2\n" +
+            "      AND is_deleted = 0",nativeQuery = true)
+    Relationships checkIsFriend (@Param("account1") Integer accountId1, @Param("account2") Integer accountId2);
+
+
+    @Query (value = "select * from post\n" +
+            "where account_id = :accountId and privacy_post_id in (1,2) and is_deleted = 0 ORDER BY  post.date DESC",nativeQuery = true)
+    List <Post> getListForFriend (@Param("accountId") Integer accountId);
+
+    @Query (value = "select * from post\n" +
+            "where account_id = :accountId and privacy_post_id = 1 and is_deleted = 0 ORDER BY  post.date DESC ",nativeQuery = true)
+    List <Post> getListForStranger (@Param("accountId") Integer accountId);
 
     /**
      * Method: showListNewsfeed,
@@ -45,7 +63,7 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      */
     @Query(value = "SELECT p.*\n" +
             "FROM post p\n" +
-            "WHERE (p.account_id = :loggedInAccountId AND p.privacy_post_id IN (1, 2,3))\n" +
+            "WHERE (p.account_id = :loggedInAccountId AND p.privacy_post_id IN (1, 2, 3) AND p.is_deleted = 0)\n" +
             "   OR (p.account_id IN (\n" +
             "        SELECT CASE\n" +
             "                 WHEN r.receiver_account_id = :loggedInAccountId THEN r.sender_account_id\n" +
@@ -56,17 +74,8 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
             "        AND (r.receiver_account_id = :loggedInAccountId OR r.sender_account_id = :loggedInAccountId)\n" +
             "      )\n" +
             "      AND p.privacy_post_id IN (1, 2))\n" +
-            "   OR (p.account_id NOT IN (\n" +
-            "        SELECT CASE\n" +
-            "                 WHEN r.receiver_account_id = :loggedInAccountId THEN r.sender_account_id\n" +
-            "                 ELSE r.receiver_account_id\n" +
-            "               END AS friend_id\n" +
-            "        FROM relationships r\n" +
-            "        WHERE r.relationship_status_id = 2\n" +
-            "        AND (r.receiver_account_id = :loggedInAccountId OR r.sender_account_id = :loggedInAccountId)\n" +
-            "      )\n" +
-            "      AND p.privacy_post_id = 1" +
-            ")ORDER BY p.date DESC", nativeQuery = true)
+            "      AND p.is_deleted = 0\n" +
+            "ORDER BY p.date DESC", nativeQuery = true)
     List<Post> showListNewsfeed(@Param("loggedInAccountId") Integer loggedInAccountId);
 
     /**
@@ -78,7 +87,7 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
      */
     @Query(value = "SELECT * FROM case.post\n" +
             "join accounts on post.account_id = accounts.id\n" +
-            "where post.is_deleted = 0 and accounts.id = :accountId", nativeQuery = true)
+            "where post.is_deleted = 0 and accounts.id = :accountId ORDER BY post.date DESC", nativeQuery = true)
     List<Post> showListOfAnAccount(@Param("accountId") Integer accountId);
 
     /**

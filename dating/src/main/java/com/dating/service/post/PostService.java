@@ -1,6 +1,7 @@
 package com.dating.service.post;
 
 import com.dating.model.post.Post;
+import com.dating.model.relationship.Relationships;
 import com.dating.repository.post.IPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class PostService implements IPostService {
     @Override
     public boolean create(String content, String image, Integer accountId, Integer privacyId) {
         try {
-            iPostRepository.create( content, image, accountId, privacyId);
+            iPostRepository.create(content, image, accountId, privacyId);
         } catch (Exception exception) {
             return false;
         }
@@ -81,5 +82,31 @@ public class PostService implements IPostService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Post> showListForAdmin() {
+        return iPostRepository.showListForAdmin();
+    }
+
+    @Override
+    public Boolean checkIsFriend(Integer accountId1, Integer accountId2) {
+        Relationships relationships = iPostRepository.checkIsFriend(accountId1, accountId2);
+        if (relationships != null) {
+            System.out.println("Id relationship là: " + relationships.getRelationshipStatus().getId());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Post> getListForFriend(Integer accountId) {
+        return iPostRepository.getListForFriend(accountId);
+    }
+
+    @Override
+    public List<Post> getListForStranger(Integer accountId) {
+        return iPostRepository.getListForStranger(accountId);
     }
 }
