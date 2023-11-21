@@ -91,9 +91,8 @@ public class PostService implements IPostService {
 
     @Override
     public Boolean checkIsFriend(Integer accountId1, Integer accountId2) {
-        Relationships relationships = iPostRepository.checkIsFriend(accountId1, accountId2);
-        if (relationships != null) {
-            System.out.println("Id relationship là: " + relationships.getRelationshipStatus().getId());
+        Integer record = iPostRepository.checkIsFriend(accountId1, accountId2);
+        if (record == 1) {
             return true;
         } else {
             return false;
