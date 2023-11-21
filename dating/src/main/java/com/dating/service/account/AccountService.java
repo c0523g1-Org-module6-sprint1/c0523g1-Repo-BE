@@ -41,6 +41,11 @@ public class AccountService implements IAccountService {
         return false;
     }
 
+//    @Override
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return null;
+    }
+
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
         return accountRepository.findAllAccount(pageable, username, typeAccount);
