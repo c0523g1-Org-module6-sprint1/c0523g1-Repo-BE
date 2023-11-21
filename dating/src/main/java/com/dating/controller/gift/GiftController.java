@@ -1,6 +1,7 @@
 package com.dating.controller.gift;
 
 import com.dating.dto.GiftRecordDto.GiftRecordDto;
+import com.dating.dto.GiftRecordDto.QuantityDto;
 import com.dating.model.account.Account;
 import com.dating.model.gift.Gift;
 
@@ -117,5 +118,18 @@ public class GiftController {
         List<GiftRecord> list = iGiftService.getListRecord(accountSender.getId());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
+    /**
+     * method quantity
+     * Create QuyNP
+     * Date 13-11-2023
+     */
+    @GetMapping("quantity/{userName}")
+    public ResponseEntity<?> getQuantity(@PathVariable String userName) {
+        if (userName == null || userName.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Account accountSender = iChangePasswordService.findPassword(userName);
+        List<QuantityDto> list = iGiftService.getQuantity(accountSender.getId());
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }
