@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface IGiftRecordRepository extends JpaRepository<GiftRecord, Integer> {
     /**
      * method create
@@ -18,5 +20,6 @@ public interface IGiftRecordRepository extends JpaRepository<GiftRecord, Integer
     @Transactional
     @Query(value = "INSERT INTO gift_record (quantity, time, account_receiver_id, account_sender_id, gift_id, is_delete) VALUES (:quantity, NOW(), :receiverAccountId, :senderAccountId, :giftId, false)", nativeQuery = true)
     void insertGiftRecord(@Param("quantity") int quantity, @Param("receiverAccountId") Integer receiverAccountId, @Param("senderAccountId") Integer senderAccountId, @Param("giftId") int giftId);
-
+    @Query(value = "SELECT * FROM gift_record WHERE is_delete = false and account_receiver_id = :accountId", nativeQuery = true)
+    List<GiftRecord> getAll(@Param("accountId") Integer accountId);
 }
