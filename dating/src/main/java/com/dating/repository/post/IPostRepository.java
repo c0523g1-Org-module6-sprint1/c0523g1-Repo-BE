@@ -1,6 +1,7 @@
 package com.dating.repository.post;
 
 import com.dating.model.post.Post;
+import com.dating.model.relationship.Relationships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,13 +37,13 @@ public interface IPostRepository extends JpaRepository<Post, Integer> {
     List<Post> showListForAdmin();
 
 
-    @Query(value = "SELECT COUNT(*) AS count\n" +
+    @Query(value = "SELECT *" +
             "FROM relationships\n" +
             "WHERE ((receiver_account_id = :account1 AND sender_account_id = :account2)\n" +
             "       OR (receiver_account_id = :account2 AND sender_account_id = :account1))\n" +
             "      AND relationship_status_id = 2\n" +
             "      AND is_deleted = 0",nativeQuery = true)
-    Integer checkIsFriend (@Param("account1") Integer accountId1, @Param("account2") Integer accountId2);
+    Relationships checkIsFriend (@Param("account1") Integer accountId1, @Param("account2") Integer accountId2);
 
 
     @Query (value = "select * from post\n" +

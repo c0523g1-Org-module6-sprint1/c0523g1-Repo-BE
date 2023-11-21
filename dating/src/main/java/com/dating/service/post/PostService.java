@@ -1,6 +1,7 @@
 package com.dating.service.post;
 
 import com.dating.model.post.Post;
+import com.dating.model.relationship.Relationships;
 import com.dating.repository.post.IPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,8 +91,9 @@ public class PostService implements IPostService {
 
     @Override
     public Boolean checkIsFriend(Integer accountId1, Integer accountId2) {
-        Integer record = iPostRepository.checkIsFriend(accountId1, accountId2);
-        if (record > 0) {
+        Relationships relationships = iPostRepository.checkIsFriend(accountId1, accountId2);
+        if (relationships != null) {
+            System.out.println("Id relationship là: " + relationships.getRelationshipStatus().getId());
             return true;
         } else {
             return false;

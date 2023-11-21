@@ -1,6 +1,7 @@
 package com.dating.service.post;
 
 import com.dating.model.post.Post;
+import com.dating.model.relationship.Relationships;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
