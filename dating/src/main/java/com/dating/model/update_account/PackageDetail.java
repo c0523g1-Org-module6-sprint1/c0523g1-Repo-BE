@@ -25,6 +25,7 @@ public class PackageDetail {
 
     @ManyToOne
     @JoinColumn(name = "account_types_id",referencedColumnName = "id")
+    @Column(columnDefinition = " default 4")
     private AccountTypes accountTypes;
     @Column(name = "is_deleted", columnDefinition = "bit(1) default 0")
     private boolean isDeleted;
