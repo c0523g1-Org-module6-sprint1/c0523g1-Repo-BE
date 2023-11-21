@@ -25,25 +25,26 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "l.name AS nameLocation, " +
             "g.name AS nameGender, " +
             "acc.avatar AS avatarAccount, " +
-            "acc.birthday AS birthdayAccount " +
+            "acc.birthday AS birthdayAccount, " +
+            "subquery.relationship_status_id AS idRel " +
             "FROM accounts acc " +
             "JOIN location l ON acc.location_id = l.id " +
             "JOIN genders g ON acc.gender_id = g.id " +
             "JOIN ( " +
-            "    SELECT rel.relationship_status_id, rel.receiver_account_id, rel.sender_account_id, relta.name " +
+            "    SELECT rel.relationship_status_id , rel.receiver_account_id, rel.sender_account_id, relta.name " +
             "    FROM relationships rel " +
             "    JOIN relationship_status relta ON rel.relationship_status_id = relta.id " +
-            "    WHERE rel.relationship_status_id = 2 AND rel.is_deleted = 0" +
+            "    WHERE rel.relationship_status_id = 2 OR rel.relationship_status_id = 3 AND rel.is_deleted = 0" +
             "        AND (rel.receiver_account_id = :idLogin XOR rel.sender_account_id = :idLogin) " +
             ") subquery ON acc.id = CASE " +
             "    WHEN subquery.receiver_account_id = :idLogin THEN subquery.sender_account_id " +
             "    ELSE subquery.receiver_account_id " +
             "END " +
-            "WHERE acc.name LIKE CONCAT('%', :name, '%')",nativeQuery = true)
+            "WHERE acc.name LIKE CONCAT('%', :name, '%') ORDER BY idRel ASC ",nativeQuery = true)
     List<IFriendDto> findAllFriendByName(@Param("idLogin") Integer idLogin,@Param("name") String name);
 
     /**
-     * method delete
+     * method block
      * Create: 14-11-2023
      * return: void
      * author: ThienPT
@@ -55,6 +56,14 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
                     "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
                     "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
     void blockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
+
+    @Transactional
+    @Modifying
+    @Query(value =
+            "update relationships as rel set rel.relationship_status_id = 2 " +
+                    "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
+                    "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
+    void unblockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
 
 
     @Transactional
