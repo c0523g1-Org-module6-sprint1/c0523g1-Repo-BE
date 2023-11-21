@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,10 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentDto implements Validator {
 
-    private int id;
     @NotNull
     private String content;
-    private LocalDateTime date;
     private boolean idDeleted;
     private int postId;
     private int accountId;

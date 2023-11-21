@@ -1,8 +1,12 @@
 package com.dating.controller.comment;
 
 import com.dating.dto.comment.CommentDto;
+import com.dating.model.account.Account;
 import com.dating.model.comment.Comments;
+import com.dating.model.post.Post;
+import com.dating.service.account.IAccountService;
 import com.dating.service.comment.ICommentService;
+import com.dating.service.post.IPostService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,11 @@ public class CommentController {
     @Autowired
     private ICommentService iCommentService;
 
+    @Autowired
+    private IAccountService iAccountService;
+
+    @Autowired
+    private IPostService iPostService;
     /**
      * author: thienlch
      * date: 14/11/2023
@@ -70,15 +79,24 @@ public class CommentController {
     /**
      * author: thienlch
      * date: 14/11/2023
-     * goal: delete comment
+     * goal: create comment
      *
      * @return HttpStatus
      */
     @PostMapping("/comment")
-    public ResponseEntity<Object> createComment(@RequestBody Comments comments, BindingResult bindingResult) {
-        if (comments.getContent().equals("")) {
+    @ResponseBody
+    public ResponseEntity<Object> createComment(@RequestBody CommentDto commentDto) {
+        if (commentDto.getContent().equals("")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail to create");
         }
+        Comments comments = new Comments();
+        BeanUtils.copyProperties(commentDto,comments);
+        Account account = iAccountService.findAccountById(commentDto.getAccountId());
+        LocalDateTime dateTime = LocalDateTime.now();
+        comments.setDate(dateTime);
+        comments.setAccount(account);
+        Post post = iPostService.getPostById(commentDto.getPostId());
+        comments.setPost(post);
         iCommentService.saveComment(comments);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -99,7 +117,7 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Updated Fail");
         }
         if (iCommentService.findCommentById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Updated Fail");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Updated Fail");
         }
         Comments comments = new Comments();
         BeanUtils.copyProperties(commentDto, comments);
