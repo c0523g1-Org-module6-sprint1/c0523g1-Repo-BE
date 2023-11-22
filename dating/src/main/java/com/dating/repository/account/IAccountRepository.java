@@ -36,6 +36,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
+
     Account findAccountByUserNameAndAndIsDeletedIsFalse(String username);
 
     /**
@@ -57,8 +58,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " JOIN warning w on wd.warning_id =  w.id " +
             " join package_detail pd on acc.id = pd.account_id   " +
             " join account_types acct on pd.account_types_id = acct.id  " +
-            " where acc.user_name like concat('%', :username, '%') and acct.`id` like concat('%', :typeAccount, '%') ", nativeQuery = true)
-    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username,@Param("typeAccount") String typeAccount);
+            " where acc.role_id = 1 and  acc.user_name like concat('%', :username, '%') and acct.`id` like concat('%', :typeAccount, '%')  ", nativeQuery = true)
+    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username, @Param("typeAccount") String typeAccount);
 
 
     /**
@@ -111,16 +112,20 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      */
     @Transactional
     @Modifying
-    @Query(value = "UPDATE " +
-            " accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
-    void deleteAccountId(@Param("id") Integer id);
+    @Query(value = " UPDATE accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
+    void lockAccountId(@Param("id") Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = " UPDATE accounts SET is_deleted = 0 where accounts.id = :id ", nativeQuery = true)
+    void unlockAccount(@Param("id") Integer id);
 
 
     /**
      * author: thienlch
      * date: 13/11/2023
      * goal: edit account
+     *
      * @return void
      */
     @Transactional
@@ -143,7 +148,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id) \n" +
             "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
-            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})",nativeQuery = true)
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})", nativeQuery = true)
     Integer createNewAccount(Account account);
 
 
@@ -151,6 +156,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * author: LongTND
      * date :14/11/2023
      * goal: get account by ID
+     *
      * @return account
      */
     @Query(value = "select * from accounts " +
@@ -163,11 +169,23 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * author: LongTND
      * date: 14/11/2023
      * goal: get account by user_name
+     *
      * @return account
      */
-    @Query(value = "select * from accounts where user_name = :user_name",nativeQuery = true)
+    @Query(value = "select * from accounts where user_name = :user_name", nativeQuery = true)
     Account getAccountByUserName(@Param("user_name") String userName);
 
+
+    /**
+     * TriVN
+     * find by id all
+     * @param id
+     * @return
+     */
+    @Query(value = "select * from accounts " +
+            "where id = :id " ,
+            nativeQuery = true)
+    Account findByIdUnlock(Integer id);
 }
 
 
