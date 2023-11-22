@@ -1,4 +1,5 @@
 package com.dating.repository.update_account;
+
 import com.dating.model.account.Account;
 import com.dating.model.update_account.PackageDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,6 +50,13 @@ public interface IPackageDetailRepository extends JpaRepository<PackageDetail, I
             "WHERE id= :idAccount", nativeQuery = true)
     void setMoneyAccount(int idAccount, int newMoney);
 
+    /**
+     * Method: registrationDate,
+     * Create: HauNH,
+     * Date  : 13/11/2023
+     * param : LocalDate date, LocalDate regisDate, int idAccount
+     * return: Update the date,regisDate,id field in Account
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE case.accounts \n" +
