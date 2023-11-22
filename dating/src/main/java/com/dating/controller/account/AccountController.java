@@ -172,6 +172,7 @@ public class AccountController {
             return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
         } else {
             iAccountService.unlockAccount(id);
+            iAccountService.setFaultAmount(id);
             return new ResponseEntity<>("Đã Mở Nick Thành Công", HttpStatus.OK);
         }
     }
