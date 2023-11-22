@@ -44,7 +44,7 @@ public interface IAccountService extends UserDetailsService {
     Boolean createNewAccount(Account account);
 
 
-    void deleteAccount(Integer id);
+
 
     /**
      * TriVn
