@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class AccountDto implements Validator {
     private Integer id;
-//    private String name;
+    private String name;
     private String userName;
     private String password;
     private String birthday;
@@ -30,9 +30,9 @@ public class AccountDto implements Validator {
 //    private String phoneNumber;
 //    private Double money;
 //    private String regisDate;
-//    private String avatar;
+    private String avatar;
 //    private String expire;
-//    private String maritalStatus;
+    private String maritalStatus;
 //    private Integer point;
 //    private Integer genderId;
 //    private Integer jobId;

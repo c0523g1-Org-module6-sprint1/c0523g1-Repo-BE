@@ -32,7 +32,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where user_name like :username" +
+            " where user_name = :username" +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
@@ -57,8 +57,8 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " JOIN warning w on wd.warning_id =  w.id " +
             " join package_detail pd on acc.id = pd.account_id   " +
             " join account_types acct on pd.account_types_id = acct.id  " +
-            " where acc.user_name like concat('%', :username, '%') and acct.`id` like concat('%', :typeAccount, '%') ", nativeQuery = true)
-    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username,@Param("typeAccount") String typeAccount);
+            " where acc.role_id = 1 and  acc.user_name like concat('%', :username, '%') and acct.`id` like concat('%', :typeAccount, '%')  ", nativeQuery = true)
+    Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username, @Param("typeAccount") String typeAccount);
 
 
     /**
@@ -69,7 +69,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where email like :email " +
+            " where email = :email " +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByEmail(@Param("email") String email);
@@ -88,18 +88,18 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     Account findAccountById(@Param("id") Integer id);
 
 
-    /**
-     * method addNewAccount
-     * Create SangPQ
-     * Date 13-11-2023
-     * param Account account
-     * return Integer
-     */
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id) " +
-            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id})", nativeQuery = true)
-    Integer addNewAccount(Account account);
+//    /**
+//     * method addNewAccount
+//     * Create SangPQ
+//     * Date 13-11-2023
+//     * param Account account
+//     * return Integer
+//     */
+//    @Transactional
+//    @Modifying
+//    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id, role_id) " +
+//            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id} , 1)", nativeQuery = true)
+//    Integer addNewAccount(Account account);
 
 
     /**
@@ -111,10 +111,13 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      */
     @Transactional
     @Modifying
-    @Query(value = "UPDATE " +
-            " accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
-    void deleteAccountId(@Param("id") Integer id);
+    @Query(value = " UPDATE accounts SET is_deleted = 1 where accounts.id = :id ", nativeQuery = true)
+    void lockAccountId(@Param("id") Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = " UPDATE accounts SET is_deleted = 0 where accounts.id = :id ", nativeQuery = true)
+    void unlockAccount(@Param("id") Integer id);
 
 
     /**
@@ -141,9 +144,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id) \n" +
+    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id,role_id) \n" +
             "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
-            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})",nativeQuery = true)
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 1)",nativeQuery = true)
     Integer createNewAccount(Account account);
 
 
@@ -165,8 +168,39 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * goal: get account by user_name
      * @return account
      */
-    @Query(value = "select * from accounts where user_name = :user_name",nativeQuery = true)
+    @Query(value = "select * from accounts where user_name = :user_name", nativeQuery = true)
     Account getAccountByUserName(@Param("user_name") String userName);
+
+
+    /**
+     * TriVN
+     * find by id all
+     * @param id
+     * @return
+     */
+    @Query(value = "select * from accounts " +
+            "where id = :id " ,
+            nativeQuery = true)
+    Account findByIdUnlock(Integer id);
+    /**
+     * method addNewHobbyDetail
+     * Create SangPQ
+     * Date 17-11-2023
+     * param HobbyDetail hobbyDetail
+     * return Integer
+     */
+
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO hobby_detail (account_id, hobby_id) \n" +
+            "VALUES (:#{#hobbyDetail.account.id}, :#{#hobbyDetail.hobby.id})",nativeQuery = true)
+    Integer addNewHobbyDetail(HobbyDetail hobbyDetail);
+
+
+
+
+
+
 
 }
 
