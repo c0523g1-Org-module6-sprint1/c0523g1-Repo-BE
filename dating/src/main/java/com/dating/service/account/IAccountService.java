@@ -76,6 +76,7 @@ public interface IAccountService extends UserDetailsService {
      * @param id
      */
     void unlockAccount(Integer id);
+    void setFaultAmount(Integer id);
 
     Account findByIdUnlock(Integer id);
 }

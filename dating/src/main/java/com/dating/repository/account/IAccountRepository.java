@@ -117,8 +117,15 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = " UPDATE accounts SET is_deleted = 0 where accounts.id = :id ", nativeQuery = true)
+    @Query(value = " UPDATE accounts " +
+            " SET is_deleted = 0  where accounts.id = :id ", nativeQuery = true)
     void unlockAccount(@Param("id") Integer id);
+    @Transactional
+    @Modifying
+    @Query(value = " UPDATE warning_details " +
+            " join accounts on accounts.id = warning_details.account_id" +
+            " SET warning_details.fault_amount = 0  where accounts.id = :id ", nativeQuery = true)
+    void setFaultAmount(@Param("id") Integer id);
 
 
     /**

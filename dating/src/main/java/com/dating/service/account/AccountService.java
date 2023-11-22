@@ -143,6 +143,11 @@ public class AccountService implements IAccountService {
         accountRepository.unlockAccount(id);
     }
 
+    @Override
+    public void setFaultAmount(Integer id) {
+        accountRepository.setFaultAmount(id);
+    }
+
     /**
      * TriVN
      * Find by id all
