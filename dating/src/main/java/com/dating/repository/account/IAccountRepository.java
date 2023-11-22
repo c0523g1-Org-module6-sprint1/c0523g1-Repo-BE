@@ -32,7 +32,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where user_name like :username" +
+            " where user_name = :username" +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
@@ -70,7 +70,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where email like :email " +
+            " where email = :email " +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByEmail(@Param("email") String email);
@@ -142,9 +142,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id) \n" +
+    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id,role_id) \n" +
             "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
-            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id})",nativeQuery = true)
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 2)",nativeQuery = true)
     Integer createNewAccount(Account account);
 
 
@@ -168,6 +168,26 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      */
     @Query(value = "select * from accounts where user_name = :user_name",nativeQuery = true)
     Account getAccountByUserName(@Param("user_name") String userName);
+
+    /**
+     * method addNewHobbyDetail
+     * Create SangPQ
+     * Date 17-11-2023
+     * param HobbyDetail hobbyDetail
+     * return Integer
+     */
+
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO hobby_detail (account_id, hobby_id) \n" +
+            "VALUES (:#{#hobbyDetail.account.id}, :#{#hobbyDetail.hobby.id})",nativeQuery = true)
+    Integer addNewHobbyDetail(HobbyDetail hobbyDetail);
+
+
+
+
+
+
 
 }
 

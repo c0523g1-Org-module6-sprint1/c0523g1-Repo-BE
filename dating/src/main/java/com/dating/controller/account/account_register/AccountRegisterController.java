@@ -4,6 +4,7 @@ import com.dating.dto.account.AccountDto;
 import com.dating.model.Role;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
+import com.dating.model.hobby.Hobby;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.service.account.IAccountService;
@@ -63,22 +64,27 @@ public class AccountRegisterController {
             account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
             Role role = new Role();
             role.setId(2);
+            role.setName("MEMBER");
             account.setRole(role);
             accountService.createNewAccount(account);
             return new ResponseEntity<>(account,HttpStatus.ACCEPTED);
-
         }
     }
 
-//    @PostMapping("/initial-information")
-//    public ResponseEntity<Object> initInfo(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult){
-//        new AccountDto().validate(accountDto,bindingResult);
-//        Map<String, String> errorMap = new HashMap<>();
-//        if (bindingResult.hasErrors()) {
-//            bindingResult.getFieldErrors().stream().map(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
-//            return new ResponseEntity<>(errorMap, HttpStatus.OK);
-//        }
-//        Account initAccount = new Account();
-//        BeanUtils.copyProperties(accountDto,initAccount);
-//    }
+    @PostMapping("/initial-information")
+    public ResponseEntity<Object> initInfo(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult){
+        new AccountDto().validate(accountDto,bindingResult);
+        Map<String, String> errorMap = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors().stream().map(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
+            return new ResponseEntity<>(errorMap, HttpStatus.OK);
+        }
+        Account initAccount = new Account();
+        BeanUtils.copyProperties(accountDto,initAccount);
+        initAccount.setName(accountDto.getName());
+        initAccount.setAvatar(accountDto.getAvatar());
+        initAccount.setMaritalStatus(accountDto.getMaritalStatus());
+        return null;
+    }
+
 }

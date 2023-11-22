@@ -3,9 +3,15 @@ package com.dating.service.account;
 import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
+import com.dating.model.hobby.Hobby;
+import com.dating.model.hobby_detail.HobbyDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
+
 public interface IAccountService extends UserDetailsService {
     /**
      * method findByUsername
@@ -36,7 +42,6 @@ public interface IAccountService extends UserDetailsService {
      */
     Boolean createNewAccount(Account account);
 
-
     void deleteAccount(Integer id);
 
     /**
@@ -58,5 +63,17 @@ public interface IAccountService extends UserDetailsService {
     Account findAccountByUserName(String name);
 
     Account setEditAccount(AccountDto accountDto);
+
+    /**
+     * method addNewHobbyDetail
+     * Create SangPQ
+     * Date 17-11-2023
+     * param HobbyDetail hobbyDetail
+     * return Boolean
+     */
+    Boolean addNewHobbyDetail(HobbyDetail hobbyDetail);
+
+
+
 
 }
