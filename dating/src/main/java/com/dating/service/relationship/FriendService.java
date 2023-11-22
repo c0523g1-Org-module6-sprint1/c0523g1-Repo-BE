@@ -25,4 +25,9 @@ public class FriendService implements IFriendService{
     public void unFriend(Integer idLogin, Integer idFriend) {
         iRelationshipRepository.unFriend(idLogin,idFriend);
     }
+
+    @Override
+    public void unblockFriend(Integer idLogin, Integer idFriend) {
+        iRelationshipRepository.unblockFriend(idLogin,idFriend);
+    }
 }

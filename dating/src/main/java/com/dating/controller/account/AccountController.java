@@ -49,7 +49,7 @@ public class AccountController {
     @GetMapping("/accounts")
     public ResponseEntity<?> showAccountList(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "limit", defaultValue = "2") int pageSize,
+            @RequestParam(name = "limit", defaultValue = "5") int pageSize,
             @RequestParam(defaultValue = "", required = false) String username,
             @RequestParam(defaultValue = "", required = false) String typeAccount
     ) {
@@ -78,10 +78,10 @@ public class AccountController {
 
     @PutMapping("/warning")
     public ResponseEntity<WarningDetails> warningDetails(@RequestBody List<Integer> warningId) {
-        if (warningId == null){
+        if (warningId == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        for (Integer i:warningId){
+        for (Integer i : warningId) {
             iTypeAccountService.warning(i);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -140,24 +140,45 @@ public class AccountController {
 
     /**
      * TriVN
-     * delete
+     * lock account
+     *
+     * @param list
+     * @return
+     */
+    @PatchMapping("/accounts/lock/")
+    public ResponseEntity<?> lockAccount(@RequestBody List<Integer> list) {
+        for (Integer integer : list) {
+            Account account = iAccountService.findByIdUnlock(integer);
+            if (account == null) {
+                return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
+            } else {
+                iAccountService.lockAccount(integer);
+            }
+        }
+        return new ResponseEntity<>("Đã lock thành công", HttpStatus.OK);
+    }
+
+    /**
+     * TriVn
+     * unlock account
      *
      * @param id
      * @return
      */
-    @PatchMapping("/accounts")
-    public ResponseEntity<?> lockAccount(@RequestParam Integer id) {
-        Account account = iAccountService.findAccountById(id);
+    @PatchMapping("/accounts/unlock/{id}")
+    public ResponseEntity<?> unlockAccount(@PathVariable("id") Integer id) {
+        Account account = iAccountService.findByIdUnlock(id);
         if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
+        } else {
+            iAccountService.unlockAccount(id);
+            return new ResponseEntity<>("Đã Mở Nick Thành Công", HttpStatus.OK);
         }
-        iAccountService.deleteAccount(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/api/public/personal-page/edit/{id}")
-    public ResponseEntity<Object> getAccountById (@PathVariable("id") Integer id){
-        if (id == null){
+    public ResponseEntity<Object> getAccountById(@PathVariable("id") Integer id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Account account = iAccountService.findAccountById(id);
