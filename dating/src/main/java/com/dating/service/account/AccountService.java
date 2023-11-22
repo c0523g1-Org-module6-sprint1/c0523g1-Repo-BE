@@ -47,8 +47,8 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void deleteAccount(Integer id) {
-        accountRepository.deleteAccountId(id);
+    public void lockAccount(Integer id) {
+        accountRepository.lockAccountId(id);
     }
 
 
@@ -111,6 +111,21 @@ public class AccountService implements IAccountService {
 //        account.setEmail(accountDto.getEmail());
 //        account.setPhoneNumber(accountDto.);
         return account;
+    }
+
+    /**
+     * unlock account
+     * TriVn
+     * @param id
+     */
+    @Override
+    public void unlockAccount(Integer id) {
+        accountRepository.unlockAccount(id);
+    }
+
+    @Override
+    public Account findByIdUnlock(Integer id) {
+        return accountRepository.findByIdUnlock(id);
     }
 
 }
