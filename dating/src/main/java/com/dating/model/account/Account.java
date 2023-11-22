@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -130,5 +131,8 @@ public class Account {
     @JsonBackReference
     @OneToMany(mappedBy = "accountReceiver")
     private Set<GiftRecord> giftRecord;
+
+    @Transient
+    private List<Integer> hobbies;
 //a
 }
