@@ -3,6 +3,7 @@ import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
+import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.repository.account.IAccountRepository;
@@ -41,29 +42,34 @@ public class AccountService implements IAccountService {
         return false;
     }
 
-    @Override
-    public void deleteAccount(Integer id) {
-
+    //    @Override
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return null;
     }
 
-//    @Override
-//    public Page<Account> findAll(Pageable pageable, String username) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Page<Account> findAll(Pageable pageable, String username) {
-//        return null;
-//    }
 
+    /**
+     * TriVn
+     * Display list and search
+     * @param pageable
+     * @param username
+     * @param typeAccount
+     * @return
+     */
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
         return accountRepository.findAllAccount(pageable, username, typeAccount);
     }
 
+
+    /**
+     * TriVN
+     * Log account
+     * @param id
+     */
     @Override
     public void lockAccount(Integer id) {
-//        accountRepository.lockAccountId(id);
+        accountRepository.lockAccountId(id);
     }
 
 
@@ -72,7 +78,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findAccountById(Integer id) {
-      return accountRepository.findAccountById(id);
+        return accountRepository.findAccountById(id);
 
     }
 
@@ -128,6 +134,11 @@ public class AccountService implements IAccountService {
         return account;
     }
 
+    @Override
+    public Boolean addNewHobbyDetail(HobbyDetail hobbyDetail) {
+        return null;
+    }
+
     /**
      * unlock account
      * TriVn
@@ -135,13 +146,18 @@ public class AccountService implements IAccountService {
      */
     @Override
     public void unlockAccount(Integer id) {
-//        accountRepository.unlockAccount(id);
+        accountRepository.unlockAccount(id);
     }
 
+    /**
+     * TriVN
+     * Find by id all
+     * @param id
+     * @return
+     */
     @Override
     public Account findByIdUnlock(Integer id) {
-//        return accountRepository.findByIdUnlock(id);
-        return null;
+        return accountRepository.findByIdUnlock(id);
     }
 
 }
