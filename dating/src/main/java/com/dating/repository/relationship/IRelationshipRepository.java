@@ -34,8 +34,8 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "    SELECT rel.relationship_status_id , rel.receiver_account_id, rel.sender_account_id, relta.name " +
             "    FROM relationships rel " +
             "    JOIN relationship_status relta ON rel.relationship_status_id = relta.id " +
-            "    WHERE rel.relationship_status_id = 2 OR rel.relationship_status_id = 3 AND rel.is_deleted = 0" +
-            "        AND (rel.receiver_account_id = :idLogin XOR rel.sender_account_id = :idLogin) " +
+            "    WHERE (rel.receiver_account_id = :idLogin XOR rel.sender_account_id = :idLogin) AND rel.is_deleted = 0" +
+            "        AND rel.relationship_status_id = 2 OR rel.relationship_status_id = 3 " +
             ") subquery ON acc.id = CASE " +
             "    WHEN subquery.receiver_account_id = :idLogin THEN subquery.sender_account_id " +
             "    ELSE subquery.receiver_account_id " +
