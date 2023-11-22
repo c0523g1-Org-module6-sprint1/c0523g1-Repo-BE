@@ -8,10 +8,16 @@ import lombok.Setter;
 
 
 public interface TopHunderedDto {
-     int getId();
-     String getName();
-     String getAvatar();
-     String  getAccountTypes();
-     double getMoney();
-int getCountLike();
+    int getId();
+
+    String getName();
+
+    String getAvatar();
+
+    String getAccountTypes();
+
+    int getPoint();
+
+    //     double getMoney();
+    int getCountLike();
 }
