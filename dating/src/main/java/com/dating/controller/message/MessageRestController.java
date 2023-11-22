@@ -135,7 +135,7 @@ public class MessageRestController {
      * param Boolean busyMode, Integer accountId
      * return new Object: void
      */
-    @PostMapping("/setbusy")
+    @GetMapping("/setbusy")
     public ResponseEntity<?> setBusyMode(@RequestParam(name = "busyMode", defaultValue = "false") Boolean busyMode,
                                          @RequestParam Integer accountId){
         Account account = messageService.findAccountById(accountId);

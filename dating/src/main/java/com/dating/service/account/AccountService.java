@@ -41,15 +41,20 @@ public class AccountService implements IAccountService {
         return false;
     }
 
-//    @Override
-    public Page<Account> findAll(Pageable pageable, String username) {
-        return null;
+    @Override
+    public void deleteAccount(Integer id) {
+
     }
 
-    @Override
-    public Page<Account> findAll(Pageable pageable, String username) {
-        return null;
-    }
+//    @Override
+//    public Page<Account> findAll(Pageable pageable, String username) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Page<Account> findAll(Pageable pageable, String username) {
+//        return null;
+//    }
 
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
@@ -58,7 +63,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public void lockAccount(Integer id) {
-        accountRepository.lockAccountId(id);
+//        accountRepository.lockAccountId(id);
     }
 
 
@@ -130,12 +135,13 @@ public class AccountService implements IAccountService {
      */
     @Override
     public void unlockAccount(Integer id) {
-        accountRepository.unlockAccount(id);
+//        accountRepository.unlockAccount(id);
     }
 
     @Override
     public Account findByIdUnlock(Integer id) {
-        return accountRepository.findByIdUnlock(id);
+//        return accountRepository.findByIdUnlock(id);
+        return null;
     }
 
 }
