@@ -76,4 +76,16 @@ public class FriendControler {
         friendService.unFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping ("/unblock")
+    public ResponseEntity<?> unblockFriend(
+            @RequestParam(value = "idLogin", required = false) Integer idLogin,
+            @RequestParam(value = "idFriend", required = false) Integer idFriend
+    ) {
+        if (idLogin == null || idFriend == null) {
+            return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
+        }
+        friendService.unblockFriend(idLogin,idFriend);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
