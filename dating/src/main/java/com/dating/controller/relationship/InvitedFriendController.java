@@ -1,13 +1,7 @@
 package com.dating.controller.relationship;
-
 import com.dating.dto.relationship.IInvitedFriendDto;
-import com.dating.dto.relationships.RelationshipsDTO;
-import com.dating.model.account.Account;
-import com.dating.model.relationship.Relationships;
-import com.dating.service.account.IAccountService;
 import com.dating.service.relationship.IInvitedFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +14,6 @@ import java.util.List;
 public class InvitedFriendController {
     @Autowired
     private IInvitedFriendService iInvitedFriendService;
-    @Autowired
-    private IAccountService accountService;
 
     /**
      * Method find All
@@ -46,7 +38,7 @@ public class InvitedFriendController {
      * Method deleted invited
      * Author HungHLP
      * Create 13-11-2023
-     *
+     *Param invited id
      * @return list  invited friend
      */
 
@@ -60,7 +52,7 @@ public class InvitedFriendController {
      * Method accept invited
      * Author HungHLP
      * Create 13-11-2023
-     *
+     *Param Invited ID
      * @return list  invited friend
      */
 
