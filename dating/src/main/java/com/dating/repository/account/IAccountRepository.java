@@ -144,9 +144,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id,role_id) \n" +
+    @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id,role_id,avatar,expire,marital_status,money,name,phone_number,point,regis_date,message_status_id) \n" +
             "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
-            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 1)",nativeQuery = true)
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 1,'',null,'',0,'','',0,null,1)",nativeQuery = true)
     Integer createNewAccount(Account account);
 
 
