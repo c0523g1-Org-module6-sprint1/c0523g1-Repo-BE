@@ -15,7 +15,7 @@ public interface ISearchNameRepository extends JpaRepository<Account, Integer> {
             "            JOIN location ON accounts.location_id = location.id \n" +
             "            JOIN genders ON genders.id = accounts.gender_id \n" +
             "            JOIN jobs ON jobs.id = accounts.job_id\n" +
-            "            WHERE accounts.name LIKE :name AND accounts.is_deleted = 0 ORDER BY accounts.money DESC LIMIT 20", nativeQuery = true)
+            "            WHERE accounts.name LIKE :name AND accounts.is_deleted = 0 ORDER BY accounts.point DESC LIMIT 20", nativeQuery = true)
     List<SearchNameDto> findAccountByName(@Param("name")String name);
     @Query(value = "SELECT id, avatar, role_id as role FROM accounts WHERE user_name = :userName",nativeQuery = true)
     MainPageDto findByUserName (@Param("userName")String userName);
