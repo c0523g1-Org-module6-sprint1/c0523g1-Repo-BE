@@ -46,11 +46,26 @@ public class AccountService implements IAccountService {
         return null;
     }
 
+
+    /**
+     * TriVn
+     * Display list and search
+     * @param pageable
+     * @param username
+     * @param typeAccount
+     * @return
+     */
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
         return accountRepository.findAllAccount(pageable, username, typeAccount);
     }
 
+
+    /**
+     * TriVN
+     * Log account
+     * @param id
+     */
     @Override
     public void lockAccount(Integer id) {
         accountRepository.lockAccountId(id);
@@ -128,6 +143,12 @@ public class AccountService implements IAccountService {
         accountRepository.unlockAccount(id);
     }
 
+    /**
+     * TriVN
+     * Find by id all
+     * @param id
+     * @return
+     */
     @Override
     public Account findByIdUnlock(Integer id) {
         return accountRepository.findByIdUnlock(id);
