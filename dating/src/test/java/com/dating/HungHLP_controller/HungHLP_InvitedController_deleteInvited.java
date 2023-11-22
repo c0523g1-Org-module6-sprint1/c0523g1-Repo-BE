@@ -19,9 +19,12 @@ public class HungHLP_InvitedController_deleteInvited {
 
     @Autowired
     private MockMvc mockMvc;
+
     /**
      * ID = null
      * HungHLP 15-11-2023
+     * deleted fail
+     *
      * @throws Exception
      */
 
@@ -37,6 +40,8 @@ public class HungHLP_InvitedController_deleteInvited {
     /**
      * HungHLP 15-11-2023
      * id = ""
+     * deleted fail
+     *
      * @throws Exception
      */
     @Test
