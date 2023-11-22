@@ -6,6 +6,6 @@ public interface IWarningDetailService {
     WarningDetails findById(Integer id);
 
     void save(WarningDetails warningDetails);
-    void  lockAccount(WarningDetails warningDetails);
+//    void  lockAccount(WarningDetails warningDetails);
 
 }

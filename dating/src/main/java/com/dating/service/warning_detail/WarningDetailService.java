@@ -22,16 +22,16 @@ public class WarningDetailService implements IWarningDetailService{
         iWarningDetailRepository.save(warningDetails);
     }
 
-    @Override
-    public void lockAccount(WarningDetails warningDetails) {
-        if (warningDetails.getFaultAmount()== 10){
-            iAccountRepository.deleteAccountId(warningDetails.getAccount().getId());
-        }else if (warningDetails.getFaultAmount()==6){
-            iAccountRepository.deleteAccountId(warningDetails.getAccount().getId());
-        }else if (warningDetails.getFaultAmount()==3){
-            iAccountRepository.deleteAccountId(warningDetails.getAccount().getId());
-        }
-    }
+//    @Override
+//    public void lockAccount(WarningDetails warningDetails) {
+//        if (warningDetails.getFaultAmount()== 10){
+//            iAccountRepository.lockAccountId(warningDetails.getAccount().getId());
+//        }else if (warningDetails.getFaultAmount()==6){
+//            iAccountRepository.lockAccountId(warningDetails.getAccount().getId());
+//        }else if (warningDetails.getFaultAmount()==3){
+//            iAccountRepository.lockAccountId(warningDetails.getAccount().getId());
+//        }
+//    }
 
 
 
