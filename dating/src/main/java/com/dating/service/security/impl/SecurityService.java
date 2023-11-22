@@ -15,11 +15,25 @@ public class SecurityService implements ISecurityService {
     @Autowired
     private ISecurityRepository securityRepository;
 
+    /**
+     * method findByUsername()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String name
+     * return Optional<Account>
+     */
     @Override
     public Optional<Account> findByUsername(String name) {
         return Optional.ofNullable(securityRepository.findByUserName(name));
     }
 
+    /**
+     * method loadUserByUsername()
+     * Create ThienBB
+     * Date 13-11-2023
+     * param String name
+     * return null
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
