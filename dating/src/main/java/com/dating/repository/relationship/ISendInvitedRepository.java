@@ -25,7 +25,8 @@ public interface ISendInvitedRepository extends JpaRepository<Relationships,Inte
                            @Param("receiveAccountID") int receiveAccountID);
 
 
-    @Query(value = "select * from relationships where sender_account_id = :idSent and receiver_account_id = :idReceiver",nativeQuery = true)
+    @Query(value = "select * from relationships where (sender_account_id = :idSent or receiver_account_id = :idSent ) and " +
+            "(sender_account_id =  :idReceiver or receiver_account_id = :idReceiver )",nativeQuery = true)
     Relationships getRelationshipsStatus(@Param("idSent") int idSent, @Param("idReceiver") int idReceiver );
 
     @Query(value = "select count(*) from relationships where relationship_status_id = 1 and receiver_account_id = :id",nativeQuery = true)
