@@ -1,6 +1,7 @@
 package com.dating.dto.account;
 
 public interface AccountDTOs {
+ Integer getId();
  String getUserName();
  String getRegisDate();
  String getMoney();
@@ -8,6 +9,7 @@ public interface AccountDTOs {
  String getDescription();
  String getDateWarning();
  String getTypeAccount();
+ Boolean getIsDeleted();
 
 
 }

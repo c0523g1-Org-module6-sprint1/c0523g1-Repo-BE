@@ -1,5 +1,6 @@
 package com.dating.service.update_account;
 
+import com.dating.dto.update_account.IPackageDto;
 import com.dating.model.update_account.PackageTypes;
 import com.dating.repository.update_account.IPackageTypesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,9 @@ public class PackageTypesService implements IPackageTypesService{
     @Override
     public List<PackageTypes> findAll() {
         return packageTypesRepository.findAll();
+    }
+    @Override
+    public List<IPackageDto> findAllPackageAccount(int idAccount) {
+        return packageTypesRepository.findPackageAccount(idAccount);
     }
 }
