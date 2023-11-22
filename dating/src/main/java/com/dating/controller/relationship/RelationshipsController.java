@@ -103,7 +103,7 @@ public class RelationshipsController {
         if (relationships == null){
             Relationships relationships1 = new Relationships();
             RelationshipStatus relationshipStatus = new RelationshipStatus();
-            relationshipStatus.setId(1);
+            relationshipStatus.setId(0);
             relationships1.setRelationshipStatus(relationshipStatus);
             return new ResponseEntity<>(relationships1,HttpStatus.OK);
         }
@@ -111,4 +111,20 @@ public class RelationshipsController {
 
     }
 
+    /**
+     * Method getCountInviteFriend
+     * Created by LongTND
+     * Date 21/11/2023
+     * @Param id
+     * @Return int
+     */
+    @GetMapping("/api/public/quantity-friend/{id}")
+    public ResponseEntity<Integer> getQuantityInviteFriend(@PathVariable Integer id){
+       if (id == null){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+       Integer count = sendInvitedService.getCountInviteFriend(id);
+       return new ResponseEntity<>(count,HttpStatus.OK);
+
+    }
 }

@@ -3,8 +3,6 @@ import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
-import com.dating.model.hobby.Hobby;
-import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.repository.account.IAccountRepository;
@@ -15,8 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
@@ -45,14 +41,19 @@ public class AccountService implements IAccountService {
         return false;
     }
 
+//    @Override
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return null;
+    }
+
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
         return accountRepository.findAllAccount(pageable, username, typeAccount);
     }
 
     @Override
-    public void deleteAccount(Integer id) {
-        accountRepository.deleteAccountId(id);
+    public void lockAccount(Integer id) {
+        accountRepository.lockAccountId(id);
     }
 
 
@@ -117,17 +118,19 @@ public class AccountService implements IAccountService {
         return account;
     }
 
+    /**
+     * unlock account
+     * TriVn
+     * @param id
+     */
     @Override
-    public Boolean addNewHobbyDetail(HobbyDetail hobbyDetail) {
-        try {
-            accountRepository.addNewHobbyDetail(hobbyDetail);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public void unlockAccount(Integer id) {
+        accountRepository.unlockAccount(id);
     }
 
-
-
+    @Override
+    public Account findByIdUnlock(Integer id) {
+        return accountRepository.findByIdUnlock(id);
+    }
 
 }

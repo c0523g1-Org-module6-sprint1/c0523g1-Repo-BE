@@ -45,20 +45,19 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      *
      * @return HttpStatus
      */
-
-    @Query(value = " select acc.user_name as userName , " +
+    @Query(value = " select acc.id as id ,acc.user_name as userName , " +
             " acc.regis_date as regisDate , " +
-            " acc.money as money , " +
+            " acc.money as money ,  " +
             " wd.fault_amount as faultAmount " +
             " ,wd.`description` as `description` " +
             " , wd.`date` as dateWarning " +
-            " , acct.`name` as typeAccount " +
+            " , acct.`name` as typeAccount , acc.is_deleted as isDeleted " +
             " from accounts acc " +
             " join warning_details wd on acc.id = wd.account_id  " +
             " JOIN warning w on wd.warning_id =  w.id " +
             " join package_detail pd on acc.id = pd.account_id   " +
             " join account_types acct on pd.account_types_id = acct.id  " +
-            " where acc.user_name like concat('%', :username, '%') and acct.`name` like concat('%', :typeAccount, '%') ", nativeQuery = true)
+            " where acc.user_name like concat('%', :username, '%') and acct.`id` like concat('%', :typeAccount, '%') ", nativeQuery = true)
     Page<AccountDTOs> findAllAccount(Pageable pageable, @Param("username") String username,@Param("typeAccount") String typeAccount);
 
 
@@ -106,7 +105,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     /**
      * author: TriVN
      * date: 13/11/2023
-     * goal: delete account
+     * goal: block account
      *
      * @return HttpStatus
      */

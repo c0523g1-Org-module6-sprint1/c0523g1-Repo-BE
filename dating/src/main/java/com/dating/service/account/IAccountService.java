@@ -3,15 +3,10 @@ package com.dating.service.account;
 import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
-import com.dating.model.hobby.Hobby;
 import com.dating.model.hobby_detail.HobbyDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
-import java.util.List;
-
 public interface IAccountService extends UserDetailsService {
     /**
      * method findByUsername
@@ -31,7 +26,13 @@ public interface IAccountService extends UserDetailsService {
      */
     Account findByEmail(String email);
 
-
+    /**
+     * TriVN
+     * @param pageable
+     * @param username
+     * @param typeAccount
+     * @return
+     */
     Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount);
     /**
      * method createNewAccount
@@ -42,7 +43,14 @@ public interface IAccountService extends UserDetailsService {
      */
     Boolean createNewAccount(Account account);
 
+
     void deleteAccount(Integer id);
+
+    /**
+     * TriVn
+     * @param id
+     */
+    void lockAccount(Integer id);
 
     /**
      * method findAccountById
@@ -76,4 +84,11 @@ public interface IAccountService extends UserDetailsService {
 
 
 
+    /**
+     * TriVn
+     * @param id
+     */
+    void unlockAccount(Integer id);
+
+    Account findByIdUnlock(Integer id);
 }

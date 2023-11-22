@@ -27,7 +27,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/public")
 public class AccountController {
     @Autowired
     private IAccountService iAccountService;
@@ -49,28 +49,43 @@ public class AccountController {
     @GetMapping("/accounts")
     public ResponseEntity<?> showAccountList(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "limit", defaultValue = "2") int pageSize,
+            @RequestParam(name = "limit", defaultValue = "5") int pageSize,
             @RequestParam(defaultValue = "", required = false) String username,
             @RequestParam(defaultValue = "", required = false) String typeAccount
     ) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username,typeAccount);
+        Page<AccountDTOs> accountList = iAccountService.findAll(pageable, username, typeAccount);
         if (accountList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
 
+    /**
+     * TriVN
+     * display typeAccounts
+     *
+     * @return
+     */
     @GetMapping("/typeAccounts")
     public ResponseEntity<List<AccountTypes>> showTypeAccount() {
         List<AccountTypes> accountTypesList = iTypeAccountService.findTypeAccount();
         if (accountTypesList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(accountTypesList,HttpStatus.OK);
+        return new ResponseEntity<>(accountTypesList, HttpStatus.OK);
     }
 
-
+    @PutMapping("/warning")
+    public ResponseEntity<WarningDetails> warningDetails(@RequestBody List<Integer> warningId) {
+        if (warningId == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        for (Integer i : warningId) {
+            iTypeAccountService.warning(i);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PatchMapping("/api/personal-page/edit/{id}")
     public ResponseEntity<?> editAccountByID(@PathVariable int id, @RequestBody AccountDto accountDto) {
@@ -123,19 +138,47 @@ public class AccountController {
 //        return null;
 //    }
 
-    @PatchMapping("/accounts/{id}")
-    public ResponseEntity<?> lockAccount(@RequestParam Integer id){
-        Account account = iAccountService.findAccountById(id);
-        if (account == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    /**
+     * TriVN
+     * lock account
+     *
+     * @param list
+     * @return
+     */
+    @PatchMapping("/accounts/lock/")
+    public ResponseEntity<?> lockAccount(@RequestBody List<Integer> list) {
+        for (Integer integer : list) {
+            Account account = iAccountService.findByIdUnlock(integer);
+            if (account == null) {
+                return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
+            } else {
+                iAccountService.lockAccount(integer);
+            }
         }
-       iAccountService.deleteAccount(id);
-       return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Đã lock thành công", HttpStatus.OK);
+    }
+
+    /**
+     * TriVn
+     * unlock account
+     *
+     * @param id
+     * @return
+     */
+    @PatchMapping("/accounts/unlock/{id}")
+    public ResponseEntity<?> unlockAccount(@PathVariable("id") Integer id) {
+        Account account = iAccountService.findByIdUnlock(id);
+        if (account == null) {
+            return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
+        } else {
+            iAccountService.unlockAccount(id);
+            return new ResponseEntity<>("Đã Mở Nick Thành Công", HttpStatus.OK);
+        }
     }
 
     @GetMapping("/api/public/personal-page/edit/{id}")
-    public ResponseEntity<Object> getAccountById (@PathVariable("id") Integer id){
-        if (id == null){
+    public ResponseEntity<Object> getAccountById(@PathVariable("id") Integer id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Account account = iAccountService.findAccountById(id);
