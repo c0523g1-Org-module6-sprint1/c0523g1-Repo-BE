@@ -3,6 +3,7 @@ import com.dating.dto.account.AccountDTOs;
 import com.dating.dto.account.AccountDto;
 import com.dating.model.account.Account;
 import com.dating.model.gender.Gender;
+import com.dating.model.hobby_detail.HobbyDetail;
 import com.dating.model.job.Job;
 import com.dating.model.location.Location;
 import com.dating.repository.account.IAccountRepository;
@@ -131,6 +132,11 @@ public class AccountService implements IAccountService {
 //        account.setEmail(accountDto.getEmail());
 //        account.setPhoneNumber(accountDto.);
         return account;
+    }
+
+    @Override
+    public Boolean addNewHobbyDetail(HobbyDetail hobbyDetail) {
+        return null;
     }
 
     /**

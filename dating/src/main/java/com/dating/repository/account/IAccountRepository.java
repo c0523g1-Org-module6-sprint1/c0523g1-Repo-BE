@@ -32,7 +32,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where user_name like :username" +
+            " where user_name = :username" +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByUserName(@Param("username") String username);
@@ -69,7 +69,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
      * return Account or null
      */
     @Query(value = " select * from accounts " +
-            " where email like :email " +
+            " where email = :email " +
             " and is_deleted = 0 ",
             nativeQuery = true)
     Account findAccountByEmail(@Param("email") String email);
@@ -88,18 +88,18 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     Account findAccountById(@Param("id") Integer id);
 
 
-    /**
-     * method addNewAccount
-     * Create SangPQ
-     * Date 13-11-2023
-     * param Account account
-     * return Integer
-     */
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id) " +
-            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id})", nativeQuery = true)
-    Integer addNewAccount(Account account);
+//    /**
+//     * method addNewAccount
+//     * Create SangPQ
+//     * Date 13-11-2023
+//     * param Account account
+//     * return Integer
+//     */
+//    @Transactional
+//    @Modifying
+//    @Query(value = "INSERT INTO accounts (user_name, password,gender_id, email, location_id, role_id) " +
+//            "VALUES (:#{#account.userName},:#{#account.password},:#{#account.gender.id} ,:#{#account.email},:#{#account.location.id} , 1)", nativeQuery = true)
+//    Integer addNewAccount(Account account);
 
 
     /**
@@ -146,7 +146,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query(value = "INSERT INTO accounts (user_name, password, email, birthday, gender_id, location_id, job_id,role_id) \n" +
             "VALUES (:#{#account.userName}, :#{#account.password}, :#{#account.email}, :#{#account.birthday}, \n" +
-            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 2)",nativeQuery = true)
+            "        :#{#account.gender.id}, :#{#account.location.id}, :#{#account.job.id}, 1)",nativeQuery = true)
     Integer createNewAccount(Account account);
 
 

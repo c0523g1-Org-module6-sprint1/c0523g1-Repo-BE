@@ -63,7 +63,7 @@ public class AccountRegisterController {
             account.setJob(new Job(accountDto.getJob(),false));
             account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
             Role role = new Role();
-            role.setId(2);
+            role.setId(1);
             role.setName("MEMBER");
             account.setRole(role);
             accountService.createNewAccount(account);
