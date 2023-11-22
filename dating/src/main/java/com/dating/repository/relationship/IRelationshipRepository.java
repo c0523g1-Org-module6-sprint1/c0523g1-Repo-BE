@@ -2,6 +2,8 @@ package com.dating.repository.relationship;
 
 import com.dating.dto.relationship.IFriendDto;
 import com.dating.model.relationship.Relationships;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -35,13 +37,13 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "    FROM relationships rel " +
             "    JOIN relationship_status relta ON rel.relationship_status_id = relta.id " +
             "    WHERE (rel.receiver_account_id = :idLogin XOR rel.sender_account_id = :idLogin) AND rel.is_deleted = 0" +
-            "        AND rel.relationship_status_id = 2 OR rel.relationship_status_id = 3 " +
+            "        AND (rel.relationship_status_id = 2 OR rel.relationship_status_id = 3) " +
             ") subquery ON acc.id = CASE " +
             "    WHEN subquery.receiver_account_id = :idLogin THEN subquery.sender_account_id " +
             "    ELSE subquery.receiver_account_id " +
             "END " +
             "WHERE acc.name LIKE CONCAT('%', :name, '%') ORDER BY idRel ASC ",nativeQuery = true)
-    List<IFriendDto> findAllFriendByName(@Param("idLogin") Integer idLogin,@Param("name") String name);
+    Page<IFriendDto> findAllFriendByName(@Param("idLogin") Integer idLogin, @Param("name") String name, Pageable pageable);
 
     /**
      * method block
