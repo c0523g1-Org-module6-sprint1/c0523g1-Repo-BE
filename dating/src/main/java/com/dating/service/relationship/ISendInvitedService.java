@@ -8,4 +8,6 @@ public interface ISendInvitedService{
     void saveInvited(Relationships relationships);
     Relationships getRelationshipsStatus(int idSent, int idReceiver);
 
+    Integer getCountInviteFriend(int id);
+
 }

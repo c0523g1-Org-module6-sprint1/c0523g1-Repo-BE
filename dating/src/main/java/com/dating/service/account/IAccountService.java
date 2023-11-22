@@ -25,7 +25,13 @@ public interface IAccountService extends UserDetailsService {
      */
     Account findByEmail(String email);
 
-
+    /**
+     * TriVN
+     * @param pageable
+     * @param username
+     * @param typeAccount
+     * @return
+     */
     Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount);
     /**
      * method createNewAccount
@@ -36,9 +42,14 @@ public interface IAccountService extends UserDetailsService {
      */
     Boolean createNewAccount(Account account);
 
-    Page<Account> findAll(Pageable pageable,String username);
-  
+
     void deleteAccount(Integer id);
+
+    /**
+     * TriVn
+     * @param id
+     */
+    void lockAccount(Integer id);
 
     /**
      * method findAccountById
@@ -60,4 +71,11 @@ public interface IAccountService extends UserDetailsService {
 
     Account setEditAccount(AccountDto accountDto);
 
+    /**
+     * TriVn
+     * @param id
+     */
+    void unlockAccount(Integer id);
+
+    Account findByIdUnlock(Integer id);
 }

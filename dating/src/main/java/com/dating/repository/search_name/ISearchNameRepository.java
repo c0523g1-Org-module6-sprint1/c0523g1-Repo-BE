@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ISearchNameRepository extends JpaRepository<Account, Integer> {
-    @Query(value = "SELECT accounts.id, accounts.name, accounts.avatar, location.name as location, jobs.name as job \n" +
+    @Query(value = "SELECT accounts.id, accounts.name, accounts.avatar, location.name as location, jobs.name as job, genders.name as gender \n" +
             "FROM accounts \n" +
             "            JOIN location ON accounts.location_id = location.id \n" +
             "            JOIN genders ON genders.id = accounts.gender_id \n" +

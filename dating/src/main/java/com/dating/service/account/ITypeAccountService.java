@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ITypeAccountService {
     List<AccountTypes> findTypeAccount();
+    void warning(Integer id);
 }

@@ -7,4 +7,5 @@ public interface IWarningDetailService {
 
     void save(WarningDetails warningDetails);
     void  lockAccount(WarningDetails warningDetails);
+
 }

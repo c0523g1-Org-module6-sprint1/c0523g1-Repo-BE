@@ -1,7 +1,6 @@
 package com.dating.service.relationship;
 
 import com.dating.dto.relationship.IRecommendFriendDto;
-import com.dating.model.account.Account;
 import com.dating.repository.relationship.IRecommendFriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +13,22 @@ public class RecommendFriendService implements IRecommendFriendService {
     private IRecommendFriendRepository recommendFriendRepository;
 
     @Override
-    public List<IRecommendFriendDto> findAllRecommendFriend(Integer accountID, Integer roleID) {
+    public List<IRecommendFriendDto> findAllRecommendFriend(Integer accountID, Integer roleID, String genderName, String locationName) {
+
+        if ("".equals(genderName)) {
+            genderName = "%";
+        }
+        if ("".equals(locationName)) {
+            locationName = "%";
+        }
         if (roleID == 1) {
-            return recommendFriendRepository.sortByLocation(accountID);
+            return recommendFriendRepository.sortByJob(accountID, genderName, locationName);
         } else if (roleID == 2) {
-            return recommendFriendRepository.sortByJob(accountID);
+            return recommendFriendRepository.sortByHobby(accountID, genderName, locationName);
         } else if (roleID == 3) {
-            return recommendFriendRepository.sortByHobby(accountID);
+            return recommendFriendRepository.findAllRecommendFriend(accountID, genderName, locationName);
         } else {
-            return recommendFriendRepository.findAllRecommendFriend(accountID);
+            return recommendFriendRepository.findAllRecommendFriend(accountID, genderName, locationName);
         }
     }
 
