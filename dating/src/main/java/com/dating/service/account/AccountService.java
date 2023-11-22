@@ -41,14 +41,19 @@ public class AccountService implements IAccountService {
         return false;
     }
 
+//    @Override
+    public Page<Account> findAll(Pageable pageable, String username) {
+        return null;
+    }
+
     @Override
     public Page<AccountDTOs> findAll(Pageable pageable, String username, String typeAccount) {
         return accountRepository.findAllAccount(pageable, username, typeAccount);
     }
 
     @Override
-    public void deleteAccount(Integer id) {
-        accountRepository.deleteAccountId(id);
+    public void lockAccount(Integer id) {
+        accountRepository.lockAccountId(id);
     }
 
 
@@ -111,6 +116,21 @@ public class AccountService implements IAccountService {
 //        account.setEmail(accountDto.getEmail());
 //        account.setPhoneNumber(accountDto.);
         return account;
+    }
+
+    /**
+     * unlock account
+     * TriVn
+     * @param id
+     */
+    @Override
+    public void unlockAccount(Integer id) {
+        accountRepository.unlockAccount(id);
+    }
+
+    @Override
+    public Account findByIdUnlock(Integer id) {
+        return accountRepository.findByIdUnlock(id);
     }
 
 }

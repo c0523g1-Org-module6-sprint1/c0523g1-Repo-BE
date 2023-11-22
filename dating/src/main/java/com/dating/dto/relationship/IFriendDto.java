@@ -8,4 +8,5 @@ public interface IFriendDto {
     String getNameGender();
     String getAvatarAccount();
     String getBirthdayAccount();
+    Integer getIdRel();
 }

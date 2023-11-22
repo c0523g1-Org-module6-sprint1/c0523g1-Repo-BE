@@ -10,6 +10,7 @@ public interface SearchNameDto {
     String getAvatar();
     String getLocation();
     String getJob();
+    String getGender();
 
 
 }
