@@ -51,7 +51,17 @@ public class FriendControler {
         return new ResponseEntity<>(friendDtoList, HttpStatus.OK);
     }
 
-    @DeleteMapping ("/block")
+    /**
+     * Method block friend
+     * Author ThienPT
+     * Create 13-11-2023
+     *
+     * @param idLogin : IdLogin is login in web
+     * @param idFriend : IdFriend is friend with account login in web
+     * @return void
+     */
+
+    @PatchMapping ("/block")
     public ResponseEntity<?> blockFriend(
             @RequestParam(value = "idLogin", required = false) Integer idLogin,
             @RequestParam(value = "idFriend", required = false) Integer idFriend
@@ -59,13 +69,22 @@ public class FriendControler {
         if (idLogin == null || idFriend == null) {
             return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
-//        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         friendService.blockFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Method unfriend
+     * Author ThienPT
+     * Create 13-11-2023
+     *
+     * @param idLogin : IdLogin is login in web
+     * @param idFriend : IdFriend is friend with account login in web
+     * @return void
+     */
     @DeleteMapping("/unfriend")
     public ResponseEntity<?> unFriend(
             @RequestParam(value = "idLogin", required = false) Integer idLogin,
@@ -74,14 +93,24 @@ public class FriendControler {
         if (idLogin == null || idFriend == null) {
             return new ResponseEntity<>("Giá trị id nhận vào không thể null!", HttpStatus.BAD_REQUEST);
         }
-//        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+        if (accountService.findAccountById(idLogin) == null || accountService.findAccountById(idFriend) == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         friendService.unFriend(idLogin,idFriend);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping ("/unblock")
+
+    /**
+     * Method  Unblock friend
+     * Author ThienPT
+     * Create 13-11-2023
+     *
+     * @param idLogin : IdLogin is login in web
+     * @param idFriend : IdFriend is friend with account login in web
+     * @return void
+     */
+    @PatchMapping ("/unblock")
     public ResponseEntity<?> unblockFriend(
             @RequestParam(value = "idLogin", required = false) Integer idLogin,
             @RequestParam(value = "idFriend", required = false) Integer idFriend
