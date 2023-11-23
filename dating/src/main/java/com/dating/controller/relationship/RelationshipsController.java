@@ -100,7 +100,11 @@ public class RelationshipsController {
     @GetMapping("/api/public/status/{idSent}/{idReceiver}")
     public ResponseEntity<Relationships> getRelationshipStatus(@PathVariable("idSent") int idSent, @PathVariable("idReceiver") int idReceiver){
         if (idReceiver == idSent){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Relationships relationships = new Relationships();
+            RelationshipStatus relationshipStatus = new RelationshipStatus();
+            relationshipStatus.setId(0);
+            relationships.setRelationshipStatus(relationshipStatus);
+            return new ResponseEntity<>(relationships,HttpStatus.OK);
         }
         Relationships relationships =sendInvitedService.getRelationshipsStatus(idSent,idReceiver);
         if (relationships == null){
@@ -128,6 +132,28 @@ public class RelationshipsController {
        }
        Integer count = sendInvitedService.getCountInviteFriend(id);
        return new ResponseEntity<>(count,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/api/public/send-friend/{sendID}/{receiverID}")
+    public ResponseEntity<Relationships> getStatusSending(@PathVariable("sendID") int sentID,
+                                                          @PathVariable("receiverID") int receiverID){
+        if (sentID == receiverID){
+            Relationships relationships = new Relationships();
+            RelationshipStatus relationshipStatus = new RelationshipStatus();
+            relationshipStatus.setId(0);
+            relationships.setRelationshipStatus(relationshipStatus);
+            return new ResponseEntity<>(relationships,HttpStatus.OK);
+        }
+        Relationships relationships =sendInvitedService.getStatus(sentID,receiverID);
+        if (relationships == null){
+            Relationships relationships1 = new Relationships();
+            RelationshipStatus relationshipStatus = new RelationshipStatus();
+            relationshipStatus.setId(0);
+            relationships1.setRelationshipStatus(relationshipStatus);
+            return new ResponseEntity<>(relationships1,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(relationships,HttpStatus.OK);
 
     }
 }

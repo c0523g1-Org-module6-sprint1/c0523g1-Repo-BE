@@ -10,4 +10,6 @@ public interface ISendInvitedService{
 
     Integer getCountInviteFriend(int id);
 
+    Relationships getStatus(int sendID, int receiverID);
+
 }
