@@ -28,7 +28,8 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
             "g.name AS nameGender, " +
             "acc.avatar AS avatarAccount, " +
             "acc.birthday AS birthdayAccount, " +
-            "subquery.relationship_status_id AS idRel " +
+            "subquery.relationship_status_id AS idRel, " +
+            "subquery.sender_account_id AS idSender " +
             "FROM accounts acc " +
             "JOIN location l ON acc.location_id = l.id " +
             "JOIN genders g ON acc.gender_id = g.id " +
@@ -54,7 +55,7 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
     @Transactional
     @Modifying
     @Query(value =
-            "update relationships as rel set rel.relationship_status_id = 3 " +
+            "update relationships as rel set rel.relationship_status_id = 3 ,rel.receiver_account_id = :idLogin,rel.sender_account_id = :idFriend " +
                     "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
                     "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
     void blockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
@@ -63,8 +64,7 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
     @Modifying
     @Query(value =
             "update relationships as rel set rel.relationship_status_id = 2 " +
-                    "where (rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend) " +
-                    "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
+                    "where rel.receiver_account_id = :idLogin and rel.sender_account_id = :idFriend ",nativeQuery = true)
     void unblockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
 
 

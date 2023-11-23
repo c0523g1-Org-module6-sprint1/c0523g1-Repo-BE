@@ -9,4 +9,7 @@ public interface IFriendDto {
     String getAvatarAccount();
     String getBirthdayAccount();
     Integer getIdRel();
+
+    Integer getIdSender();
+
 }
