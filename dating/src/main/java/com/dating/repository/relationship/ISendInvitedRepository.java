@@ -32,4 +32,6 @@ public interface ISendInvitedRepository extends JpaRepository<Relationships,Inte
     @Query(value = "select count(*) from relationships where relationship_status_id = 1 and receiver_account_id = :id",nativeQuery = true)
     Integer getCountInviteFriend(@Param("id") int id);
 
+    @Query(value = "select * from  relationships where sender_account_id = :sendID and receiver_account_id = :receiverID",nativeQuery = true)
+    Relationships getStatus(@Param("sendID") int sendID, @Param("receiverID") int  receiverID);
 }

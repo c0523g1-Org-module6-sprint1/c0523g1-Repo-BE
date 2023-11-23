@@ -28,5 +28,10 @@ public class SendInvitedService  implements ISendInvitedService{
         return sendInvitedRepository.getCountInviteFriend(id);
     }
 
+    @Override
+    public Relationships getStatus(int sendID, int receiverID) {
+        return sendInvitedRepository.getStatus(sendID,receiverID);
+    }
+
 
 }
