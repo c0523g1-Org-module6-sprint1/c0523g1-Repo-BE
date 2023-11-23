@@ -60,6 +60,13 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
                     "or  (rel.receiver_account_id = :idFriend and rel.sender_account_id = :idLogin);",nativeQuery = true)
     void blockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
 
+
+    /**
+     * method unblock
+     * Create: 14-11-2023
+     * return: void
+     * author: ThienPT
+     */
     @Transactional
     @Modifying
     @Query(value =
@@ -68,6 +75,12 @@ public interface IRelationshipRepository  extends JpaRepository<Relationships, I
     void unblockFriend(@Param("idLogin") Integer idLogin, @Param("idFriend") Integer idFriend);
 
 
+    /**
+     * method unFriend
+     * Create: 14-11-2023
+     * return: void
+     * author: ThienPT
+     */
     @Transactional
     @Modifying
     @Query(value = "delete  from relationships as rel  " +
