@@ -99,6 +99,9 @@ public class RelationshipsController {
 
     @GetMapping("/api/public/status/{idSent}/{idReceiver}")
     public ResponseEntity<Relationships> getRelationshipStatus(@PathVariable("idSent") int idSent, @PathVariable("idReceiver") int idReceiver){
+        if (idReceiver == idSent){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         Relationships relationships =sendInvitedService.getRelationshipsStatus(idSent,idReceiver);
         if (relationships == null){
             Relationships relationships1 = new Relationships();

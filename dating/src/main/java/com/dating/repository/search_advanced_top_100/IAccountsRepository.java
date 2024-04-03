@@ -19,12 +19,13 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
             "JOIN jobs ON jobs.id = accounts.job_id " +
             "left JOIN hobby_detail ON hobby_detail.account_id = accounts.id " +
             "left JOIN hobbies ON hobbies.id = hobby_detail.hobby_id " +
-            "WHERE accounts.name like :name " +
-            "and genders.id = :genderId " +
-            "and ((YEAR(CURRENT_DATE()) - YEAR(accounts.birthday) BETWEEN :birthdayFrom AND :birthdayEnd) " +
-            "and jobs.id = :jobId " +
-            "and location.code = :locationId " +
-            "and hobbies.id = :hobbyDetailId) ",
+            "WHERE(accounts.name like :name " +
+            "or genders.id = :genderId " +
+            "or ((YEAR(CURRENT_DATE()) - YEAR(accounts.birthday) BETWEEN :birthdayFrom AND :birthdayEnd)) " +
+            "or jobs.id = :jobId " +
+            "or hobbies.id = :hobbyDetailId ) " +
+            "and location.code = :locationId " ,
+
             nativeQuery = true)
     List<SearchAvancedDto> findAll(@Param("name") String name, @Param("birthdayFrom") int birthdayFrom, @Param("birthdayEnd")
     int birthdayEnd, @Param("genderId") int genderId, @Param("locationId") int locationId, @Param("jobId") int jobId,
@@ -32,13 +33,13 @@ public interface IAccountsRepository extends JpaRepository<Account, Integer> {
 
 
     @Transactional
-    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.money as money, count(like_detail.id) AS countLike " +
+    @Query(value = "SELECT accounts.id, accounts.avatar, accounts.name, account_types.name as accountTypes, accounts.point as point, count(like_detail.id) AS countLike " +
             " FROM accounts " +
             " left JOIN package_detail ON accounts.id = package_detail.account_id " +
             " left JOIN account_types ON package_detail.account_types_id = account_types.id " +
             " left JOIN like_detail ON like_detail.account_id = accounts.id " +
-            " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.money " +
-            " ORDER BY countLike DESC " +
+            " GROUP BY accounts.id, accounts.avatar, accounts.name, account_types.name, accounts.point " +
+            " ORDER BY point Desc " +
             " LIMIT 100 ",
             nativeQuery = true)
     List<TopHunderedDto> findAllByAccount();
